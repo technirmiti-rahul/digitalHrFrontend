@@ -57,11 +57,20 @@
     <div class="overflow-y-hidden pb-5 h-100">
       <div class="h-100 overflow-y-auto">
         <div
+          v-auto-animate
           class="container h-100 py-3 d-flex justify-content-center align-items-start align-items-sm-center"
         >
-          <form v-auto-animate class="form-container border shadow-lg rounded-3">
-            <h1 v-if="formPage == 1" class="text-center source-600 text-dark mb-4">Add Client</h1>
-            <div v-if="formPage == 1" class="row">
+          <form
+            v-if="formPage == 1"
+            v-auto-animate
+            class="form-container border shadow-lg rounded-3"
+          >
+            <div class="d-flex justify-content-center">
+              <div class="w-100">
+                <h4 class="text-center source-600 text-dark mb-4">Add Client</h4>
+              </div>
+            </div>
+            <div class="row">
               <div class="form-group col-12 col-sm-6 col-lg-4">
                 <label for="name source-500" class="source-500">Name</label>
                 <input
@@ -93,7 +102,7 @@
                 />
               </div>
               <div class="form-group col-12 col-sm-6 col-lg-4">
-                <label for="phone_number source-500" class="source-500">Phone Number</label>
+                <label for="phone_number source-500" class="source-500">WhatsApp Number</label>
                 <input
                   v-model="form.whatsapp_no"
                   type="number"
@@ -192,14 +201,176 @@
                 />
               </div>
             </div>
+
             <div class="w-100 d-flex justify-content-center align-items-center">
               <button
                 v-if="formPage == 1"
-                @click="handleAddUser"
+                @click="validateFormPage1"
                 type="button"
                 class="btn bg-dark bg-gradient source-500 text-light mt-4 px-5"
               >
                 Next
+              </button>
+            </div>
+          </form>
+          <!-- /////////////////////////////////////////////////////////////////////// -->
+          <form
+            v-if="formPage == 2"
+            v-auto-animate
+            class="form-container border shadow-lg rounded-3"
+          >
+            <div class="d-flex justify-content-center">
+              <div class="">
+                <i @click="formPage = 1" class="bi bi-arrow-left icon-font-2 pointer"></i>
+              </div>
+              <div class="w-100">
+                <h4 class="text-center source-600 text-dark mb-4">Add Details</h4>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="form-group col-12 col-sm-6">
+                <label for="pan_card" class="source-500 mt-2">Pan Card</label>
+                <input
+                  v-model="form.pan_card"
+                  type="text"
+                  class="form-control border"
+                  id="pan_card"
+                  placeholder="Enter Pan Number"
+                />
+              </div>
+              <div class="form-group col-12 col-sm-6">
+                <label for="gst_no" class="source-500 mt-2">GST Number</label>
+                <input
+                  v-model="form.gst_no"
+                  type="number"
+                  class="form-control border"
+                  id="gst_no"
+                  placeholder="Enter GST Number"
+                />
+              </div>
+
+              <div class="form-group col-12 col-sm-6">
+                <label for="adhar_card" class="source-500 mt-2">Adhar Card</label>
+                <input
+                  v-model="form.adhar_card"
+                  type="number"
+                  class="form-control border"
+                  id="adhar_card"
+                  placeholder="Enter Adhar Number"
+                />
+              </div>
+
+              <div class="form-group col-12 col-sm-6">
+                <label for="cin_no" class="source-500 mt-2">CIN Number</label>
+                <input
+                  v-model="form.cin_no"
+                  type="number"
+                  class="form-control border"
+                  id="cin_no"
+                  placeholder="Enter CIN Number"
+                />
+              </div>
+              <div class="form-group col-12 col-sm-6">
+                <div class="mt-3">
+                  <label for="incorporation_type" class="source-500">Incorporation Type</label>
+                  <multiselect
+                    class=""
+                    v-model="form.incorporation_type"
+                    :options="incorporation_typeOptions"
+                    placeholder="Select Incorporation Type"
+                  ></multiselect>
+                </div>
+              </div>
+              <div class="form-group col-12 col-sm-6">
+                <div class="mt-3">
+                  <label for="industry_type" class="source-500">Industry Type</label>
+                  <multiselect
+                    v-model="form.industry_type"
+                    :options="industry_typeOptions"
+                    placeholder="Select Industry Type"
+                  ></multiselect>
+                </div>
+              </div>
+            </div>
+
+            <div class="w-100 d-flex justify-content-center align-items-center">
+              <button
+                v-if="formPage == 2"
+                @click="validateFormPage2"
+                type="button"
+                class="btn bg-dark bg-gradient source-500 text-light mt-4 px-5"
+              >
+                Next
+              </button>
+            </div>
+          </form>
+          <!-- /////////////////////////////////////////////////////////////////////// -->
+          <form
+            v-if="formPage == 3"
+            v-auto-animate
+            class="form-container border shadow-lg rounded-3"
+          >
+            <div class="d-flex justify-content-center">
+              <div class="">
+                <i @click="formPage = 2" class="bi bi-arrow-left icon-font-2 pointer"></i>
+              </div>
+              <div class="w-100">
+                <h4 class="text-center source-600 text-dark mb-4">Add Contact</h4>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="form-group col-12 col-md-6">
+                <label for="contact_person.name" class="source-500 mt-2">Conatact Name</label>
+                <input
+                  v-model="form.contact_person.name"
+                  type="text"
+                  class="form-control border"
+                  id="contact_person.name"
+                  placeholder="Enter Contact Name"
+                />
+                <label for="contact_person.contact_no" class="source-500 mt-2">
+                  Conatct Number
+                </label>
+                <input
+                  v-model="form.contact_person.contact_no"
+                  type="number"
+                  class="form-control border"
+                  id="contact_person.contact_no"
+                  placeholder="Enter Conatct Number"
+                />
+              </div>
+              <div class="form-group col-12 col-md-6">
+                <label for="contact_person.email" class="source-500 mt-2">Conatct Email</label>
+                <input
+                  v-model="form.contact_person.email"
+                  type="email"
+                  class="form-control border"
+                  id="contact_person.email"
+                  placeholder="Enter Conatct Email "
+                />
+                <label for="contact_person.designation" class="source-500 mt-2">
+                  Contact Designation
+                </label>
+                <input
+                  v-model="form.contact_person.designation"
+                  type="text"
+                  class="form-control border"
+                  id="contact_person.designation"
+                  placeholder="Enter Pan Number"
+                />
+              </div>
+            </div>
+
+            <div class="w-100 d-flex justify-content-center align-items-center">
+              <button
+                v-if="formPage == 3"
+                @click="formPage = 1"
+                type="button"
+                class="btn bg-dark bg-gradient source-500 text-light mt-4 px-5"
+              >
+                Add Client
               </button>
             </div>
           </form>
@@ -236,6 +407,9 @@ export default {
         adhar_card: '',
         gst_no: '',
         cin_no: '',
+        team: '',
+        department: '',
+        roleType: '',
         industry_type: '',
         employee_count_range: '',
         incorporation_type: '',
@@ -255,6 +429,27 @@ export default {
       departments: [],
       roles: [],
       teams: [],
+      documentOoptions: ['pan', 'adhar', 'gst', 'cin'],
+      industry_typeOptions: ['Factories', 'Restaurants', 'Hotels', 'IT Company'],
+      incorporation_typeOptions: [
+        'Proprietory Firm',
+        'Partnership Firm',
+        'LLP',
+        'Private Limited',
+        'Public Limited',
+        'Local Bodies / Municipal Corporations',
+        'State Govt. Controlled',
+        'State Govt. Department',
+        'Co-Operative Society',
+        'Registered Society',
+        'Firms Run by Trust',
+      ],
+      submitedDocuments: [
+        { document_typ: 'pan', uploaded: false },
+        { document_typ: 'adhar', uploaded: false },
+        { document_typ: 'gst', uploaded: false },
+        { document_typ: 'cin', uploaded: false },
+      ],
     };
   },
 
@@ -307,7 +502,7 @@ export default {
       } */
     },
 
-    async handleAddUser(e) {
+    async handleAddClient() {
       if (this.validateFormPage1() == false) {
         return;
       }
@@ -347,61 +542,121 @@ export default {
       console.log('validateForm');
       if (this.form.name == '') {
         toast.info(`Enter Name`, { autoClose: 1000 });
-        return false;
+        return;
       }
       if (this.form.whatsapp_no == '') {
         toast.info(`Enter Number`, { autoClose: 1000 });
-        return false;
+        return;
       }
       if (this.form.email == '') {
         toast.info(`Enter Email`, { autoClose: 1000 });
-        return false;
+        return;
       }
       const re =
         /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
       if (!re.test(this.form.email)) {
         toast.info(`Enter Valid Email`, { autoClose: 1000 });
-        return false;
+        return;
       }
 
       if (this.form.password == '') {
         toast.info(`Enter Password`, { autoClose: 1000 });
-        return false;
+        return;
       }
       if (this.form.pin_code == '') {
         toast.info(`Enter Pin Code`, { autoClose: 1000 });
-        return false;
+        return;
       }
       if (this.form.city == '') {
         toast.info(`Enter city`, { autoClose: 1000 });
-        return false;
+        return;
       }
       if (this.form.state == '') {
         toast.info(`Enter state`, { autoClose: 1000 });
-        return false;
+        return;
       }
       if (this.form.country == '') {
         toast.info(`Enter country`, { autoClose: 1000 });
-        return false;
+        return;
       }
       if (this.form.address == '' || this.form.address.length < 10) {
         toast.info(`Enter address properly`, { autoClose: 1000 });
-        return false;
+        return;
       }
-      if (this.selected_department == '') {
-        toast.info(`Select Department `, { autoClose: 1000 });
-        return false;
-      }
-      if (this.selected_roleType == '') {
-        toast.info(`Select Role `, { autoClose: 1000 });
-        return false;
-      }
-      if (this.selected_team == '') {
-        toast.info(`Select Team `, { autoClose: 1000 });
-        return false;
+      if (this.form.country == '') {
+        toast.info(`Enter country`, { autoClose: 1000 });
+        return;
       }
 
-      return true;
+      if (this.selected_department == '') {
+        toast.info(`Select Department`, { autoClose: 1000 });
+        return;
+      }
+
+      if (this.selected_team == '') {
+        toast.info(`Select Team`, { autoClose: 1000 });
+        return;
+      }
+
+      if (this.selected_roleType == '') {
+        toast.info(`Select Role Type`, { autoClose: 1000 });
+        return;
+      }
+
+      this.formPage = 2;
+    },
+
+    validateFormPage2() {
+      console.log('validateForm2');
+      if (this.form.pan_card == '') {
+        toast.info(`Enter Pan Card`, { autoClose: 1000 });
+        return;
+      }
+
+      if (this.form.adhar_card == '') {
+        toast.info(`Enter Aadhar Card`, { autoClose: 1000 });
+        return;
+      }
+      if (this.form.cin_no == '') {
+        toast.info(`Enter CIN Number`, { autoClose: 1000 });
+        return;
+      }
+      if (this.form.gst_no == '') {
+        toast.info(`Enter GST Number`, { autoClose: 1000 });
+        return;
+      }
+      if (this.form.incorporation_type == '') {
+        toast.info(`Enter Incorporation Type`, { autoClose: 1000 });
+        return;
+      }
+      if (this.form.industry_type == '') {
+        toast.info(`Enter Industry Type`, { autoClose: 1000 });
+        return;
+      }
+
+      this.formPage = 3;
+    },
+
+    validateFormPage3() {
+      console.log('validateForm3');
+      if (this.form.contact_person.name == '') {
+        toast.info(`Enter Contact Person Name`, { autoClose: 1000 });
+        return;
+      }
+      if (this.form.contact_person.email == '') {
+        toast.info(`Enter Contact Person Email`, { autoClose: 1000 });
+        return;
+      }
+      if (this.form.contact_person.contact_no == '') {
+        toast.info(`Enter Contact Person Number`, { autoClose: 1000 });
+        return;
+      }
+      if (this.form.contact_person.designation == '') {
+        toast.info(`Enter Contact Person Designation`, { autoClose: 1000 });
+        return;
+      }
+
+      this.formPage = 4;
     },
 
     nameWithLang({ name }) {
