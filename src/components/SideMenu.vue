@@ -110,7 +110,7 @@ ul {
                   class="bi bi-speedometer text-light mx-2 text_shadow"
                   style="font-size: 1rem"
                 ></i>
-                Dashboard
+                Dashboard1
               </div>
             </div>
             <div
@@ -120,7 +120,7 @@ ul {
             >
               <div class="bg-transparent text-light border-0">
                 <i class="bi bi-speedometer text-light mx-2" style="font-size: 1rem"></i>
-                Dashboard
+                Dashboard1
               </div>
             </div>
           </div>
