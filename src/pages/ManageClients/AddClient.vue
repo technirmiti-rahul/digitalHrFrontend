@@ -4,16 +4,12 @@
 
 .form-container {
   width: 100%;
-  max-width: 600px;
+  max-width: 1000px;
   padding: 15px;
   margin: auto;
   background-color: #fff;
   border-radius: 20px;
   box-shadow: 20px 20px 60px #d9d9d9, -20px -20px 60px #ffffff;
-}
-
-.form-group label {
-  color: #333;
 }
 
 .form-control {
@@ -59,12 +55,14 @@
     </div>
 
     <div class="overflow-y-hidden pb-5 h-100">
-      <div class="h-100 overflow-y-auto d-flex justify-content-center align-items-center">
-        <div class="container py-3">
-          <form class="form-container border shadow-lg rounded-3">
-            <h1 class="text-center source-600 text-dark mb-4">Add Client</h1>
-            <div class="row">
-              <div class="form-group col-12 col-md-6">
+      <div class="h-100 overflow-y-auto">
+        <div
+          class="container h-100 py-3 d-flex justify-content-center align-items-start align-items-sm-center"
+        >
+          <form v-auto-animate class="form-container border shadow-lg rounded-3">
+            <h1 v-if="formPage == 1" class="text-center source-600 text-dark mb-4">Add Client</h1>
+            <div v-if="formPage == 1" class="row">
+              <div class="form-group col-12 col-sm-6 col-lg-4">
                 <label for="name source-500" class="source-500">Name</label>
                 <input
                   v-model="form.name"
@@ -73,7 +71,9 @@
                   id="name"
                   placeholder="Enter name"
                 />
-                <label for="email" class="source-500 mt-2">Email address</label>
+              </div>
+              <div class="form-group col-12 col-sm-6 col-lg-4">
+                <label for="email" class="source-500 mt-2">Email Address</label>
                 <input
                   v-model="form.email"
                   type="email"
@@ -81,6 +81,28 @@
                   id="email"
                   placeholder="Enter email"
                 />
+              </div>
+              <div class="form-group col-12 col-sm-6 col-lg-4">
+                <label for="password" class="source-500 mt-2">Password</label>
+                <input
+                  v-model="form.password"
+                  type="password"
+                  class="form-control border"
+                  id="password"
+                  placeholder="Password"
+                />
+              </div>
+              <div class="form-group col-12 col-sm-6 col-lg-4">
+                <label for="phone_number source-500" class="source-500">Phone Number</label>
+                <input
+                  v-model="form.whatsapp_no"
+                  type="number"
+                  class="form-control border"
+                  id="phone_number"
+                  placeholder="Enter phone number"
+                />
+              </div>
+              <div class="form-group col-12 col-sm-6 col-lg-4">
                 <label for="pin_code" class="source-500 mt-2">Pin Code</label>
                 <input
                   v-model="form.pin_code"
@@ -90,6 +112,8 @@
                   id="pin_code"
                   placeholder="Enter pin code"
                 />
+              </div>
+              <div class="form-group col-12 col-sm-6 col-lg-4">
                 <label for="state" class="source-500 mt-2">State</label>
                 <input
                   v-model="form.state"
@@ -98,7 +122,30 @@
                   id="state"
                   placeholder="Enter state"
                 />
+              </div>
 
+              <div class="form-group col-12 col-sm-6 col-lg-4">
+                <label for="city" class="source-500 mt-2">City</label>
+                <input
+                  v-model="form.city"
+                  type="text"
+                  class="form-control border"
+                  id="city"
+                  placeholder="Enter city"
+                />
+              </div>
+              <div class="form-group col-12 col-sm-6 col-lg-4">
+                <label for="country" class="source-500 mt-2">Country</label>
+                <input
+                  v-model="form.country"
+                  type="text"
+                  class="form-control border"
+                  id="country"
+                  placeholder="Enter country"
+                />
+              </div>
+
+              <div class="form-group col-12 col-sm-6 col-lg-4">
                 <div class="mt-2">
                   <label for="department" class="source-500">Department</label>
                   <multiselect
@@ -109,7 +156,8 @@
                     track-by="name"
                   ></multiselect>
                 </div>
-
+              </div>
+              <div class="form-group col-12 col-sm-6 col-lg-4">
                 <div class="mt-2">
                   <label for="team" class="source-500">Team</label>
                   <multiselect
@@ -121,42 +169,7 @@
                   ></multiselect>
                 </div>
               </div>
-              <!-- ///////////////////////////////////////////// -->
-              <div class="form-group col-12 col-md-6">
-                <label for="phone_number source-500" class="source-500">Phone Number</label>
-                <input
-                  v-model="form.whatsapp_no"
-                  type="number"
-                  class="form-control border"
-                  id="phone_number"
-                  placeholder="Enter phone number"
-                />
-
-                <label for="password" class="source-500 mt-2">Password</label>
-                <input
-                  v-model="form.password"
-                  type="password"
-                  class="form-control border"
-                  id="password"
-                  placeholder="Password"
-                />
-                <label for="city" class="source-500 mt-2">City</label>
-                <input
-                  v-model="form.city"
-                  type="text"
-                  class="form-control border"
-                  id="city"
-                  placeholder="Enter city"
-                />
-
-                <label for="country" class="source-500 mt-2">Country</label>
-                <input
-                  v-model="form.country"
-                  type="text"
-                  class="form-control border"
-                  id="country"
-                  placeholder="Enter country"
-                />
+              <div class="form-group col-12 col-sm-6 col-lg-4">
                 <div class="mt-2">
                   <label for="role_type" class="source-500">Role Type</label>
                   <multiselect
@@ -167,6 +180,8 @@
                     track-by="name"
                   ></multiselect>
                 </div>
+              </div>
+              <div class="form-group col-12 col-sm-6 col-lg-4">
                 <label for="address" class="source-500 mt-2">Address</label>
                 <textarea
                   v-model="form.address"
@@ -179,11 +194,12 @@
             </div>
             <div class="w-100 d-flex justify-content-center align-items-center">
               <button
+                v-if="formPage == 1"
                 @click="handleAddUser"
                 type="button"
-                class="btn bg-dark bg-gradient source-500 text-light mt-4 w-50"
+                class="btn bg-dark bg-gradient source-500 text-light mt-4 px-5"
               >
-                Add User
+                Next
               </button>
             </div>
           </form>
@@ -208,19 +224,30 @@ export default {
   },
   data() {
     return {
+      formPage: 1,
       form: {
+        user_id: '',
         name: '',
         email: '',
-        password: '',
         whatsapp_no: '',
-        roleType: '',
-        team: '',
-        department: '',
-        city: '',
-        state: '',
-        country: '',
+        password: '',
         address: '',
-        pin_code: '',
+        pan_card: '',
+        adhar_card: '',
+        gst_no: '',
+        cin_no: '',
+        industry_type: '',
+        employee_count_range: '',
+        incorporation_type: '',
+
+        document_type: '',
+        doc_url: '',
+        contact_person: {
+          name: '',
+          email: '',
+          contact_no: '',
+          designation: '',
+        },
       },
       selected_roleType: '',
       selected_team: '',
@@ -281,7 +308,7 @@ export default {
     },
 
     async handleAddUser(e) {
-      if (this.validateForm() == false) {
+      if (this.validateFormPage1() == false) {
         return;
       }
       this.form.roleType = this.selected_roleType._id;
@@ -316,7 +343,7 @@ export default {
       }
     },
 
-    validateForm() {
+    validateFormPage1() {
       console.log('validateForm');
       if (this.form.name == '') {
         toast.info(`Enter Name`, { autoClose: 1000 });
@@ -328,6 +355,12 @@ export default {
       }
       if (this.form.email == '') {
         toast.info(`Enter Email`, { autoClose: 1000 });
+        return false;
+      }
+      const re =
+        /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+      if (!re.test(this.form.email)) {
+        toast.info(`Enter Valid Email`, { autoClose: 1000 });
         return false;
       }
 
