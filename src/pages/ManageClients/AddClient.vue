@@ -82,7 +82,10 @@
             </div>
             <div class="row">
               <div class="form-group col-12 col-sm-6 col-lg-4">
-                <label for="name source-500" class="source-500">Name</label>
+                <label for="name source-500" class="source-500">
+                  Name
+                  <span class="text-danger">*</span>
+                </label>
                 <input
                   v-model="form.name"
                   type="text"
@@ -92,8 +95,21 @@
                 />
               </div>
               <div class="form-group col-12 col-sm-6 col-lg-4">
-                <label for="email" class="source-500 mt-2">Email Address</label>
+                <label for="email" class="source-500 mt-2 mt-sm-0">
+                  Email Address
+                  <span class="text-danger">*</span>
+                </label>
                 <input
+                  v-if="userAdded == false"
+                  v-model="form.email"
+                  type="email"
+                  class="form-control border"
+                  id="email"
+                  placeholder="Enter email"
+                />
+                <input
+                  v-if="userAdded == true"
+                  disabled
                   v-model="form.email"
                   type="email"
                   class="form-control border"
@@ -102,7 +118,10 @@
                 />
               </div>
               <div class="form-group col-12 col-sm-6 col-lg-4">
-                <label for="password" class="source-500 mt-2">Password</label>
+                <label for="password" class="source-500 mt-2 mt-sm-0">
+                  Password
+                  <span class="text-danger">*</span>
+                </label>
                 <input
                   v-model="form.password"
                   type="password"
@@ -112,7 +131,10 @@
                 />
               </div>
               <div class="form-group col-12 col-sm-6 col-lg-4">
-                <label for="phone_number source-500" class="source-500">WhatsApp Number</label>
+                <label for="phone_number source-500 " class="source-500 mt-2">
+                  WhatsApp Number
+                  <span class="text-danger">*</span>
+                </label>
                 <input
                   v-model="form.whatsapp_no"
                   type="number"
@@ -122,7 +144,10 @@
                 />
               </div>
               <div class="form-group col-12 col-sm-6 col-lg-4">
-                <label for="pin_code" class="source-500 mt-2">Pin Code</label>
+                <label for="pin_code" class="source-500 mt-2">
+                  Pin Code
+                  <span class="text-danger">*</span>
+                </label>
                 <input
                   v-model="form.pin_code"
                   @input="validatePinCode"
@@ -133,7 +158,10 @@
                 />
               </div>
               <div class="form-group col-12 col-sm-6 col-lg-4">
-                <label for="state" class="source-500 mt-2">State</label>
+                <label for="state" class="source-500 mt-2">
+                  State
+                  <span class="text-danger">*</span>
+                </label>
                 <input
                   v-model="form.state"
                   type="text"
@@ -144,7 +172,10 @@
               </div>
 
               <div class="form-group col-12 col-sm-6 col-lg-4">
-                <label for="city" class="source-500 mt-2">City</label>
+                <label for="city" class="source-500 mt-2">
+                  City
+                  <span class="text-danger">*</span>
+                </label>
                 <input
                   v-model="form.city"
                   type="text"
@@ -154,7 +185,10 @@
                 />
               </div>
               <div class="form-group col-12 col-sm-6 col-lg-4">
-                <label for="country" class="source-500 mt-2">Country</label>
+                <label for="country" class="source-500 mt-2">
+                  Country
+                  <span class="text-danger">*</span>
+                </label>
                 <input
                   v-model="form.country"
                   type="text"
@@ -166,7 +200,10 @@
 
               <div class="form-group col-12 col-sm-6 col-lg-4">
                 <div class="mt-2">
-                  <label for="department" class="source-500">Department</label>
+                  <label for="department" class="source-500">
+                    Department
+                    <span class="text-danger">*</span>
+                  </label>
                   <multiselect
                     v-model="selected_department"
                     :options="departments"
@@ -178,7 +215,10 @@
               </div>
               <div class="form-group col-12 col-sm-6 col-lg-4">
                 <div class="mt-2">
-                  <label for="team" class="source-500">Team</label>
+                  <label for="team" class="source-500">
+                    Team
+                    <span class="text-danger">*</span>
+                  </label>
                   <multiselect
                     v-model="selected_team"
                     :options="teams"
@@ -188,20 +228,12 @@
                   ></multiselect>
                 </div>
               </div>
+
               <div class="form-group col-12 col-sm-6 col-lg-4">
-                <div class="mt-2">
-                  <label for="role_type" class="source-500">Role Type</label>
-                  <multiselect
-                    v-model="selected_roleType"
-                    :options="roles"
-                    placeholder="role_type"
-                    label="name"
-                    track-by="name"
-                  ></multiselect>
-                </div>
-              </div>
-              <div class="form-group col-12 col-sm-6 col-lg-4">
-                <label for="address" class="source-500 mt-2">Address</label>
+                <label for="address" class="source-500 mt-2">
+                  Address
+                  <span class="text-danger">*</span>
+                </label>
                 <textarea
                   v-model="form.address"
                   type="text"
@@ -214,12 +246,20 @@
 
             <div class="w-100 d-flex justify-content-center align-items-center">
               <button
-                v-if="formPage == 1"
+                v-if="formPage == 1 && userAdded == false"
                 @click="handleAddClient"
                 type="button"
                 class="btn bg-dark bg-gradient source-500 text-light mt-4 px-5"
               >
                 Next
+              </button>
+              <button
+                v-if="formPage == 1 && userAdded == true"
+                @click="handleUpdateCreatedClient"
+                type="button"
+                class="btn bg-dark bg-gradient source-500 text-light mt-4 px-5"
+              >
+                Update
               </button>
             </div>
           </form>
@@ -240,7 +280,11 @@
 
             <div class="row">
               <div class="form-group col-12 col-sm-6">
-                <label for="pan_card" class="source-500 mt-2">Pan Card</label>
+                <label for="pan_card" class="source-500 mt-2">
+                  Pan Card
+
+                  <span class="text-danger">*</span>
+                </label>
                 <input
                   v-model="form.pan_card"
                   type="text"
@@ -261,7 +305,11 @@
               </div>
 
               <div class="form-group col-12 col-sm-6">
-                <label for="adhar_card" class="source-500 mt-2">Adhar Card</label>
+                <label for="adhar_card" class="source-500 mt-2">
+                  Adhar Card
+
+                  <span class="text-danger">*</span>
+                </label>
                 <input
                   v-model="form.adhar_card"
                   type="text"
@@ -283,7 +331,10 @@
               </div>
               <div class="form-group col-12 col-sm-6">
                 <div class="mt-3">
-                  <label for="incorporation_type" class="source-500">Incorporation Type</label>
+                  <label for="incorporation_type" class="source-500">
+                    Incorporation Type
+                    <span class="text-danger">*</span>
+                  </label>
                   <multiselect
                     class=""
                     v-model="form.incorporation_type"
@@ -294,7 +345,10 @@
               </div>
               <div class="form-group col-12 col-sm-6">
                 <div class="mt-3">
-                  <label for="industry_type" class="source-500">Industry Type</label>
+                  <label for="industry_type" class="source-500">
+                    Industry Type
+                    <span class="text-danger">*</span>
+                  </label>
                   <multiselect
                     v-model="form.industry_type"
                     :options="industry_typeOptions"
@@ -303,7 +357,10 @@
                 </div>
               </div>
               <div class="form-group col-12 col-sm-6">
-                <label for="pan_card" class="source-500 mt-2">Number Of Employees</label>
+                <label for="pan_card" class="source-500 mt-2">
+                  Number Of Employees
+                  <span class="text-danger">*</span>
+                </label>
                 <input
                   v-model="form.employee_count_range"
                   type="text"
@@ -342,7 +399,10 @@
 
             <div class="row">
               <div class="form-group col-12 col-md-6">
-                <label for="contact_person.name" class="source-500 mt-2">Conatact Name</label>
+                <label for="contact_person.name" class="source-500 mt-2">
+                  Conatact Name
+                  <span class="text-danger">*</span>
+                </label>
                 <input
                   v-model="form.contact_person.name"
                   type="text"
@@ -352,6 +412,7 @@
                 />
                 <label for="contact_person.contact_no" class="source-500 mt-2">
                   Conatct Number
+                  <span class="text-danger">*</span>
                 </label>
                 <input
                   v-model="form.contact_person.contact_no"
@@ -362,7 +423,10 @@
                 />
               </div>
               <div class="form-group col-12 col-md-6">
-                <label for="contact_person.email" class="source-500 mt-2">Conatct Email</label>
+                <label for="contact_person.email" class="source-500 mt-2">
+                  Conatct Email
+                  <span class="text-danger">*</span>
+                </label>
                 <input
                   v-model="form.contact_person.email"
                   type="email"
@@ -372,6 +436,7 @@
                 />
                 <label for="contact_person.designation" class="source-500 mt-2">
                   Contact Designation
+                  <span class="text-danger">*</span>
                 </label>
                 <input
                   v-model="form.contact_person.designation"
@@ -415,8 +480,9 @@ export default {
   },
   data() {
     return {
-      formPage: 2,
+      formPage: 1,
       isLoading: false,
+      userAdded: false,
       form: {
         user_id: '66d7f425ad326a6f50ef00d5',
         name: '',
@@ -474,19 +540,6 @@ export default {
     };
   },
 
-  setup() {
-    window.addEventListener('beforeunload', (event) => {
-      event.preventDefault();
-      event.returnValue = 'Are you sure you want to leave this page?';
-    });
-    window.history.pushState(null, null, null);
-    window.addEventListener('popstate', (event) => {
-      event.preventDefault();
-      event.returnValue = 'Are you sure you want to go back?';
-      window.history.pushState(null, null, null);
-    });
-  },
-
   async created() {
     this.getCurrent();
     try {
@@ -498,6 +551,12 @@ export default {
 
       const teams = await axiosClient.get(`/api/v1/team/getall`);
       this.teams = teams.data.data;
+
+      for (let i = 0; i < this.roles.length; i++) {
+        if (this.roles[i].name == 'client') {
+          this.selected_roleType = this.roles[i];
+        }
+      }
       console.log('departments : ', this.departments);
       console.log('roles : ', this.roles);
       console.log('teams : ', this.teams);
@@ -517,9 +576,29 @@ export default {
         toggleActions: 'play none none reverse',
       },
     });
+
+    // Add event listeners when the component is mounted
+    window.addEventListener('beforeunload', this.handleBeforeUnload);
+    window.addEventListener('popstate', this.handlePopState);
+    window.history.pushState(null, null, null);
+  },
+
+  beforeUnmount() {
+    // Remove event listeners when the component is unmounted
+    window.removeEventListener('beforeunload', this.handleBeforeUnload);
+    window.removeEventListener('popstate', this.handlePopState);
   },
 
   methods: {
+    handleBeforeUnload(event) {
+      event.preventDefault();
+      event.returnValue = 'Are you sure you want to leave this page?';
+    },
+    handlePopState(event) {
+      event.preventDefault();
+      event.returnValue = 'Are you sure you want to go back?';
+      window.history.pushState(null, null, null);
+    },
     async validatePinCode() {
       /* if (this.form.pin_code.length >= 6) {
         try {
@@ -555,6 +634,37 @@ export default {
           this.form.user_id = res.data._id;
         }
         this.formPage = 2;
+        this.userAdded = true;
+      } catch (err) {
+        console.log('error: ', err);
+        if (err.response.status == 409) {
+          toast.error(`Email Already Registered`, {
+            autoClose: 1500,
+          });
+        } else {
+          toast.error(`Something Went Wrong`, {
+            autoClose: 1500,
+          });
+        }
+      }
+
+      this.isLoading = false;
+    },
+
+    async handleUpdateCreatedClient() {
+      if (this.validateFormPage1() == false) {
+        return;
+      }
+      this.isLoading = true;
+      this.form.roleType = this.selected_roleType._id;
+      this.form.department = this.selected_department._id;
+      this.form.team = this.selected_team._id;
+      console.log('form: ', this.form);
+
+      try {
+        const res = await axiosClient.post(`api/v1/client/update/created`, this.form);
+        this.formPage = 2;
+        this.userAdded = true;
       } catch (err) {
         console.log('error: ', err);
         if (err.response.status == 409) {
@@ -709,14 +819,14 @@ export default {
         toast.info(`Enter Valid Aadhar Number`, { autoClose: 1000 });
         return;
       }
-      if (this.form.cin_no == '') {
+      /*  if (this.form.cin_no == '') {
         toast.info(`Enter CIN Number`, { autoClose: 1000 });
         return;
       }
       if (this.form.gst_no == '') {
         toast.info(`Enter GST Number`, { autoClose: 1000 });
         return;
-      }
+      } */
       if (this.form.incorporation_type == '') {
         toast.info(`Enter Incorporation Type`, { autoClose: 1000 });
         return;

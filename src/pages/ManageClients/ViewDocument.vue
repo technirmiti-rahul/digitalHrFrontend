@@ -1,5 +1,6 @@
 <style scoped>
-.main h-100 {
+.main {
+  min-height: 100vh;
 }
 
 .form-container {
@@ -53,11 +54,17 @@
 </style>
 
 <template>
-  <div class="main h-100">
-    <div class="overflow-y-hidden h-100">
-      <div class="h-100 overflow-y-auto d-flex justify-content-center align-items-center">
+  <div class="main">
+    <div class="vh-100">
+      <div class="h-100 d-flex justify-content-center align-items-center">
         <div class="w-100 h-100 py-3">
-          <embed :src="documentUrl" type="application/pdf" width="100%" height="100%" />
+          <embed
+            :src="documentUrl"
+            type="application/pdf"
+            width="100%"
+            height="100%"
+            class="h-100"
+          />
         </div>
       </div>
     </div>

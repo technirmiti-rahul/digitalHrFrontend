@@ -425,7 +425,8 @@ export default {
       this.$router.push(`/${link}`);
     },
     handleRedirect(link) {
-      this.$router.push(`/${link}`);
+      const route = this.$router.resolve(`/${link}`);
+      window.open(route.href, '_blank');
     },
 
     async getCurrent() {

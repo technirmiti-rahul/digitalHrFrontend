@@ -116,7 +116,10 @@
             </div>
             <div class="row">
               <div class="form-group col-12 col-sm-6 col-lg-4">
-                <label for="name source-500" class="source-500">Name</label>
+                <label for="name source-500" class="source-500">
+                  Name
+                  <span class="text-danger">*</span>
+                </label>
                 <input
                   v-model="form.name"
                   type="text"
@@ -126,7 +129,10 @@
                 />
               </div>
               <div class="form-group col-12 col-sm-6 col-lg-4">
-                <label for="email" class="source-500 mt-2 mt-sm-0">Email Address</label>
+                <label for="email" class="source-500 mt-2 mt-sm-0">
+                  Email Address
+                  <span class="text-danger">*</span>
+                </label>
                 <input
                   disabled
                   v-model="form.email"
@@ -140,6 +146,7 @@
               <div class="form-group col-12 col-sm-6 col-lg-4">
                 <label for="phone_number source-500" class="source-500 mt-2 mt-sm-0">
                   WhatsApp Number
+                  <span class="text-danger">*</span>
                 </label>
                 <input
                   v-model="form.whatsapp_no"
@@ -150,7 +157,10 @@
                 />
               </div>
               <div class="form-group col-12 col-sm-6 col-lg-4">
-                <label for="pin_code" class="source-500 mt-2">Pin Code</label>
+                <label for="pin_code" class="source-500 mt-2">
+                  Pin Code
+                  <span class="text-danger">*</span>
+                </label>
                 <input
                   v-model="form.pin_code"
                   @input="validatePinCode"
@@ -161,7 +171,10 @@
                 />
               </div>
               <div class="form-group col-12 col-sm-6 col-lg-4">
-                <label for="state" class="source-500 mt-2">State</label>
+                <label for="state" class="source-500 mt-2">
+                  State
+                  <span class="text-danger">*</span>
+                </label>
                 <input
                   v-model="form.state"
                   type="text"
@@ -172,7 +185,10 @@
               </div>
 
               <div class="form-group col-12 col-sm-6 col-lg-4">
-                <label for="city" class="source-500 mt-2">City</label>
+                <label for="city" class="source-500 mt-2">
+                  City
+                  <span class="text-danger">*</span>
+                </label>
                 <input
                   v-model="form.city"
                   type="text"
@@ -182,7 +198,10 @@
                 />
               </div>
               <div class="form-group col-12 col-sm-6 col-lg-4">
-                <label for="country" class="source-500 mt-2">Country</label>
+                <label for="country" class="source-500 mt-2">
+                  Country
+                  <span class="text-danger">*</span>
+                </label>
                 <input
                   v-model="form.country"
                   type="text"
@@ -193,7 +212,10 @@
               </div>
 
               <div class="form-group col-12 col-sm-6 col-lg-4">
-                <label for="address" class="source-500 mt-2">Address</label>
+                <label for="address" class="source-500 mt-2">
+                  Address
+                  <span class="text-danger">*</span>
+                </label>
                 <textarea
                   v-model="form.address"
                   type="text"
@@ -232,7 +254,10 @@
 
             <div class="row">
               <div class="form-group col-12 col-sm-6">
-                <label for="pan_card" class="source-500 mt-2">Pan Card</label>
+                <label for="pan_card" class="source-500 mt-2">
+                  Pan Card
+                  <span class="text-danger">*</span>
+                </label>
                 <input
                   v-model="form.pan_card"
                   type="text"
@@ -253,7 +278,10 @@
               </div>
 
               <div class="form-group col-12 col-sm-6">
-                <label for="adhar_card" class="source-500 mt-2">Adhar Card</label>
+                <label for="adhar_card" class="source-500 mt-2">
+                  Adhar Card
+                  <span class="text-danger">*</span>
+                </label>
                 <input
                   v-model="form.adhar_card"
                   type="text"
@@ -275,7 +303,10 @@
               </div>
               <div class="form-group col-12 col-sm-6">
                 <div class="mt-3">
-                  <label for="incorporation_type" class="source-500">Incorporation Type</label>
+                  <label for="incorporation_type" class="source-500">
+                    Incorporation Type
+                    <span class="text-danger">*</span>
+                  </label>
                   <multiselect
                     class=""
                     v-model="form.incorporation_type"
@@ -286,7 +317,10 @@
               </div>
               <div class="form-group col-12 col-sm-6">
                 <div class="mt-3">
-                  <label for="industry_type" class="source-500">Industry Type</label>
+                  <label for="industry_type" class="source-500">
+                    Industry Type
+                    <span class="text-danger">*</span>
+                  </label>
                   <multiselect
                     v-model="form.industry_type"
                     :options="industry_typeOptions"
@@ -295,7 +329,10 @@
                 </div>
               </div>
               <div class="form-group col-12 col-sm-6">
-                <label for="pan_card" class="source-500 mt-2">Number Of Employees</label>
+                <label for="pan_card" class="source-500 mt-2">
+                  Number Of Employees
+                  <span class="text-danger">*</span>
+                </label>
                 <input
                   v-model="form.employee_count_range"
                   type="text"
@@ -328,13 +365,16 @@
                 <i @click="formPage = 2" class="bi bi-arrow-left icon-font-2 pointer"></i>
               </div>
               <div class="w-100 pe-3">
-                <h4 class="text-center source-600 text-dark mb-4">Add Contact</h4>
+                <h4 class="text-center source-600 text-dark mb-4">Update Contact</h4>
               </div>
             </div>
 
             <div class="row">
               <div class="form-group col-12 col-md-6">
-                <label for="contact_person.name" class="source-500 mt-2">Conatact Name</label>
+                <label for="contact_person.name" class="source-500 mt-2">
+                  Conatact Name
+                  <span class="text-danger">*</span>
+                </label>
                 <input
                   v-model="form.contact_person.name"
                   type="text"
@@ -344,9 +384,10 @@
                 />
                 <label for="contact_person.contact_no" class="source-500 mt-2">
                   Conatct Number
+                  <span class="text-danger">*</span>
                 </label>
                 <input
-                  v-model="form.contact_person.contact_no"
+                  v-model.number="form.contact_person.contact_no"
                   type="number"
                   class="form-control border"
                   id="contact_person.contact_no"
@@ -354,7 +395,10 @@
                 />
               </div>
               <div class="form-group col-12 col-md-6">
-                <label for="contact_person.email" class="source-500 mt-2">Conatct Email</label>
+                <label for="contact_person.email" class="source-500 mt-2">
+                  Conatct Email
+                  <span class="text-danger">*</span>
+                </label>
                 <input
                   v-model="form.contact_person.email"
                   type="email"
@@ -364,6 +408,7 @@
                 />
                 <label for="contact_person.designation" class="source-500 mt-2">
                   Contact Designation
+                  <span class="text-danger">*</span>
                 </label>
                 <input
                   v-model="form.contact_person.designation"
@@ -515,7 +560,7 @@ export default {
     return {
       formPage: 1,
       isLoading: false,
-      UpdateDocuments: true,
+      UpdateDocuments: false,
       client: '',
       form: {
         user_id: '66d7f425ad326a6f50ef00d5',
@@ -579,20 +624,11 @@ export default {
     };
   },
 
-  setup() {
-    window.addEventListener('beforeunload', (event) => {
-      event.preventDefault();
-      event.returnValue = 'Are you sure you want to leave this page?';
-    });
-    window.history.pushState(null, null, null);
-    window.addEventListener('popstate', (event) => {
-      event.preventDefault();
-      event.returnValue = 'Are you sure you want to go back?';
-      window.history.pushState(null, null, null);
-    });
-  },
-
   async created() {
+    const UpdateDocuments = localStorage.getItem('UpdateDocuments');
+    if (UpdateDocuments) {
+      this.UpdateDocuments = JSON.parse(UpdateDocuments);
+    }
     this.getCurrent();
     try {
       try {
@@ -600,32 +636,71 @@ export default {
         const clientData = clientRes.data.data[0];
         this.client = clientRes.data.data[0];
         console.log('res: ', clientData);
+
         this.client = clientData;
-        this.form = {
-          user_id: clientData.user_id,
-          name: clientData.name,
-          email: clientData.email,
-          whatsapp_no: clientData.whatsapp_no,
-          pin_code: clientData.pin_code,
-          country: clientData.country,
-          state: clientData.state,
-          city: clientData.city,
-          address: clientData.address,
-          pan_card: clientData.pan_card,
-          adhar_card: clientData.adhar_card,
-          gst_no: clientData.gst_no,
-          cin_no: clientData.cin_no,
-          industry_type: clientData.industry_type,
-          employee_count_range: clientData.employee_count_range,
-          contact_person: {
-            name: clientData.contact_person.name,
-            email: clientData.contact_person.email,
-            contact_no: clientData.contact_person.contact_no,
-            designation: clientData.contact_person.designation,
-          },
-          incorporation_type: clientData.incorporation_type,
-        };
+        console.log('client: ', this.client);
+
         console.log('form: ', this.form);
+        this.form = {
+          user_id: clientData.user_id || '',
+          name: clientData.name || '',
+          email: clientData.email || '',
+          whatsapp_no: clientData.whatsapp_no || '',
+          pin_code: clientData.pin_code || '',
+          country: clientData.country || '',
+          state: clientData.state || '',
+          city: clientData.city || '',
+          address: clientData.address || '',
+          /*  pan_card: clientData.pan_card || '',
+          adhar_card: clientData.adhar_card || '',
+          gst_no: clientData.gst_no || '',
+          cin_no: clientData.cin_no || '',
+          industry_type: clientData.industry_type || '',
+          employee_count_range: clientData.employee_count_range || '',
+          contact_person: {
+            name: clientData.contact_person.name || '',
+            email: clientData.contact_person.email || '',
+            contact_no: clientData.contact_person.contact_no || '',
+            designation: clientData.contact_person.designation || '',
+          },
+          incorporation_type: clientData.incorporation_type || '', */
+        };
+
+        if (clientData.pan_card) this.form.pan_card = clientData.pan_card;
+        if (clientData.adhar_card) this.form.adhar_card = clientData.adhar_card;
+        if (clientData.gst_no) this.form.gst_no = clientData.gst_no;
+        if (clientData.cin_no) this.form.cin_no = clientData.cin_no;
+
+        if (clientData.incorporation_type) {
+          this.form.incorporation_type = clientData.incorporation_type;
+        }
+        if (clientData.industry_type) {
+          this.form.industry_type = clientData.industry_type;
+        }
+        if (clientData.employee_count_range) {
+          this.form.employee_count_range = clientData.employee_count_range;
+        }
+
+        if (clientData.contact_person) {
+          console.log('clientData.contact_person: ', clientData.contact_person);
+          if (clientData.contact_person.name) {
+            this.form.contact_person.name = clientData.contact_person.name;
+          }
+          if (clientData.contact_person.email) {
+            this.form.contact_person.email = clientData.contact_person.email;
+          }
+          if (clientData.contact_person.contact_no) {
+            this.form.contact_person.contact_no = clientData.contact_person.contact_no;
+          }
+          if (clientData.contact_person.designation) {
+            this.form.contact_person.designation = clientData.contact_person.designation;
+          }
+        }
+
+        this.$nextTick(() => {
+          console.log('Form Updated:', this.form);
+        });
+        console.log('form: ', this.form.name);
         const userRes = await axiosClient.get(`/api/v1/user/get/${clientData.user_id}`);
 
         const userData = userRes.data.data[0];
@@ -640,9 +715,7 @@ export default {
 
       const teams = await axiosClient.get(`/api/v1/team/getall`);
       this.teams = teams.data.data;
-      console.log('departments : ', this.departments);
-      console.log('roles : ', this.roles);
-      console.log('teams : ', this.teams);
+
       if (this.client.adhar_proof == false) this.documentOptions.push('adhar');
       if (this.client.gst_proof == false) this.documentOptions.push('gst');
       if (this.client.pan_proof == false) this.documentOptions.push('pan');
@@ -678,7 +751,9 @@ export default {
           autoClose: 1500,
         });
 
-        this.$router.go(0);
+        setTimeout(() => {
+          this.$router.go(0);
+        }, 2000);
         return;
       } catch (err) {
         console.log('error: ', err);
@@ -691,6 +766,7 @@ export default {
 
     handleUpdateDocuments(e) {
       this.UpdateDocuments = e;
+      localStorage.setItem('UpdateDocuments', e);
     },
 
     async uploadFile() {
@@ -727,6 +803,10 @@ export default {
         toast.success(`File uploaded successfully`, {
           autoClose: 1500,
         });
+
+        setTimeout(() => {
+          this.$router.go(0);
+        }, 2000);
 
         for (let i = 0; i < this.submitedDocuments.length; i++) {
           if (this.submitedDocuments[i].document_typ == this.form.document_type) {
@@ -841,65 +921,61 @@ export default {
         return false;
       }
 
-      /*  if (this.selected_department == '') {
-        toast.info(`Select Department`, { autoClose: 1000 });
-        return false;
-      }
-
-      if (this.selected_team == '') {
-        toast.info(`Select Team`, { autoClose: 1000 });
-        return false;
-      }
-
-      if (this.selected_roleType == '') {
-        toast.info(`Select Role Type`, { autoClose: 1000 });
-        return false;
-      } */
       this.formPage = 2;
     },
 
     validateFormPage2() {
       console.log('validateForm2');
-      console.log('adhar length: ', this.form.adhar_card.length);
-      if (this.form.pan_card == '') {
-        toast.info(`Enter Pan Card`, { autoClose: 1000 });
-        return;
-      }
 
-      if (this.form.pan_card.length < 10) {
-        console.log('pan length: ', this.form.pan_card.length);
+      if (!this.form.pan_card || this.form.pan_card.length < 10) {
         toast.info(`Enter Valid Pan Id`, { autoClose: 1000 });
         return;
       }
 
-      if (this.form.adhar_card == '') {
-        toast.info(`Enter Aadhar Card`, { autoClose: 1000 });
-        return;
-      }
-
-      if (this.form.adhar_card.length < 12) {
-        console.log('adhar length: ', this.form.adhar_card.length);
+      if (!this.form.adhar_card || this.form.adhar_card.length < 12) {
         toast.info(`Enter Valid Aadhar Number`, { autoClose: 1000 });
         return;
       }
-      if (this.form.cin_no == '') {
+
+      /* if (!this.form.cin_no || this.form.cin_no === '') {
         toast.info(`Enter CIN Number`, { autoClose: 1000 });
         return;
       }
-      if (this.form.gst_no == '') {
+
+      if (!this.form.gst_no || this.form.gst_no === '') {
         toast.info(`Enter GST Number`, { autoClose: 1000 });
         return;
-      }
-      if (this.form.incorporation_type == '') {
+      } */
+
+      if (!this.form.incorporation_type || this.form.incorporation_type === '') {
         toast.info(`Enter Incorporation Type`, { autoClose: 1000 });
         return;
       }
-      if (this.form.industry_type == '') {
+
+      if (!this.form.industry_type || this.form.industry_type === '') {
         toast.info(`Enter Industry Type`, { autoClose: 1000 });
         return;
       }
 
+      if (!this.form.contact_person) {
+        this.form.contact_person = {
+          name: '',
+          email: '',
+          contact_no: '',
+          designation: '',
+        };
+      }
+
+      if (this.client.contact_person) {
+        this.form.contact_person.name = this.client.contact_person.name;
+        this.form.contact_person.email = this.client.contact_person.email;
+        this.form.contact_person.contact_no = this.client.contact_person.contact_no;
+        this.form.contact_person.designation = this.client.contact_person.designation;
+      }
+      console.log(this.form.contact_person);
+
       this.formPage = 3;
+      console.log('validateForm2 successful', this.formPage);
     },
 
     validateFormPage3() {

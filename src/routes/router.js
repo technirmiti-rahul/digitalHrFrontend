@@ -45,6 +45,14 @@ const routes = [
         path: '/signup',
         component: SignUp,
       },
+      {
+        path: '/view/document/:clientId/:docId',
+        component: ViewDocument,
+        props: (route) => ({
+          docId: route.params.docId,
+          clientId: route.params.clientId,
+        }),
+      },
     ],
   },
   {
@@ -138,14 +146,6 @@ const routes = [
         path: '/view/client/:clientId',
         component: ViewClient,
         props: (route) => ({
-          clientId: route.params.clientId,
-        }),
-      },
-      {
-        path: '/view/document/:clientId/:docId',
-        component: ViewDocument,
-        props: (route) => ({
-          docId: route.params.docId,
           clientId: route.params.clientId,
         }),
       },
