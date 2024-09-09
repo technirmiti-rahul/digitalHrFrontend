@@ -24,6 +24,7 @@ import AddClientDetails from '../pages/ManageClients/AddClientDetails.vue';
 import UpdateClient from '../pages/ManageClients/UpdateClient.vue';
 import ViewClient from '../pages/ManageClients/ViewClient.vue';
 import ViewDocument from '../pages/ManageClients/ViewDocument.vue';
+import UpdateDocuments from '../pages/ManageClients/UpdateDocuments.vue';
 
 import roughPage from '../pages/roughPage.vue';
 import roughPage2 from '../pages/roughPage2.vue';
@@ -118,6 +119,13 @@ const routes = [
       {
         path: '/add/client',
         component: AddClient,
+      },
+      {
+        path: '/update/client/documents/:clientId',
+        component: UpdateDocuments,
+        props: (route) => ({
+          clientId: route.params.clientId,
+        }),
       },
       {
         path: '/update/client/:clientId',

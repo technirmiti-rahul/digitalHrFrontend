@@ -297,12 +297,12 @@ import 'vue3-toastify/dist/index.css';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 export default {
-  name: 'AddClientDetails',
+  name: 'updateDocuments',
   components: {
     Multiselect,
   },
   props: {
-    userId: {
+    clientId: {
       type: String,
     },
   },
@@ -352,10 +352,17 @@ export default {
         industry_type: '',
         employee_count_range: '',
         incorporation_type: '',
+        adhar_proof: false,
+        gst_proof: false,
+        cin_proof: false,
+        pan_proof: false,
+        adhar_proof_url: '',
+        gst_proof_url: '',
+        cin_proof_url: '',
+        pan_proof_url: '',
 
         document_type: '',
-        document_url_id: '',
-        document_url: '',
+        doc_url: '',
         contact_person: {
           name: '',
           email: '',
@@ -385,7 +392,7 @@ export default {
     this.getCurrent();
     if (this.userId) {
       try {
-        const userRes = await axiosClient.get(`/api/v1/user/get/${this.userId}`);
+        const userRes = await axiosClient.get(`/api/v1/user/get/${this.clientId}`);
         this.user = userRes.data.data[0];
         console.log('res: ', this.user);
 
@@ -436,13 +443,9 @@ export default {
       formData.append('file', this.file);
 
       try {
-        const documentRes = await axiosClient.post(
-          `/api/v1/document/upload/${this.form.document_type}/${this.userId}`,
-          formData
-        );
+        const documentRes = await axiosClient.post(`/api/v1/document/upload`, formData);
         console.log(documentRes);
-        this.form.document_url = documentRes.data.location.Location;
-        this.form.document_url_id = documentRes.data.file_id;
+        this.form.doc_url = documentRes.data.location;
         console.log('form', this.form);
         const res = await axiosClient.put(
           `/api/v1/client/update/document/${this.userId}`,

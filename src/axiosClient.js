@@ -1,8 +1,8 @@
 import axios from 'axios';
 
 const axiosClient = axios.create({
-  baseURL: 'https://hrmanagementbackend-o7tt.onrender.com/',
-  //baseURL: 'http://localhost:5001/',
+  //baseURL: 'https://hrmanagementbackend-o7tt.onrender.com/',
+  baseURL: 'http://localhost:5001/',
 });
 // Add a request interceptor to set the Authorization header before each request
 axiosClient.interceptors.request.use(

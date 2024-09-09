@@ -12,6 +12,16 @@
   box-shadow: 20px 20px 60px #d9d9d9, -20px -20px 60px #ffffff;
 }
 
+.form-container2 {
+  width: 100%;
+  max-width: 700px;
+  padding: 15px;
+  margin: auto;
+  background-color: #fff;
+  border-radius: 20px;
+  box-shadow: 20px 20px 60px #d9d9d9, -20px -20px 60px #ffffff;
+}
+
 .form-control {
   background-color: #f8f9fa;
   border: none;
@@ -205,7 +215,7 @@
             <div class="w-100 d-flex justify-content-center align-items-center">
               <button
                 v-if="formPage == 1"
-                @click="validateFormPage1"
+                @click="handleAddClient"
                 type="button"
                 class="btn bg-dark bg-gradient source-500 text-light mt-4 px-5"
               >
@@ -217,7 +227,7 @@
           <form
             v-if="formPage == 2"
             v-auto-animate
-            class="form-container border shadow-lg rounded-3"
+            class="form-container2 border shadow-lg rounded-3"
           >
             <div class="d-flex justify-content-center">
               <div class="">
@@ -243,7 +253,7 @@
                 <label for="gst_no" class="source-500 mt-2">GST Number</label>
                 <input
                   v-model="form.gst_no"
-                  type="number"
+                  type="text"
                   class="form-control border"
                   id="gst_no"
                   placeholder="Enter GST Number"
@@ -254,7 +264,7 @@
                 <label for="adhar_card" class="source-500 mt-2">Adhar Card</label>
                 <input
                   v-model="form.adhar_card"
-                  type="number"
+                  type="text"
                   class="form-control border"
                   id="adhar_card"
                   placeholder="Enter Adhar Number"
@@ -265,7 +275,7 @@
                 <label for="cin_no" class="source-500 mt-2">CIN Number</label>
                 <input
                   v-model="form.cin_no"
-                  type="number"
+                  type="text"
                   class="form-control border"
                   id="cin_no"
                   placeholder="Enter CIN Number"
@@ -292,6 +302,16 @@
                   ></multiselect>
                 </div>
               </div>
+              <div class="form-group col-12 col-sm-6">
+                <label for="pan_card" class="source-500 mt-2">Number Of Employees</label>
+                <input
+                  v-model="form.employee_count_range"
+                  type="text"
+                  class="form-control border"
+                  id="pan_card"
+                  placeholder="Enter Number Of Employees"
+                />
+              </div>
             </div>
 
             <div class="w-100 d-flex justify-content-center align-items-center">
@@ -309,7 +329,7 @@
           <form
             v-if="formPage == 3"
             v-auto-animate
-            class="form-container border shadow-lg rounded-3"
+            class="form-container2 border shadow-lg rounded-3"
           >
             <div class="d-flex justify-content-center">
               <div class="">
@@ -366,7 +386,7 @@
             <div class="w-100 d-flex justify-content-center align-items-center">
               <button
                 v-if="formPage == 3"
-                @click="formPage = 1"
+                @click="handleAddClientDetails"
                 type="button"
                 class="btn bg-dark bg-gradient source-500 text-light mt-4 px-5"
               >
@@ -395,9 +415,10 @@ export default {
   },
   data() {
     return {
-      formPage: 1,
+      formPage: 2,
+      isLoading: false,
       form: {
-        user_id: '',
+        user_id: '66d7f425ad326a6f50ef00d5',
         name: '',
         email: '',
         whatsapp_no: '',
@@ -453,6 +474,19 @@ export default {
     };
   },
 
+  setup() {
+    window.addEventListener('beforeunload', (event) => {
+      event.preventDefault();
+      event.returnValue = 'Are you sure you want to leave this page?';
+    });
+    window.history.pushState(null, null, null);
+    window.addEventListener('popstate', (event) => {
+      event.preventDefault();
+      event.returnValue = 'Are you sure you want to go back?';
+      window.history.pushState(null, null, null);
+    });
+  },
+
   async created() {
     this.getCurrent();
     try {
@@ -506,6 +540,7 @@ export default {
       if (this.validateFormPage1() == false) {
         return;
       }
+      this.isLoading = true;
       this.form.roleType = this.selected_roleType._id;
       this.form.department = this.selected_department._id;
       this.form.team = this.selected_team._id;
@@ -515,15 +550,50 @@ export default {
         const res = await axiosClient.post(`api/v1/client/add`, this.form);
 
         if (res) {
-          console.log(res);
+          console.log('success: ', res);
+
+          this.form.user_id = res.data._id;
+        }
+        this.formPage = 2;
+      } catch (err) {
+        console.log('error: ', err);
+        if (err.response.status == 409) {
+          toast.error(`Email Already Registered`, {
+            autoClose: 1500,
+          });
+        } else {
+          toast.error(`Something Went Wrong`, {
+            autoClose: 1500,
+          });
+        }
+      }
+
+      this.isLoading = false;
+    },
+
+    async handleAddClientDetails() {
+      console.log('form: ', this.form);
+      if (this.validateFormPage3() == false) {
+        return;
+      }
+
+      this.isLoading = true;
+
+      try {
+        const res = await axiosClient.put(
+          `/api/v1/client/add/details/${this.form.user_id}`,
+          this.form
+        );
+        console.log(res);
+
+        if (res) {
           toast.success(`Client Added`, {
             autoClose: 1500,
           });
-
-          setTimeout(() => {
-            this.$router.push(`/add/client/details/${res.data._id}`);
-          }, 2000);
         }
+        setTimeout(() => {
+          this.$router.push(`/add/client/details/${this.form.user_id}`);
+        }, 2000);
       } catch (err) {
         console.log('error: ', err);
         if (err.response.status == 409) {
@@ -536,85 +606,107 @@ export default {
           });
         }
       }
+
+      this.isLoading = false;
     },
 
     validateFormPage1() {
       console.log('validateForm');
       if (this.form.name == '') {
         toast.info(`Enter Name`, { autoClose: 1000 });
-        return;
+        return false;
       }
       if (this.form.whatsapp_no == '') {
         toast.info(`Enter Number`, { autoClose: 1000 });
-        return;
+        return false;
+      }
+
+      if (this.form.whatsapp_no.length < 10) {
+        toast.info(`Enter valid Whatsapp Number`, { autoClose: 1000 });
+        return false;
       }
       if (this.form.email == '') {
         toast.info(`Enter Email`, { autoClose: 1000 });
-        return;
+        return false;
       }
       const re =
         /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
       if (!re.test(this.form.email)) {
         toast.info(`Enter Valid Email`, { autoClose: 1000 });
-        return;
+        return false;
       }
 
       if (this.form.password == '') {
         toast.info(`Enter Password`, { autoClose: 1000 });
-        return;
+        return false;
+      }
+      if (this.form.password.length < 6) {
+        toast.info(`Password Must Contain At Least 6 Characters`, { autoClose: 1000 });
+        return false;
       }
       if (this.form.pin_code == '') {
         toast.info(`Enter Pin Code`, { autoClose: 1000 });
-        return;
+        return false;
       }
       if (this.form.city == '') {
         toast.info(`Enter city`, { autoClose: 1000 });
-        return;
+        return false;
       }
       if (this.form.state == '') {
         toast.info(`Enter state`, { autoClose: 1000 });
-        return;
+        return false;
       }
       if (this.form.country == '') {
         toast.info(`Enter country`, { autoClose: 1000 });
-        return;
+        return false;
       }
       if (this.form.address == '' || this.form.address.length < 10) {
         toast.info(`Enter address properly`, { autoClose: 1000 });
-        return;
+        return false;
       }
       if (this.form.country == '') {
         toast.info(`Enter country`, { autoClose: 1000 });
-        return;
+        return false;
       }
 
       if (this.selected_department == '') {
         toast.info(`Select Department`, { autoClose: 1000 });
-        return;
+        return false;
       }
 
       if (this.selected_team == '') {
         toast.info(`Select Team`, { autoClose: 1000 });
-        return;
+        return false;
       }
 
       if (this.selected_roleType == '') {
         toast.info(`Select Role Type`, { autoClose: 1000 });
-        return;
+        return false;
       }
-
-      this.formPage = 2;
     },
 
     validateFormPage2() {
       console.log('validateForm2');
+      console.log('adhar length: ', this.form.adhar_card.length);
       if (this.form.pan_card == '') {
         toast.info(`Enter Pan Card`, { autoClose: 1000 });
         return;
       }
 
+      if (this.form.pan_card.length < 10) {
+        console.log('pan length: ', this.form.pan_card.length);
+        toast.info(`Enter Valid Pan Id`, { autoClose: 1000 });
+        return;
+      }
+
       if (this.form.adhar_card == '') {
         toast.info(`Enter Aadhar Card`, { autoClose: 1000 });
+        return;
+      }
+
+      if (this.form.adhar_card.length < 12) {
+        console.log('adhar length: ', this.form.adhar_card.length);
+        toast.info(`Enter Valid Aadhar Number`, { autoClose: 1000 });
         return;
       }
       if (this.form.cin_no == '') {
@@ -645,6 +737,12 @@ export default {
       }
       if (this.form.contact_person.email == '') {
         toast.info(`Enter Contact Person Email`, { autoClose: 1000 });
+        return;
+      }
+      let re =
+        /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+      if (!re.test(this.form.contact_person.email)) {
+        toast.info(`Enter Valid Contact Person Email`, { autoClose: 1000 });
         return;
       }
       if (this.form.contact_person.contact_no == '') {

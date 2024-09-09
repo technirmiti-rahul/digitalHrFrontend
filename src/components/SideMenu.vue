@@ -395,7 +395,8 @@ export default {
       if (link == 'dashboard') {
         this.glowMenuItem = 'dashboard';
 
-        this.$router.push(`/${link}`);
+        const route = this.$router.resolve(`/${link}`);
+        window.open(route.href, '_blank');
         localStorage.setItem('currPage', link);
         return;
       }

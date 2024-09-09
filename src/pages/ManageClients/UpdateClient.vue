@@ -4,7 +4,7 @@
 
 .form-container {
   width: 100%;
-  max-width: 600px;
+  max-width: 1000px;
   padding: 15px;
   margin: auto;
   background-color: #fff;
@@ -12,8 +12,24 @@
   box-shadow: 20px 20px 60px #d9d9d9, -20px -20px 60px #ffffff;
 }
 
-.form-group label {
-  color: #333;
+.form-document {
+  width: 100%;
+  max-width: 1000px;
+  padding: 15px;
+  margin: auto;
+  background-color: #fff;
+
+  box-shadow: 20px 20px 60px #d9d9d9, -20px -20px 60px #ffffff;
+}
+
+.form-container2 {
+  width: 100%;
+  max-width: 700px;
+  padding: 15px;
+  margin: auto;
+  background-color: #fff;
+  border-radius: 20px;
+  box-shadow: 20px 20px 60px #d9d9d9, -20px -20px 60px #ffffff;
 }
 
 .form-control {
@@ -54,18 +70,52 @@
 
 <template>
   <div class="main h-100">
-    <div class="border-bottom px-4">
-      <h5 class="pt-2 hind-medium source-500">Update Client</h5>
+    <div class="border-bottom px-4 d-flex justify-content-between">
+      <div>
+        <h5 class="pt-2 hind-medium source-500">Update Client</h5>
+      </div>
+      <div class="d-flex align-items-center capitalize source-400">
+        <div v-auto-animate class="border-end px-2">
+          <span
+            @click="handleUpdateDocuments(false)"
+            class="pointer"
+            v-if="UpdateDocuments == true"
+          >
+            details
+          </span>
+          <span class="text-secondary opacity-50" v-if="UpdateDocuments == false">details</span>
+        </div>
+        <div v-auto-animate class="px-2">
+          <span
+            @click="handleUpdateDocuments(true)"
+            class="pointer"
+            v-if="UpdateDocuments == false"
+          >
+            documents
+          </span>
+          <span class="text-secondary opacity-50" v-if="UpdateDocuments == true">documents</span>
+        </div>
+      </div>
     </div>
 
-    <div class="overflow-y-hidden pb-5 h-100">
-      <div class="h-100 overflow-y-auto d-flex justify-content-center align-items-center">
-        <div class="container py-3">
-          <form v-auto-animate class="form-container border shadow-lg rounded-3">
-            <h1 class="text-center source-600 text-dark mb-2">Update Client</h1>
-
-            <div v-if="formPage == 1" class="row">
-              <div class="form-group col-12 col-md-6">
+    <div v-auto-animate class="overflow-y-hidden pb-5 h-100">
+      <div v-if="UpdateDocuments == false" v-auto-animate class="h-100 overflow-y-auto">
+        <div
+          v-auto-animate
+          class="container h-100 py-3 d-flex justify-content-center align-items-start align-items-sm-center"
+        >
+          <form
+            v-if="formPage == 1"
+            v-auto-animate
+            class="form-container border shadow-lg rounded-3"
+          >
+            <div class="d-flex justify-content-center">
+              <div class="w-100">
+                <h4 class="text-center source-600 text-dark mb-4">Client Information</h4>
+              </div>
+            </div>
+            <div class="row">
+              <div class="form-group col-12 col-sm-6 col-lg-4">
                 <label for="name source-500" class="source-500">Name</label>
                 <input
                   v-model="form.name"
@@ -74,7 +124,9 @@
                   id="name"
                   placeholder="Enter name"
                 />
-                <label for="email" class="source-500 mt-2">Email address</label>
+              </div>
+              <div class="form-group col-12 col-sm-6 col-lg-4">
+                <label for="email" class="source-500 mt-2 mt-sm-0">Email Address</label>
                 <input
                   disabled
                   v-model="form.email"
@@ -83,6 +135,103 @@
                   id="email"
                   placeholder="Enter email"
                 />
+              </div>
+
+              <div class="form-group col-12 col-sm-6 col-lg-4">
+                <label for="phone_number source-500" class="source-500 mt-2 mt-sm-0">
+                  WhatsApp Number
+                </label>
+                <input
+                  v-model="form.whatsapp_no"
+                  type="number"
+                  class="form-control border"
+                  id="phone_number"
+                  placeholder="Enter phone number"
+                />
+              </div>
+              <div class="form-group col-12 col-sm-6 col-lg-4">
+                <label for="pin_code" class="source-500 mt-2">Pin Code</label>
+                <input
+                  v-model="form.pin_code"
+                  @input="validatePinCode"
+                  type="text"
+                  class="form-control border"
+                  id="pin_code"
+                  placeholder="Enter pin code"
+                />
+              </div>
+              <div class="form-group col-12 col-sm-6 col-lg-4">
+                <label for="state" class="source-500 mt-2">State</label>
+                <input
+                  v-model="form.state"
+                  type="text"
+                  class="form-control border"
+                  id="state"
+                  placeholder="Enter state"
+                />
+              </div>
+
+              <div class="form-group col-12 col-sm-6 col-lg-4">
+                <label for="city" class="source-500 mt-2">City</label>
+                <input
+                  v-model="form.city"
+                  type="text"
+                  class="form-control border"
+                  id="city"
+                  placeholder="Enter city"
+                />
+              </div>
+              <div class="form-group col-12 col-sm-6 col-lg-4">
+                <label for="country" class="source-500 mt-2">Country</label>
+                <input
+                  v-model="form.country"
+                  type="text"
+                  class="form-control border"
+                  id="country"
+                  placeholder="Enter country"
+                />
+              </div>
+
+              <div class="form-group col-12 col-sm-6 col-lg-4">
+                <label for="address" class="source-500 mt-2">Address</label>
+                <textarea
+                  v-model="form.address"
+                  type="text"
+                  class="form-control border"
+                  id="address"
+                  placeholder="Enter address"
+                />
+              </div>
+            </div>
+
+            <div class="w-100 d-flex justify-content-center align-items-center gap-2">
+              <button
+                v-if="formPage == 1"
+                @click="validateFormPage1"
+                type="button"
+                class="btn bg-dark bg-gradient source-500 text-light mt-4 px-5"
+              >
+                Next
+              </button>
+            </div>
+          </form>
+          <!-- /////////////////////////////////////////////////////////////////////// -->
+          <form
+            v-if="formPage == 2"
+            v-auto-animate
+            class="form-container2 border shadow-lg rounded-3"
+          >
+            <div class="d-flex justify-content-center">
+              <div class="ps-3">
+                <i @click="formPage = 1" class="bi bi-arrow-left icon-font-2 pointer"></i>
+              </div>
+              <div class="w-100 pe-3">
+                <h4 class="text-center source-600 text-dark mb-4">Client Details</h4>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="form-group col-12 col-sm-6">
                 <label for="pan_card" class="source-500 mt-2">Pan Card</label>
                 <input
                   v-model="form.pan_card"
@@ -91,17 +240,42 @@
                   id="pan_card"
                   placeholder="Enter Pan Number"
                 />
-
+              </div>
+              <div class="form-group col-12 col-sm-6">
                 <label for="gst_no" class="source-500 mt-2">GST Number</label>
                 <input
                   v-model="form.gst_no"
-                  type="number"
+                  type="text"
                   class="form-control border"
                   id="gst_no"
                   placeholder="Enter GST Number"
                 />
-                <label for="incorporation" class="source-500 mt-2">Incorporation</label>
-                <div class="">
+              </div>
+
+              <div class="form-group col-12 col-sm-6">
+                <label for="adhar_card" class="source-500 mt-2">Adhar Card</label>
+                <input
+                  v-model="form.adhar_card"
+                  type="text"
+                  class="form-control border"
+                  id="adhar_card"
+                  placeholder="Enter Adhar Number"
+                />
+              </div>
+
+              <div class="form-group col-12 col-sm-6">
+                <label for="cin_no" class="source-500 mt-2">CIN Number</label>
+                <input
+                  v-model="form.cin_no"
+                  type="text"
+                  class="form-control border"
+                  id="cin_no"
+                  placeholder="Enter CIN Number"
+                />
+              </div>
+              <div class="form-group col-12 col-sm-6">
+                <div class="mt-3">
+                  <label for="incorporation_type" class="source-500">Incorporation Type</label>
                   <multiselect
                     class=""
                     v-model="form.incorporation_type"
@@ -109,56 +283,10 @@
                     placeholder="Select Incorporation Type"
                   ></multiselect>
                 </div>
-
-                <label for="address" class="source-500 mt-2">Address</label>
-                <textarea
-                  v-model="form.address"
-                  type="text"
-                  class="form-control border"
-                  id="address"
-                  placeholder="Enter GST Number"
-                />
               </div>
-              <!-- /////////////////////////////////////////////////////////////////////////////////////////////////// -->
-              <div class="form-group col-12 col-md-6">
-                <label for="phone_number source-500" class="source-500">whatsapp Number</label>
-                <input
-                  v-model="form.whatsapp_no"
-                  type="number"
-                  class="form-control border"
-                  id="phone_number"
-                  placeholder="Enter whatsapp number"
-                />
-
-                <label for="adhar_card" class="source-500 mt-2">Adhar Card</label>
-                <input
-                  v-model="form.adhar_card"
-                  type="number"
-                  class="form-control border"
-                  id="adhar_card"
-                  placeholder="Enter Adhar Number"
-                />
-
-                <label for="cin_no" class="source-500 mt-2">CIN Number</label>
-                <input
-                  v-model="form.cin_no"
-                  type="number"
-                  class="form-control border"
-                  id="cin_no"
-                  placeholder="Enter CIN Number"
-                />
-                <label for="employee_count_range" class="source-500 mt-2">
-                  Number Of Employees
-                </label>
-                <input
-                  v-model="form.employee_count_range"
-                  type="number"
-                  class="form-control border"
-                  id="employee_count_range"
-                  placeholder="Enter whatsapp number"
-                />
-                <label for="industry_type" class="source-500 mt-2">Industry Type</label>
-                <div class="">
+              <div class="form-group col-12 col-sm-6">
+                <div class="mt-3">
+                  <label for="industry_type" class="source-500">Industry Type</label>
                   <multiselect
                     v-model="form.industry_type"
                     :options="industry_typeOptions"
@@ -166,17 +294,45 @@
                   ></multiselect>
                 </div>
               </div>
-            </div>
-            <div v-if="formPage == 2" class="mt-3 mb-2 source-600 d-flex gap-2">
-              <div v-if="formPage == 2" @click="formPage = 1" class="pointer pb-2">
-                <i class="bi bi-arrow-left icon-font-2"></i>
-              </div>
-              <div class="w-100 text-center">
-                <h5>Contact Person Information</h5>
+              <div class="form-group col-12 col-sm-6">
+                <label for="pan_card" class="source-500 mt-2">Number Of Employees</label>
+                <input
+                  v-model="form.employee_count_range"
+                  type="text"
+                  class="form-control border"
+                  id="pan_card"
+                  placeholder="Enter Number Of Employees"
+                />
               </div>
             </div>
 
-            <div v-if="formPage == 2" class="row">
+            <div class="w-100 d-flex justify-content-center align-items-center">
+              <button
+                v-if="formPage == 2"
+                @click="validateFormPage2"
+                type="button"
+                class="btn bg-dark bg-gradient source-500 text-light mt-4 px-5"
+              >
+                Next
+              </button>
+            </div>
+          </form>
+          <!-- /////////////////////////////////////////////////////////////////////// -->
+          <form
+            v-if="formPage == 3"
+            v-auto-animate
+            class="form-container2 border shadow-lg rounded-3"
+          >
+            <div class="d-flex justify-content-center">
+              <div class="ps-3">
+                <i @click="formPage = 2" class="bi bi-arrow-left icon-font-2 pointer"></i>
+              </div>
+              <div class="w-100 pe-3">
+                <h4 class="text-center source-600 text-dark mb-4">Add Contact</h4>
+              </div>
+            </div>
+
+            <div class="row">
               <div class="form-group col-12 col-md-6">
                 <label for="contact_person.name" class="source-500 mt-2">Conatact Name</label>
                 <input
@@ -201,7 +357,7 @@
                 <label for="contact_person.email" class="source-500 mt-2">Conatct Email</label>
                 <input
                   v-model="form.contact_person.email"
-                  type="text"
+                  type="email"
                   class="form-control border"
                   id="contact_person.email"
                   placeholder="Enter Conatct Email "
@@ -218,25 +374,117 @@
                 />
               </div>
             </div>
+
             <div class="w-100 d-flex justify-content-center align-items-center">
               <button
-                v-if="formPage == 1"
-                @click="changeFormPage"
+                v-if="formPage == 3"
+                @click="handleUpadateClient"
                 type="button"
-                class="btn bg-dark bg-gradient source-500 text-light mt-4 w-50"
-              >
-                Next
-              </button>
-              <button
-                v-if="formPage == 2"
-                @click="handleUpdateClient"
-                type="button"
-                class="btn bg-dark bg-gradient source-500 text-light mt-4 w-50"
+                class="btn bg-dark bg-gradient source-500 text-light mt-4 px-5"
               >
                 Update Client
               </button>
             </div>
           </form>
+        </div>
+      </div>
+      <div v-if="UpdateDocuments == true" v-auto-animate class="h-100 overflow-y-auto">
+        <div class="container h-100 py-3">
+          <div class="form-document rounded">
+            <div class="row mb-4">
+              <div class="form-group col-12 col-md-6">
+                <div class="">
+                  <label for="incorporation_type" class="source-500">Select Document Type</label>
+                  <multiselect
+                    class="text-capitalize"
+                    v-model="form.document_type"
+                    :options="documentOptions"
+                    placeholder="Select Document "
+                  ></multiselect>
+                </div>
+              </div>
+              <div class="form-group col-12 col-md-6 d-flex justify-content-end">
+                <div class="d-flex gap-4 w-100">
+                  <div class="d-flex align-items-end w-100">
+                    <label for="formFile" class="source-500"></label>
+                    <input
+                      class="form-control"
+                      accept="image/png, image/jpeg, application/pdf"
+                      type="file"
+                      id="file"
+                      ref="file"
+                      v-on:change="handleFile()"
+                    />
+                  </div>
+                  <div class="d-flex align-items-end">
+                    <butto @click="uploadFile" type="button" class="btn btn-dark btn-sm">Add</butto>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="">
+              <div
+                class="d-flex justify-content-around capitalize source-600 animate rounded py-1 pointer px-4 mb-2"
+                v-if="client.adhar_proof == true"
+              >
+                <div>adhar proof</div>
+                <div>
+                  <button
+                    @click="handleDeleteDocument(client.adhar_proof_url_id, 'adhar')"
+                    type="button"
+                    class="btn btn-outline-danger btn-sm"
+                  >
+                    Delete
+                  </button>
+                </div>
+              </div>
+              <div
+                class="d-flex justify-content-around capitalize source-600 animate rounded py-1 pointer px-4 mb-2"
+                v-if="client.pan_proof == true"
+              >
+                <div>pan proof</div>
+                <div>
+                  <button
+                    type="button"
+                    @click="handleDeleteDocument(client.pan_proof_url_id, 'pan')"
+                    class="btn btn-outline-danger btn-sm"
+                  >
+                    Delete
+                  </button>
+                </div>
+              </div>
+              <div
+                class="d-flex justify-content-around capitalize source-600 animate rounded py-1 pointer px-4 mb-2"
+                v-if="client.cin_proof == true"
+              >
+                <div>cin proof</div>
+                <div>
+                  <button
+                    type="button"
+                    @click="handleDeleteDocument(client.cin_proof_url_id, 'cin')"
+                    class="btn btn-outline-danger btn-sm"
+                  >
+                    Delete
+                  </button>
+                </div>
+              </div>
+              <div
+                class="d-flex justify-content-around capitalize source-600 animate rounded py-1 pointer px-4 mb-2"
+                v-if="client.gst_proof == true"
+              >
+                <div>gst proof</div>
+                <div>
+                  <button
+                    type="button"
+                    @click="handleDeleteDocument(client.gst_proof_url_id, 'gst')"
+                    class="btn btn-outline-danger btn-sm"
+                  >
+                    Delete
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -251,42 +499,63 @@ import { toast } from 'vue3-toastify';
 import 'vue3-toastify/dist/index.css';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import UpdateDocuments from './UpdateDocuments.vue';
 export default {
-  name: 'UpdateClientClient',
+  name: 'SignUp',
+  components: {
+    Multiselect,
+  },
   props: {
     clientId: {
       type: String,
       required: true,
     },
   },
-
-  components: {
-    Multiselect,
-  },
   data() {
     return {
       formPage: 1,
+      isLoading: false,
+      UpdateDocuments: true,
+      client: '',
       form: {
-        user_id: '',
+        user_id: '66d7f425ad326a6f50ef00d5',
         name: '',
         email: '',
         whatsapp_no: '',
-
+        password: '',
         address: '',
         pan_card: '',
         adhar_card: '',
         gst_no: '',
         cin_no: '',
+        team: '',
+        city: '',
+        state: '',
+        country: '',
+        pin_code: '',
+        department: '',
+        roleType: '',
         industry_type: '',
         employee_count_range: '',
+        incorporation_type: '',
+
+        document_type: '',
+        doc_url: '',
         contact_person: {
-          name: ' ',
+          name: '',
           email: '',
           contact_no: '',
           designation: '',
         },
-        incorporation_type: '',
       },
+      selected_roleType: '',
+      selected_team: '',
+      selected_department: '',
+      departments: [],
+      roles: [],
+      teams: [],
+      /*  documentOptions: ['pan', 'adhar', 'gst', 'cin'], */
+      documentOptions: [],
       industry_typeOptions: ['Factories', 'Restaurants', 'Hotels', 'IT Company'],
       incorporation_typeOptions: [
         'Proprietory Firm',
@@ -301,36 +570,83 @@ export default {
         'Registered Society',
         'Firms Run by Trust',
       ],
+      submitedDocuments: [
+        { document_typ: 'pan', uploaded: false },
+        { document_typ: 'adhar', uploaded: false },
+        { document_typ: 'gst', uploaded: false },
+        { document_typ: 'cin', uploaded: false },
+      ],
     };
+  },
+
+  setup() {
+    window.addEventListener('beforeunload', (event) => {
+      event.preventDefault();
+      event.returnValue = 'Are you sure you want to leave this page?';
+    });
+    window.history.pushState(null, null, null);
+    window.addEventListener('popstate', (event) => {
+      event.preventDefault();
+      event.returnValue = 'Are you sure you want to go back?';
+      window.history.pushState(null, null, null);
+    });
   },
 
   async created() {
     this.getCurrent();
     try {
-      const clientRes = await axiosClient.get(`/api/v1/client/get/${this.clientId}`);
-      const clientData = clientRes.data.data[0];
-      this.form = {
-        user_id: clientData.user_id,
-        name: clientData.name,
-        email: clientData.email,
-        whatsapp_no: clientData.whatsapp_no,
+      try {
+        const clientRes = await axiosClient.get(`/api/v1/client/get/${this.clientId}`);
+        const clientData = clientRes.data.data[0];
+        this.client = clientRes.data.data[0];
+        console.log('res: ', clientData);
+        this.client = clientData;
+        this.form = {
+          user_id: clientData.user_id,
+          name: clientData.name,
+          email: clientData.email,
+          whatsapp_no: clientData.whatsapp_no,
+          pin_code: clientData.pin_code,
+          country: clientData.country,
+          state: clientData.state,
+          city: clientData.city,
+          address: clientData.address,
+          pan_card: clientData.pan_card,
+          adhar_card: clientData.adhar_card,
+          gst_no: clientData.gst_no,
+          cin_no: clientData.cin_no,
+          industry_type: clientData.industry_type,
+          employee_count_range: clientData.employee_count_range,
+          contact_person: {
+            name: clientData.contact_person.name,
+            email: clientData.contact_person.email,
+            contact_no: clientData.contact_person.contact_no,
+            designation: clientData.contact_person.designation,
+          },
+          incorporation_type: clientData.incorporation_type,
+        };
+        console.log('form: ', this.form);
+        const userRes = await axiosClient.get(`/api/v1/user/get/${clientData.user_id}`);
 
-        address: clientData.address,
-        pan_card: clientData.pan_card,
-        adhar_card: clientData.adhar_card,
-        gst_no: clientData.gst_no,
-        cin_no: clientData.cin_no,
-        industry_type: clientData.industry_type,
-        employee_count_range: clientData.employee_count_range,
-        contact_person: {
-          name: clientData.contact_person.name,
-          email: clientData.contact_person.email,
-          contact_no: clientData.contact_person.contact_no,
-          designation: clientData.contact_person.designation,
-        },
-        incorporation_type: clientData.incorporation_type,
-      };
-      console.log('res: ', clientRes.data.data[0]);
+        const userData = userRes.data.data[0];
+        this.form.address = userData.address;
+      } catch (err) {}
+
+      const departments = await axiosClient.get(`/api/v1/department/getall`);
+      this.departments = departments.data.data;
+
+      const roles = await axiosClient.get(`/api/v1/role/getall`);
+      this.roles = roles.data.data;
+
+      const teams = await axiosClient.get(`/api/v1/team/getall`);
+      this.teams = teams.data.data;
+      console.log('departments : ', this.departments);
+      console.log('roles : ', this.roles);
+      console.log('teams : ', this.teams);
+      if (this.client.adhar_proof == false) this.documentOptions.push('adhar');
+      if (this.client.gst_proof == false) this.documentOptions.push('gst');
+      if (this.client.pan_proof == false) this.documentOptions.push('pan');
+      if (this.client.cin_proof == false) this.documentOptions.push('cin');
     } catch (err) {}
   },
 
@@ -350,29 +666,132 @@ export default {
   },
 
   methods: {
-    async handleUpdateClient(e) {
-      if (this.validateForm() == false) {
+    async handleDeleteDocument(document_proof_url, document_type) {
+      console.log('delete document: ', document_proof_url, document_type);
+      try {
+        const res = await axiosClient.delete(
+          `/api/v1/document/delete/${this.client.user_id}/${document_proof_url}/${document_type}`
+        );
+        this.documentOptions.push(document_type);
+        console.log('res: ', res);
+        toast.success('Document deleted successfully', {
+          autoClose: 1500,
+        });
+
+        this.$router.go(0);
+        return;
+      } catch (err) {
+        console.log('error: ', err);
+        toast.error('Failed to delete document', {
+          autoClose: 1500,
+        });
+        return;
+      }
+    },
+
+    handleUpdateDocuments(e) {
+      this.UpdateDocuments = e;
+    },
+
+    async uploadFile() {
+      if (this.form.document_type == '') {
+        toast.error(`Please select document type`, {
+          autoClose: 1500,
+        });
+        return;
+      }
+      if (this.file == undefined) {
+        toast.error(`Please select file`, {
+          autoClose: 1500,
+        });
         return;
       }
 
+      const formData = new FormData();
+      formData.append('file', this.file);
+
+      try {
+        const documentRes = await axiosClient.post(
+          `/api/v1/document/upload/${this.form.document_type}/${this.client.user_id}`,
+          formData
+        );
+        console.log(documentRes);
+        this.form.document_url = documentRes.data.location.Location;
+        this.form.document_url_id = documentRes.data.file_id;
+        console.log('form', this.form);
+        const res = await axiosClient.put(
+          `/api/v1/client/update/document/${this.client.user_id}`,
+          this.form
+        );
+
+        toast.success(`File uploaded successfully`, {
+          autoClose: 1500,
+        });
+
+        for (let i = 0; i < this.submitedDocuments.length; i++) {
+          if (this.submitedDocuments[i].document_typ == this.form.document_type) {
+            this.submitedDocuments[i].uploaded = true;
+          }
+        }
+        this.documentOoptions = this.documentOoptions.filter(
+          (option) => option != this.form.document_type
+        );
+        this.documentUploaded = true;
+        this.file = null;
+        this.form.document_type = '';
+
+        console.log('this.submitedDocuments: ', this.submitedDocuments);
+      } catch (err) {
+        console.log('error: ', err);
+      }
+    },
+
+    handleFile() {
+      this.file = this.$refs.file.files[0];
+      console.log(this.file);
+    },
+
+    async validatePinCode() {
+      /* if (this.form.pin_code.length >= 6) {
+        try {
+          const res = await axiosClient.get(`https://dev.apiman.in/pincode/${this.form.pin_code}`);
+          console.log('res: ', res);
+          if (res.data[0]) {
+            // this.form.city = res.data[0].PostOffice[0].name;
+            this.form.state = res.data.PostOffice[0].State;
+            this.form.country = res.data.PostOffice[0].Country;
+          }
+        } catch (err) {
+          console.log('error: ', err);
+        }
+      } */
+    },
+
+    async handleUpadateClient() {
       console.log('form: ', this.form);
+      if (this.validateFormPage3() == false) {
+        return;
+      }
+
+      this.isLoading = true;
 
       try {
         const res = await axiosClient.put(`/api/v1/client/update/${this.clientId}`, this.form);
+        console.log(res);
 
         if (res) {
-          toast.success(`Client Updated`, {
+          toast.success(`Client Updated Successfully`, {
             autoClose: 1500,
           });
-
-          setTimeout(() => {
-            this.$router.push('/manage/clients');
-          }, 2000);
         }
+
+        setTimeout(() => {
+          this.$router.push(`/manage/clients`);
+        }, 2000);
       } catch (err) {
         console.log('error: ', err);
         if (err.response.status == 409) {
-          toast.error(`Client Already Exist`, {
+          toast.error(`User Already Exist`, {
             autoClose: 1500,
           });
         } else {
@@ -381,126 +800,148 @@ export default {
           });
         }
       }
+
+      this.isLoading = false;
     },
 
-    nameWithLang({ name }) {
-      console.log(name);
-      return `${name} `;
-    },
-    changeFormPage() {
-      console.log('changeFormPage');
+    validateFormPage1() {
+      console.log('validateForm');
+      if (this.form.name == '') {
+        toast.info(`Enter Name`, { autoClose: 1000 });
+        return false;
+      }
+      if (this.form.whatsapp_no == '') {
+        toast.info(`Enter Number`, { autoClose: 1000 });
+        return false;
+      }
+
+      if (this.form.whatsapp_no.length < 10) {
+        toast.info(`Enter valid Whatsapp Number`, { autoClose: 1000 });
+        return false;
+      }
+
+      if (this.form.pin_code == '') {
+        toast.info(`Enter Pin Code`, { autoClose: 1000 });
+        return false;
+      }
+      if (this.form.city == '') {
+        toast.info(`Enter city`, { autoClose: 1000 });
+        return false;
+      }
+      if (this.form.state == '') {
+        toast.info(`Enter state`, { autoClose: 1000 });
+        return false;
+      }
+      if (this.form.country == '') {
+        toast.info(`Enter country`, { autoClose: 1000 });
+        return false;
+      }
+      if (this.form.address == '' || this.form.address.length < 10) {
+        toast.info(`Enter address properly`, { autoClose: 1000 });
+        return false;
+      }
+
+      /*  if (this.selected_department == '') {
+        toast.info(`Select Department`, { autoClose: 1000 });
+        return false;
+      }
+
+      if (this.selected_team == '') {
+        toast.info(`Select Team`, { autoClose: 1000 });
+        return false;
+      }
+
+      if (this.selected_roleType == '') {
+        toast.info(`Select Role Type`, { autoClose: 1000 });
+        return false;
+      } */
       this.formPage = 2;
     },
 
-    validateForm() {
-      console.log('validateForm');
-
-      if (this.form.name === '') {
-        toast.info(`Enter Name`, { autoClose: 1000 });
-        this.formPage = 1;
-        return false;
+    validateFormPage2() {
+      console.log('validateForm2');
+      console.log('adhar length: ', this.form.adhar_card.length);
+      if (this.form.pan_card == '') {
+        toast.info(`Enter Pan Card`, { autoClose: 1000 });
+        return;
       }
 
-      if (this.form.whatsapp_no === '') {
-        toast.info(`Enter WhatsApp Number`, { autoClose: 1000 });
-        this.formPage = 1;
-        return false;
+      if (this.form.pan_card.length < 10) {
+        console.log('pan length: ', this.form.pan_card.length);
+        toast.info(`Enter Valid Pan Id`, { autoClose: 1000 });
+        return;
       }
 
-      if (this.form.email === '') {
-        toast.info(`Enter Email`, { autoClose: 1000 });
-        this.formPage = 1;
-        return false;
+      if (this.form.adhar_card == '') {
+        toast.info(`Enter Aadhar Card`, { autoClose: 1000 });
+        return;
       }
 
-      if (this.form.password === '') {
-        toast.info(`Enter Password`, { autoClose: 1000 });
-        this.formPage = 1;
-        return false;
+      if (this.form.adhar_card.length < 12) {
+        console.log('adhar length: ', this.form.adhar_card.length);
+        toast.info(`Enter Valid Aadhar Number`, { autoClose: 1000 });
+        return;
       }
-
-      if (this.form.address === '') {
-        toast.info(`Enter Address`, { autoClose: 1000 });
-        this.formPage = 1;
-        return false;
-      }
-
-      if (this.form.pan_card === '') {
-        toast.info(`Enter PAN Card Number`, { autoClose: 1000 });
-        this.formPage = 1;
-        return false;
-      }
-
-      if (this.form.adhar_card === '') {
-        toast.info(`Enter Aadhar Card Number`, { autoClose: 1000 });
-        this.formPage = 1;
-        return false;
-      }
-
-      if (this.form.gst_no === '') {
-        toast.info(`Enter GST Number`, { autoClose: 1000 });
-        this.formPage = 1;
-        return false;
-      }
-
-      if (this.form.cin_no === '') {
+      if (this.form.cin_no == '') {
         toast.info(`Enter CIN Number`, { autoClose: 1000 });
-        this.formPage = 1;
-        return false;
+        return;
       }
-
-      if (this.form.industry_type === '') {
-        toast.info(`Enter Industry Type`, { autoClose: 1000 });
-        this.formPage = 1;
-        return false;
+      if (this.form.gst_no == '') {
+        toast.info(`Enter GST Number`, { autoClose: 1000 });
+        return;
       }
-
-      if (this.form.employee_count_range === '') {
-        toast.info(`Enter Employee Count Range`, { autoClose: 1000 });
-        this.formPage = 1;
-        return false;
-      }
-      if (this.form.incorporation_type === '') {
+      if (this.form.incorporation_type == '') {
         toast.info(`Enter Incorporation Type`, { autoClose: 1000 });
-        this.formPage = 1;
-        return false;
+        return;
       }
-      if (this.form.contact_person.name === '') {
+      if (this.form.industry_type == '') {
+        toast.info(`Enter Industry Type`, { autoClose: 1000 });
+        return;
+      }
+
+      this.formPage = 3;
+    },
+
+    validateFormPage3() {
+      console.log('validateForm3');
+      if (this.form.contact_person.name == '') {
         toast.info(`Enter Contact Person Name`, { autoClose: 1000 });
-        this.formPage = 2;
         return false;
       }
-
-      if (this.form.contact_person.email === '') {
+      if (this.form.contact_person.email == '') {
         toast.info(`Enter Contact Person Email`, { autoClose: 1000 });
-        this.formPage = 2;
         return false;
       }
-
-      if (this.form.contact_person.contact_no === '') {
-        toast.info(`Enter Contact Person Contact Number`, { autoClose: 1000 });
-        this.formPage = 2;
+      let re =
+        /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+      if (!re.test(this.form.contact_person.email)) {
+        toast.info(`Enter Valid Contact Person Email`, { autoClose: 1000 });
         return false;
       }
-
-      if (this.form.contact_person.designation === '') {
+      if (this.form.contact_person.contact_no == '') {
+        toast.info(`Enter Contact Person Number`, { autoClose: 1000 });
+        return false;
+      }
+      if (this.form.contact_person.designation == '') {
         toast.info(`Enter Contact Person Designation`, { autoClose: 1000 });
-        this.formPage = 2;
         return false;
       }
 
       return true;
     },
 
+    nameWithLang({ name }) {
+      console.log(name);
+      return `${name} `;
+    },
+
     async getCurrent() {
       try {
         const token = await axiosClient.get(`api/v1/user/getCurrent/`);
         console.log('Token : ', token);
-
         if (!token) {
           this.$router.push('/login');
         }
-        this.form.user_id = token.data.user._id;
       } catch (err) {
         console.log('error: ', err);
         this.$router.push('/login');

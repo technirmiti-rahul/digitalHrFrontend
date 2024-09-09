@@ -107,10 +107,10 @@
                 <input
                   disabled
                   v-model="form.incorporation_type"
-                  type="number"
+                  type="text"
                   class="form-control border"
                   id="incorporation_type"
-                  placeholder="Enter GST Number"
+                  placeholder="N/A"
                 />
               </div>
               <!-- /////////////////////////////////////////////////////////////////////////////////////////////////// -->
@@ -159,10 +159,10 @@
                 <input
                   disabled
                   v-model="form.industry_type"
-                  type="number"
+                  type="text"
                   class="form-control border"
                   id="employee_count_range"
-                  placeholder="Enter whatsapp number"
+                  placeholder="N/A"
                 />
               </div>
               <div class="form-group col-12 col-md-6 col-lg-4">
@@ -334,7 +334,6 @@ export default {
         name: '',
         email: '',
         whatsapp_no: '',
-        password: '',
         address: '',
         pan_card: '',
         adhar_card: '',
@@ -374,12 +373,12 @@ export default {
       const clientRes = await axiosClient.get(`/api/v1/client/get/${this.clientId}`);
       const clientData = clientRes.data.data[0];
       this.client = clientData;
+      console.log('res: ', clientRes.data.data[0]);
       this.form = {
         user_id: clientData.user_id,
         name: clientData.name,
         email: clientData.email,
         whatsapp_no: clientData.whatsapp_no,
-        password: clientData.password,
         address: clientData.address,
         pan_card: clientData.pan_card,
         adhar_card: clientData.adhar_card,
@@ -400,8 +399,10 @@ export default {
       const userData = userRes.data.data[0];
       this.form.address = userData.address;
 
-      console.log('res: ', clientRes.data.data[0]);
-    } catch (err) {}
+      console.log('form: ', this.form);
+    } catch (err) {
+      console.log(err);
+    }
   },
 
   mounted() {
