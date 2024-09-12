@@ -578,7 +578,7 @@ export default {
           });
           for (let i in this.items) {
             if (this.items[i].user_id == id) {
-              this.items[i].approved = !this.items[i].approved;
+              this.items.splice(i, 1);
             }
           }
         }
