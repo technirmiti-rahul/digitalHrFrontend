@@ -473,6 +473,8 @@ export default {
       );
     },
 
+    
+
     handleUserUpdate(id) {
       this.$router.push(`/update/user/${id}`);
     },

@@ -323,6 +323,53 @@ ul {
                       Add Client
                     </div>
                   </div>
+                  <div>
+                    <div
+                      v-if="glowMenuItem == 'manage/employees'"
+                      class="pointer selected text-light py-1 px-2 rounded-4 mb-1"
+                      @click="handleRedirect('manage/employees')"
+                    >
+                      <i
+                        class="bi bi-person-rolodex text-light mx-2 text_shadow"
+                        style="font-size: 1.1rem"
+                      ></i>
+                      Manage Employees
+                    </div>
+                    <div
+                      v-else
+                      class="pointer text-light py-1 px-2 rounded-4 mb-1"
+                      @click="handleRedirect('manage/employees')"
+                    >
+                      <i class="bi bi-person-rolodex text-light mx-2" style="font-size: 1.1rem"></i>
+                      Manage Employees
+                    </div>
+                  </div>
+                  <div>
+                    <div
+                      v-if="
+                        glowMenuItem == 'add/employee' || glowMenuItem.match(/^add\/employee\/.*/)
+                      "
+                      class="pointer selected text-light py-1 px-2 rounded-4 mb-1"
+                      @click="handleRedirect('add/employee')"
+                    >
+                      <i
+                        class="bi bi-person-fill-add text-light mx-2 text_shadow"
+                        style="font-size: 1.1rem"
+                      ></i>
+                      Add Employee
+                    </div>
+                    <div
+                      v-else
+                      class="pointer text-light py-1 px-2 rounded-4 mb-1"
+                      @click="handleRedirect('add/employee')"
+                    >
+                      <i
+                        class="bi bi-person-fill-add text-light mx-2"
+                        style="font-size: 1.1rem"
+                      ></i>
+                      Add Employee
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
@@ -434,6 +481,19 @@ export default {
       if (link == 'add/client') {
         this.glowMenuItem = 'add/client';
 
+        this.$router.push(`/${link}`);
+        localStorage.setItem('currPage', link);
+        return;
+      }
+      if (link == 'add/employee') {
+        this.glowMenuItem = 'add/employee';
+
+        this.$router.push(`/${link}`);
+        localStorage.setItem('currPage', link);
+        return;
+      }
+      if (link == 'manage/employees') {
+        this.glowMenuItem = 'manage/employees';
         this.$router.push(`/${link}`);
         localStorage.setItem('currPage', link);
         return;

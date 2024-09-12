@@ -48,7 +48,7 @@
 <template>
   <div v-auto-animate class="main h-100">
     <div class="border-bottom px-4">
-      <h5 class="pt-2 source-500">Update User</h5>
+      <h5 class="pt-2 source-500">View Employee</h5>
     </div>
 
     <div class="overflow-y-hidden pb-5 h-100">
@@ -87,7 +87,7 @@
                 </div>
                 <div class="col-xl-8">
                   <div class="card mb-4 scroll">
-                    <div class="card-header">Account Details</div>
+                    <div class="card-header">Employee Details</div>
                     <div class="card-body">
                       <div v-auto-animate>
                         <div class="row gx-3 mb3">
@@ -95,6 +95,7 @@
                             <div class="mb-3">
                               <label class="small mb-1" for="name">Name</label>
                               <input
+                                disabled
                                 class="form-control"
                                 id="name"
                                 type="text"
@@ -118,17 +119,41 @@
                               />
                             </div>
                             <div>
-                              <div class="mt-3">
-                                <label class="small mb-1" for="team">Team</label>
-                                <multiselect
-                                  class="text-dark"
-                                  id="team"
-                                  v-model="selected_team"
-                                  :options="teams"
-                                  :placeholder="placeholderTeam"
-                                  label="name"
-                                  track-by="name"
-                                ></multiselect>
+                              <div class="mt-2" style="padding-top: 0.3rem">
+                                <label class="small mb-1" for="pin_code">Pin Code</label>
+                                <input
+                                  disabled
+                                  class="form-control"
+                                  id="pin_code"
+                                  type="text"
+                                  v-model="form.pin_code"
+                                />
+                              </div>
+                            </div>
+
+                            <div>
+                              <div class="mt-2" style="padding-top: 0.3rem">
+                                <label class="small mb-1" for="city">City</label>
+                                <input
+                                  disabled
+                                  class="form-control"
+                                  id="city"
+                                  type="text"
+                                  v-model="form.city"
+                                />
+                              </div>
+                            </div>
+
+                            <div>
+                              <div class="mt-2" style="padding-top: 0.3rem">
+                                <label class="small mb-1" for="address">Address</label>
+                                <textarea
+                                  disabled
+                                  class="form-control"
+                                  id="address"
+                                  type="text"
+                                  v-model="form.address"
+                                />
                               </div>
                             </div>
                           </div>
@@ -138,6 +163,7 @@
                             <div class="">
                               <label class="small mb-1" for="mobile_no">whatsapp Number</label>
                               <input
+                                disabled
                                 class="form-control"
                                 id="mobile_no"
                                 type="text"
@@ -146,30 +172,39 @@
                             </div>
                             <div class="">
                               <div class="mt-3">
-                                <label class="small mb-1" for="department">Department</label>
-                                <multiselect
-                                  id="department"
-                                  class="text-dark"
-                                  v-model="selected_department"
-                                  :options="departments"
-                                  :placeholder="placeholderDepartment"
-                                  label="name"
-                                  track-by="name"
-                                ></multiselect>
+                                <label class="small mb-1" for="designation">Designation</label>
+                                <input
+                                  disabled
+                                  class="form-control"
+                                  id="designation"
+                                  type="text"
+                                  v-model="form.designation"
+                                />
                               </div>
                             </div>
                             <div>
                               <div class="mt-2" style="padding-top: 0.3rem">
-                                <label class="small mb-1" for="role">Role</label>
-                                <multiselect
-                                  class="text-dark"
-                                  id="role"
-                                  v-model="selected_roleType"
-                                  :options="roles"
-                                  :placeholder="placeholderRoleType"
-                                  label="name"
-                                  track-by="name"
-                                ></multiselect>
+                                <label class="small mb-1" for="state">State</label>
+                                <input
+                                  disabled
+                                  class="form-control"
+                                  id="state"
+                                  type="text"
+                                  v-model="form.state"
+                                />
+                              </div>
+                            </div>
+
+                            <div>
+                              <div class="mt-2" style="padding-top: 0.3rem">
+                                <label class="small mb-1" for="country">Country</label>
+                                <input
+                                  disabled
+                                  class="form-control"
+                                  id="country"
+                                  type="text"
+                                  v-model="form.country"
+                                />
                               </div>
                             </div>
                           </div>
@@ -213,13 +248,13 @@ import Multiselect from 'vue-multiselect';
 import 'vue-multiselect/dist/vue-multiselect.css';
 
 export default {
-  name: 'view User',
+  name: 'UpdateEmployee',
   components: {
     Multiselect,
   },
 
   props: {
-    userId: {
+    employeeId: {
       type: String,
       required: true,
     },
@@ -234,12 +269,19 @@ export default {
 
       profile_url: '',
       form: {
+        _id: '',
+        user_id: '',
         name: '',
         email: '',
         whatsapp_no: '',
-        roleType: '',
-        team: '',
-        department: '',
+        password: '',
+        address: '',
+        city: '',
+        state: '',
+        country: '',
+        pin_code: '',
+        designation: '',
+        date_of_joining: '',
       },
       placeholderTeam: '',
       placeholderDepartment: '',
@@ -257,25 +299,24 @@ export default {
   async created() {
     this.getCurrent();
     try {
-      const userRes = await axiosClient.get(`/api/v1/user/get/${this.userId}`);
-      console.log('res: ', userRes);
-      const userData = userRes.data.data[0];
+      console.log('employeeId: ', this.employeeId);
+      const employeeRes = await axiosClient.get(`/api/v1/employee/get/${this.employeeId}`);
+      console.log('res: ', employeeRes);
+      const employeeData = employeeRes.data.data;
 
-      if (userData) {
-        this.form.name = userData.name;
-        this.form.email = userData.email;
-        this.form.whatsapp_no = userData.whatsapp_no;
-        this.form.department = userData.department._id;
-        this.form.roleType = userData.roleType._id;
-        this.form.team = userData.team._id;
-
-        this.placeholderDepartment = userData.department.name;
-        this.placeholderRoleType = userData.roleType.name;
-        this.placeholderTeam = userData.team.name;
-
-        this.selected_roleType = userData.roleType;
-        this.selected_team = userData.team;
-        this.selected_department = userData.department;
+      if (employeeData) {
+        this.form._id = employeeData._id;
+        this.form.user_id = employeeData.user_id;
+        this.form.name = employeeData.name;
+        this.form.email = employeeData.email;
+        this.form.whatsapp_no = employeeData.whatsapp_no;
+        this.form.address = employeeData.address;
+        this.form.city = employeeData.city;
+        this.form.state = employeeData.state;
+        this.form.country = employeeData.country;
+        this.form.pin_code = employeeData.pin_code;
+        this.form.designation = employeeData.designation;
+        this.form.date_of_joining = employeeData.date_of_joining;
       }
 
       console.log('form: ', this.form);
@@ -310,40 +351,7 @@ export default {
 
   methods: {
     async handleUpdate() {
-      if (this.validateForm() == false) {
-        return;
-      }
-
-      this.form.roleType = this.selected_roleType._id;
-      this.form.department = this.selected_department._id;
-      this.form.team = this.selected_team._id;
-
-      try {
-        const res = await axiosClient.put(`api/v1/user/update/${this.userId}`, this.form);
-
-        if (res) {
-          toast.success(`User Updated successfully`, {
-            autoClose: 1500,
-          });
-
-          setTimeout(() => {
-            this.$router.push('/manage/users');
-          }, 2000);
-        }
-      } catch (err) {
-        console.log('error: ', err);
-        if (err.response.status == 404) {
-          toast.error(`User Does Not Exist`, {
-            autoClose: 1500,
-          });
-        } else {
-          toast.error(`Something Went Wrong`, {
-            autoClose: 1500,
-          });
-        }
-      }
-
-      console.log(this.form);
+      this.$router.push(`/update/employee/${this.form._id}`);
     },
 
     validateForm() {
@@ -359,21 +367,36 @@ export default {
         toast.info(`Enter Email`, { autoClose: 1000 });
         return false;
       }
+      if (this.form.designation == '') {
+        toast.info(`Enter Designation`, { autoClose: 1000 });
+        return false;
+      }
 
-      if (this.form.password == '') {
-        toast.info(`Enter Password`, { autoClose: 1000 });
+      if (this.form.date_of_joining == '') {
+        toast.info(`Enter Date of Joining`, { autoClose: 1000 });
         return false;
       }
-      if (this.selected_department == '' || !this.selected_department) {
-        toast.info(`Select Department `, { autoClose: 1000 });
+      if (this.form.pin_code == '') {
+        toast.info(`Enter Pin Code`, { autoClose: 1000 });
         return false;
       }
-      if (this.selected_team == '' || !this.selected_team) {
-        toast.info(`Select Team `, { autoClose: 1000 });
+
+      if (this.form.city == '') {
+        toast.info(`Enter City`, { autoClose: 1000 });
         return false;
       }
-      if (this.selected_roleType == '' || !this.selected_roleType) {
-        toast.info(`Select Role `, { autoClose: 1000 });
+
+      if (this.form.state == '') {
+        toast.info(`Enter State`, { autoClose: 1000 });
+        return false;
+      }
+
+      if (this.form.country == '') {
+        toast.info(`Enter Country`, { autoClose: 1000 });
+        return false;
+      }
+      if (this.form.address == '') {
+        toast.info(`Enter Address`, { autoClose: 1000 });
         return false;
       }
 

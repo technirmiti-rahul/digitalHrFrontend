@@ -26,6 +26,11 @@ import ViewClient from '../pages/ManageClients/ViewClient.vue';
 import ViewDocument from '../pages/ManageClients/ViewDocument.vue';
 import UpdateDocuments from '../pages/ManageClients/UpdateDocuments.vue';
 
+import AddEmployee from '../pages/ManageEmployees/AddEmployee.vue';
+import UpdateEmployee from '../pages/ManageEmployees/UpdateEmployee.vue';
+import ViewEmployee from '../pages/ManageEmployees/ViewEmployee.vue';
+import ManageEmployees from '../pages/ManageEmployees/ManageEmployees.vue';
+
 import roughPage from '../pages/roughPage.vue';
 import roughPage2 from '../pages/roughPage2.vue';
 const routes = [
@@ -147,6 +152,38 @@ const routes = [
         component: ViewClient,
         props: (route) => ({
           clientId: route.params.clientId,
+        }),
+      },
+
+      {
+        path: '/add/employee',
+        component: AddEmployee,
+      },
+      {
+        path: '/add/employee/:clientId',
+        component: AddEmployee,
+        props: (route) => ({
+          clientId: route.params.clientId,
+        }),
+      },
+
+      {
+        path: '/manage/employees',
+        component: ManageEmployees,
+      },
+
+      {
+        path: '/update/employee/:employeeId',
+        component: UpdateEmployee,
+        props: (route) => ({
+          employeeId: route.params.employeeId,
+        }),
+      },
+      {
+        path: '/view/employee/:employeeId',
+        component: ViewEmployee,
+        props: (route) => ({
+          employeeId: route.params.employeeId,
         }),
       },
     ],

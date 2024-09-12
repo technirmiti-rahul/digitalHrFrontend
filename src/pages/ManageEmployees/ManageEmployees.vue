@@ -67,7 +67,7 @@ h1 {
       <div class="modal-content">
         <div class="modal-header">
           <h1 class="modal-title fs-5 source-400 text-capitalize" id="ModalLabel">
-            Update Password For {{ updateClient.name }}
+            Update Password For {{ updateEmployee.name }}
           </h1>
           <button
             type="button"
@@ -114,7 +114,7 @@ h1 {
       <div class="modal-content">
         <div class="modal-header border-0">
           <h1 class="modal-title fs-5 source-400 text-capitalize" id="ModalDeleteLabel">
-            Are you sure that you want to delete {{ updateClient.name }}
+            Are you sure that you want to delete {{ updateEmployee.name }}
           </h1>
           <button
             type="button"
@@ -127,7 +127,7 @@ h1 {
         <div class="modal-footer border-0">
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
           <button
-            @click="handleDelete(updateClient.user_id)"
+            @click="handleDelete(updateEmployee.user_id)"
             type="button"
             class="btn btn-primary"
             data-bs-dismiss="modal"
@@ -150,19 +150,19 @@ h1 {
       <div class="modal-content">
         <div class="modal-header border-0 text-capitalize">
           <h1
-            v-if="updateClient.approved == true"
+            v-if="updateEmployee.approved == true"
             class="modal-title fs-5 source-400"
             id="ModalToogleApprovedLabel"
           >
             Are you sure that you want to disapprove
             <span class="text-capitalize">
-              {{ updateClient.name }}
+              {{ updateEmployee.name }}
             </span>
           </h1>
           <h1 v-else class="modal-title fs-5 source-400" id="ModalToogleApprovedLabel">
             Are you sure that you want to approve
             <span class="text-capitalize">
-              {{ updateClient.name }}
+              {{ updateEmployee.name }}
             </span>
           </h1>
           <button
@@ -176,8 +176,8 @@ h1 {
         <div class="modal-footer border-0">
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
           <button
-            v-if="updateClient.approved == true"
-            @click="toggleUserApproved(updateClient.user_id)"
+            v-if="updateEmployee.approved == true"
+            @click="toggleUserApproved(updateEmployee.user_id)"
             type="button"
             class="btn btn-primary"
             data-bs-dismiss="modal"
@@ -186,7 +186,7 @@ h1 {
           </button>
           <button
             v-else
-            @click="toggleUserApproved(updateClient.user_id)"
+            @click="toggleUserApproved(updateEmployee.user_id)"
             type="button"
             class="btn btn-primary"
             data-bs-dismiss="modal"
@@ -209,7 +209,7 @@ h1 {
       <div class="modal-content">
         <div class="modal-header">
           <h1 class="modal-title fs-5 source-400" id="ModalAddMessageLabel">
-            Send notification to {{ updateClient.name }}
+            Send notification to {{ updateEmployee.name }}
           </h1>
           <button
             type="button"
@@ -356,11 +356,6 @@ h1 {
                 placeholder="Type to search"
               />
             </div>
-            <div>
-              <router-link to="/add/client" class="d-flex align-items-center text-decoration-none">
-                <button type="button" class="btn btn-dark source-400">Add Client</button>
-              </router-link>
-            </div>
           </div>
           <div class="table border rounded">
             <div class="w-100">
@@ -376,22 +371,21 @@ h1 {
               >
                 <template #item-actions="item">
                   <div class="d-flex justify-content-evenly">
-                    <div class="table-icon" @click="handleUserUpdate(item._id)">
+                    <div class="table-icon" @click="handleEmployeeUpdate(item._id)">
                       <el-tooltip content="Update User" placement="bottom">
                         <i class="bi bi-pen-fill pointer" style="font-size"></i>
                       </el-tooltip>
                     </div>
 
-                    <div class="table-icon" @click="handleViewUser(item._id)">
+                    <div class="table-icon" @click="handleViewEmployee(item._id)">
                       <el-tooltip content="View User" placement="bottom">
                         <i class="bi bi-eye-fill pointer" style="font-size"></i>
                       </el-tooltip>
                     </div>
 
                     <div
-                      v-if="user.roleType.name == 'super_admin'"
                       class="table-icon"
-                      @click="updateClient = item"
+                      @click="updateEmployee = item"
                       data-bs-toggle="modal"
                       data-bs-target="#ModalDelete"
                     >
@@ -401,18 +395,17 @@ h1 {
                     </div>
 
                     <div
-                      v-if="user.roleType.name == 'super_admin'"
                       data-bs-toggle="modal"
                       data-bs-target="#ModalAddMessage"
-                      @click="updateClient = JSON.parse(JSON.stringify(item))"
+                      @click="updateEmployee = JSON.parse(JSON.stringify(item))"
                       class="table-icon"
                     >
                       <el-tooltip content="Send Notification" placement="bottom">
                         <i class="bi bi-bell-fill pointer" style="font-size"></i>
                       </el-tooltip>
                     </div>
-                    <!--  <div
-                      @click="updateClient = JSON.parse(JSON.stringify(item))"
+                    <div
+                      @click="updateEmployee = JSON.parse(JSON.stringify(item))"
                       data-bs-toggle="modal"
                       data-bs-target="#Modal"
                       class="table-icon"
@@ -420,40 +413,29 @@ h1 {
                       <el-tooltip content="Change Password" placement="bottom">
                         <i class="bi bi-key-fill pointer" style="font-size"></i>
                       </el-tooltip>
-                    </div> -->
+                    </div>
 
                     <div
-                      @click="updateClient = item"
+                      @click="updateEmployee = item"
                       data-bs-toggle="modal"
                       data-bs-target="#ModalToogleApproved"
                       v-if="!item.approved"
                       class="thumbs-down"
                     >
-                      <el-tooltip content="Approve User" placement="bottom">
+                      <el-tooltip content="Approve Employee" placement="bottom">
                         <i class="bi bi-hand-thumbs-down-fill pointer" style="font-size"></i>
                       </el-tooltip>
                     </div>
 
                     <div
-                      @click="updateClient = item"
+                      @click="updateEmployee = item"
                       data-bs-toggle="modal"
                       data-bs-target="#ModalToogleApproved"
                       v-if="item.approved"
                       class="table-icon"
                     >
-                      <el-tooltip content="Disapprove User" placement="bottom">
+                      <el-tooltip content="Disapprove Employee" placement="bottom">
                         <i class="bi bi-hand-thumbs-up-fill pointer" style="font-size"></i>
-                      </el-tooltip>
-                    </div>
-                    <div
-                      @click="updateClient = item"
-                      data-bs-toggle="modal"
-                      data-bs-target="#ModalToogleApproved"
-                      v-if="item.approved"
-                      class="table-icon"
-                    >
-                      <el-tooltip content="Employees" placement="bottom">
-                        <i class="bi bi-people-fill pointer" style="font-size"></i>
                       </el-tooltip>
                     </div>
                   </div>
@@ -480,7 +462,7 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import axiosClient from '../../axiosClient';
 
 export default {
-  name: 'ManageClients',
+  name: 'ManageEmployees',
   components: {
     EasyDataTable,
     Multiselect,
@@ -488,13 +470,13 @@ export default {
 
   data() {
     return {
+      id: '',
       user: {},
       notifications: [],
       headers: [
         { text: 'Name', value: 'name', sortable: true },
         { text: 'Email', value: 'email' },
-        { text: 'Industry Type', value: 'industry_type' },
-        { text: 'Conatact Person', value: 'contact_person.name' },
+        { text: 'Designation', value: 'designation' },
 
         { text: 'Actions', value: 'actions', sortable: false, width: 250 },
       ],
@@ -507,7 +489,7 @@ export default {
         by_user: '',
       },
       newPassword: '',
-      updateClient: {},
+      updateEmployee: {},
       showDeleteModal: false,
 
       search: '',
@@ -524,7 +506,8 @@ export default {
     await this.getCurrent();
 
     try {
-      const res = await axiosClient.get(`/api/v1/client/getall`);
+      const res = await axiosClient.get(`/api/v1/employee/${this.user._id}`);
+      console.log('res.data.data: ', res.data.data);
       this.originalItems = res.data.data;
       const notifications = await axiosClient.get(`/api/v1/notification/getall/${this.user._id}`);
       this.notifications = notifications.data.data;
@@ -570,7 +553,7 @@ export default {
     },
 
     async handleSendMessage() {
-      this.form.to_user = this.updateClient.user_id;
+      this.form.to_user = this.updateEmployee.user_id;
       this.form.by_user = this.user._id;
 
       try {
@@ -588,7 +571,7 @@ export default {
 
     async toggleUserApproved(id) {
       try {
-        const res = await axiosClient.put(`/api/v1/client/app_dis/${id}`);
+        const res = await axiosClient.put(`/api/v1/employee/app_dis/${id}`);
         if (res) {
           toast.success(`Updated Client `, {
             autoClose: 1000,
@@ -621,23 +604,35 @@ export default {
       }
 
       try {
-        const res = await axiosClient.put(`/api/v1/user/change/pass/${this.updateClient._id}`, {
-          password: this.newPassword,
-        });
+        const res = await axiosClient.put(
+          `/api/v1/user/change/pass/${this.updateEmployee.user_id}`,
+          {
+            password: this.newPassword,
+          }
+        );
         if (res) {
-          toast.success(`Updated Role `, {
+          console.log('res: ', res);
+          toast.success(`Password Changed `, {
             autoClose: 1000,
           });
         }
       } catch (err) {
         console.log('error: ', err);
-        toast.error(`Some Thing Went Wrong`);
+        if (err.status == 404) {
+          toast.error(`User Not Found`, {
+            autoClose: 1500,
+          });
+        } else {
+          toast.error(`Some Thing Went Wrong`, {
+            autoClose: 1500,
+          });
+        }
       }
     },
 
     async handleDelete(id) {
       try {
-        const res = await axiosClient.put(`/api/v1/client/delete/${id}`);
+        const res = await axiosClient.delete(`/api/v1/employee/delete/${id}`);
         if (res) {
           toast.success(`Client Deleted`, {
             autoClose: 1000,
@@ -663,12 +658,12 @@ export default {
       );
     },
 
-    handleUserUpdate(id) {
-      this.$router.push(`/update/client/${id}`);
+    handleEmployeeUpdate(id) {
+      this.$router.push(`/update/employee/${id}`);
     },
 
-    handleViewUser(id) {
-      this.$router.push(`/view/client/${id}`);
+    handleViewEmployee(id) {
+      this.$router.push(`/view/employee/${id}`);
     },
 
     async getCurrent() {
