@@ -306,8 +306,10 @@ export default {
         return;
       }
 
-      
-    
+      this.form.team = this.selected_team._id;
+      this.form.roleType = this.selected_roleType._id;
+      this.form.department = this.selected_department._id;
+
       console.log('form: ', this.form);
 
       try {
