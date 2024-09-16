@@ -4,7 +4,7 @@
 
 .form-container {
   width: 100%;
-  max-width: 600px;
+  max-width: 1000px;
   padding: 15px;
   margin: auto;
   background-color: #fff;
@@ -66,7 +66,7 @@
           <form class="form-container border shadow-lg rounded-3">
             <h1 class="text-center source-600 text-dark mb-4">Add Employee</h1>
             <div class="row">
-              <div class="form-group col-12 col-md-6">
+              <div class="form-group col-12 col-sm-6 col-md-4">
                 <label for="name source-500" class="source-500">Name</label>
                 <input
                   v-model="form.name"
@@ -75,6 +75,8 @@
                   id="name"
                   placeholder="Enter name"
                 />
+              </div>
+              <div class="form-group col-12 col-sm-6 col-md-4">
                 <label for="email" class="source-500 mt-2">Email address</label>
                 <input
                   v-model="form.email"
@@ -83,6 +85,18 @@
                   id="email"
                   placeholder="Enter email"
                 />
+              </div>
+              <div class="form-group col-12 col-sm-6 col-md-4">
+                <label for="password" class="source-500 mt-2">Password</label>
+                <input
+                  v-model="form.password"
+                  type="password"
+                  class="form-control border"
+                  id="password"
+                  placeholder="Password"
+                />
+              </div>
+              <div class="form-group col-12 col-sm-6 col-md-4">
                 <label for="pin_code" class="source-500 mt-2">Designation</label>
                 <input
                   v-model="form.designation"
@@ -91,6 +105,8 @@
                   id="pin_code"
                   placeholder="Enter Designation"
                 />
+              </div>
+              <div class="form-group col-12 col-sm-6 col-md-4">
                 <label for="pin_code" class="source-500 mt-2">Pin Code</label>
                 <input
                   v-model="form.pin_code"
@@ -100,6 +116,8 @@
                   id="pin_code"
                   placeholder="Enter pin code"
                 />
+              </div>
+              <div class="form-group col-12 col-sm-6 col-md-4">
                 <label for="state" class="source-500 mt-2">State</label>
                 <input
                   v-model="form.state"
@@ -108,7 +126,8 @@
                   id="state"
                   placeholder="Enter state"
                 />
-
+              </div>
+              <div class="form-group col-12 col-sm-6 col-md-4">
                 <div class="mt-2">
                   <label for="department" class="source-500">Department</label>
                   <multiselect
@@ -119,7 +138,8 @@
                     track-by="name"
                   ></multiselect>
                 </div>
-
+              </div>
+              <div class="form-group col-12 col-sm-6 col-md-4">
                 <div class="mt-2">
                   <label for="team" class="source-500">Team</label>
                   <multiselect
@@ -131,8 +151,9 @@
                   ></multiselect>
                 </div>
               </div>
+
               <!-- ///////////////////////////////////////////// -->
-              <div class="form-group col-12 col-md-6">
+              <div class="form-group col-12 col-sm-6 col-md-4">
                 <label for="phone_number source-500" class="source-500">Phone Number</label>
                 <input
                   v-model="form.whatsapp_no"
@@ -141,15 +162,9 @@
                   id="phone_number"
                   placeholder="Enter phone number"
                 />
+              </div>
 
-                <label for="password" class="source-500 mt-2">Password</label>
-                <input
-                  v-model="form.password"
-                  type="password"
-                  class="form-control border"
-                  id="password"
-                  placeholder="Password"
-                />
+              <div class="form-group col-12 col-sm-6 col-md-4">
                 <label for="date_of_joining" class="source-500 mt-2">Date of Joining</label>
                 <input
                   v-model="form.date_of_joining"
@@ -158,6 +173,8 @@
                   id="date_of_joining"
                   placeholder="Enter date of joining"
                 />
+              </div>
+              <div class="form-group col-12 col-sm-6 col-md-4">
                 <label for="city" class="source-500 mt-2">City</label>
                 <input
                   v-model="form.city"
@@ -166,7 +183,8 @@
                   id="city"
                   placeholder="Enter city"
                 />
-
+              </div>
+              <div class="form-group col-12 col-sm-6 col-md-4">
                 <label for="country" class="source-500 mt-2">Country</label>
                 <input
                   v-model="form.country"
@@ -175,7 +193,8 @@
                   id="country"
                   placeholder="Enter country"
                 />
-
+              </div>
+              <div class="form-group col-12 col-sm-6 col-md-4">
                 <label for="address" class="source-500 mt-2">Address</label>
                 <textarea
                   v-model="form.address"
