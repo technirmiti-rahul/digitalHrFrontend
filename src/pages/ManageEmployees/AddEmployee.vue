@@ -322,7 +322,7 @@ export default {
           });
 
           setTimeout(() => {
-            this.$router.push(`/manage/clients`);
+            this.$router.push(`/manage/employees`);
           }, 2000);
         }
       } catch (err) {
@@ -415,8 +415,9 @@ export default {
     },
 
     async getCurrent() {
+      let token = '';
       try {
-        const token = await axiosClient.get(`api/v1/user/getCurrent/`);
+        token = await axiosClient.get(`api/v1/user/getCurrent/`);
         this.form.client_user_id = token.data.user._id;
         // console.log('Token : ', token);
         //console.log('form.user_id: ', this.form.user_id);
