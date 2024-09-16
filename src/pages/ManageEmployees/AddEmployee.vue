@@ -354,6 +354,13 @@ export default {
         return false;
       }
 
+      let re =
+        /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+      if (!re.test(this.form.email)) {
+        toast.info(`Enter Valid Email`, { autoClose: 1000 });
+        return false;
+      }
+
       if (this.form.password == '') {
         toast.info(`Enter Password`, { autoClose: 1000 });
         return false;
