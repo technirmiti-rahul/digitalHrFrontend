@@ -154,7 +154,7 @@
 
               <!-- ///////////////////////////////////////////// -->
               <div class="form-group col-12 col-sm-6 col-md-4">
-                <label for="phone_number source-500" class="source-500">Phone Number</label>
+                <label for="phone_number source-500 " class="source-500 mt-2">Phone Number</label>
                 <input
                   v-model="form.whatsapp_no"
                   type="number"
