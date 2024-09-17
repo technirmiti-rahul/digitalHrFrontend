@@ -322,7 +322,7 @@ h1 {
   <div class="source-400 pt-2 h-100 scroll">
     <div class="border-bottom px-4 d-flex justify-content-between align-items-center py-2">
       <div>
-        <h5 class="source-500">Manage Clients</h5>
+        <h5 class="source-500 capitalize">Client : {{ client }}</h5>
       </div>
       <div class="">
         <div class="position-relative" data-bs-toggle="modal" data-bs-target="#ModalNotification">
@@ -464,10 +464,21 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import axiosClient from '../../axiosClient';
 
 export default {
-  name: 'ManageEmployees',
+  name: 'EmployeesByClient',
   components: {
     EasyDataTable,
     Multiselect,
+  },
+
+  props: {
+    client: {
+      type: String,
+      required: true,
+    },
+    clientId: {
+      type: String,
+      required: true,
+    },
   },
 
   data() {
@@ -508,7 +519,7 @@ export default {
     await this.getCurrent();
 
     try {
-      const res = await axiosClient.get(`/api/v1/employee/${this.user._id}`);
+      const res = await axiosClient.get(`/api/v1/employee/${this.clientId}`);
       console.log('res.data.data: ', res.data.data);
       this.originalItems = res.data.data;
       const notifications = await axiosClient.get(`/api/v1/notification/getall/${this.user._id}`);

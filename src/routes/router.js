@@ -30,6 +30,7 @@ import AddEmployee from '../pages/ManageEmployees/AddEmployee.vue';
 import UpdateEmployee from '../pages/ManageEmployees/UpdateEmployee.vue';
 import ViewEmployee from '../pages/ManageEmployees/ViewEmployee.vue';
 import ManageEmployees from '../pages/ManageEmployees/ManageEmployees.vue';
+import EmployeesByClient from '../pages/ManageEmployees/EmployeesByClient.vue';
 
 import roughPage from '../pages/roughPage.vue';
 import roughPage2 from '../pages/roughPage2.vue';
@@ -184,6 +185,15 @@ const routes = [
         component: ViewEmployee,
         props: (route) => ({
           employeeId: route.params.employeeId,
+        }),
+      },
+      {
+        path: '/manage/employees/by/client/:client/:clientId',
+        name: 'EmployeesByClient',
+        component: EmployeesByClient,
+        props: (route) => ({
+          clientId: route.params.clientId,
+          client: route.params.client,
         }),
       },
     ],

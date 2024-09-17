@@ -323,6 +323,38 @@ ul {
                       Add Client
                     </div>
                   </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- ////////////////////////////////////////////////Employees/////////////////////////////////////////////////////////// -->
+          <div class="rounded-2 bg overflow-hidden">
+            <div
+              @click="handleRedirect('mannage/employees')"
+              data-bs-toggle="collapse"
+              class="text-light pointer py-1 px-2 d-flex justify-content-between"
+              href="#multiCollapseEmployee"
+              aria-expanded="false"
+              aria-controls="multiCollapseEmployee"
+            >
+              <div>
+                <i
+                  class="bi bi-person-fill text-light mx-2 text_shadow"
+                  style="font-size: 1rem"
+                ></i>
+                Employee
+              </div>
+              <div class="d-flex align-items-center">
+                <i class="bi bi-chevron-down"></i>
+              </div>
+            </div>
+
+            <div class="w-100 bg-transparent rounded-0">
+              <div
+                class="collapse multi-collapse bg-transparent rounded-0"
+                id="multiCollapseEmployee"
+              >
+                <div class="card card-body rounded-2 rounded-0 shadow-lg">
                   <div>
                     <div
                       v-if="glowMenuItem == 'manage/employees'"

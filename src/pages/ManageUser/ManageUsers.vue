@@ -25,7 +25,6 @@
 .main {
 }
 .table-icon {
-  color: rgb(118, 165, 42);
 }
 h1 {
   color: rgb(118, 165, 42);
@@ -377,13 +376,13 @@ h1 {
               >
                 <template v-auto-animate #item-actions="item">
                   <div class="d-flex justify-content-evenly">
-                    <div class="table-icon" @click="handleUserUpdate(item._id)">
+                    <div class="table-icon action_icon_color" @click="handleUserUpdate(item._id)">
                       <el-tooltip content="Update User" placement="bottom">
                         <i class="bi bi-pen-fill pointer" style="font-size"></i>
                       </el-tooltip>
                     </div>
 
-                    <div class="table-icon" @click="handleViewUser(item._id)">
+                    <div class="table-icon action_icon_color" @click="handleViewUser(item._id)">
                       <el-tooltip content="View User" placement="bottom">
                         <i class="bi bi-eye-fill pointer" style="font-size"></i>
                       </el-tooltip>
@@ -391,7 +390,7 @@ h1 {
 
                     <div
                       v-if="user.roleType.name == 'super_admin'"
-                      class="table-icon"
+                      class="table-icon action_icon_color"
                       @click="updateUser = item"
                       data-bs-toggle="modal"
                       data-bs-target="#ModalDelete"
@@ -406,7 +405,7 @@ h1 {
                       data-bs-toggle="modal"
                       data-bs-target="#ModalAddMessage"
                       @click="updateUser = JSON.parse(JSON.stringify(item))"
-                      class="table-icon"
+                      class="table-icon action_icon_color"
                     >
                       <el-tooltip content="Send Notification" placement="bottom">
                         <i class="bi bi-bell-fill pointer" style="font-size"></i>
@@ -416,7 +415,7 @@ h1 {
                       @click="updateUser = JSON.parse(JSON.stringify(item))"
                       data-bs-toggle="modal"
                       data-bs-target="#Modal"
-                      class="table-icon"
+                      class="table-icon action_icon_color"
                     >
                       <el-tooltip content="Change Password" placement="bottom">
                         <i class="bi bi-key-fill pointer" style="font-size"></i>
@@ -440,7 +439,7 @@ h1 {
                       data-bs-toggle="modal"
                       data-bs-target="#ModalToogleApproved"
                       v-if="item.approved"
-                      class="table-icon"
+                      class="table-icon action_icon_color"
                     >
                       <el-tooltip content="Disapprove User" placement="bottom">
                         <i class="bi bi-hand-thumbs-up-fill pointer" style="font-size"></i>
