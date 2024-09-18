@@ -91,8 +91,8 @@ ul {
           <div class="w-100 overflow-x-hidden">
             <div class="text-light font-14px source-600 text-capitalize">{{ user.name }}</div>
             <div class="text-secondary font-14px source-500">{{ user.email }}</div>
-            <div @click="handleLogOut" class="text-secondary font-14px source-500 pointer">
-              Log out
+            <div class="text-secondary font-14px source-500">
+              <span @click="handleLogOut" class="pointer">Log out</span>
             </div>
           </div>
         </div>

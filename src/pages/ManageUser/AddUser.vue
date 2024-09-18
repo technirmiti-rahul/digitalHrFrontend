@@ -39,7 +39,7 @@
 <template>
   <div class="main h-100">
     <div class="border-bottom px-4">
-      <h5 class="pt-2 hind-medium source-500">Add User</h5>
+      <h5 class="pt-2 hind-medium source-500 page-title">Add User</h5>
     </div>
 
     <div class="overflow-y-hidden pb-5 h-100">

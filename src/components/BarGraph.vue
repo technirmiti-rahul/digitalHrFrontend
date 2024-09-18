@@ -25,11 +25,9 @@
 </style>
 
 <template>
-  <div class="main source-400 pt-5 h-100 w-100">
+  <div class="main source-400 w-100">
     <div class="h-100 w-100">
-      <span class="bg-dark">
-        <canvas id="barChart1" class="border rounded"></canvas>
-      </span>
+      <canvas id="barChart"></canvas>
     </div>
   </div>
 </template>
@@ -39,7 +37,7 @@ import Chart from 'chart.js/auto';
 import 'chartjs-plugin-annotation';
 
 export default {
-  name: 'BarGraph',
+  name: 'LineGraph',
 
   props: {
     propsChartData: Object,
@@ -59,11 +57,6 @@ export default {
             text: 'Bar Graph',
           },
         },
-        scales: {
-          x: {
-            barThickness: 5, // Adjusted width of the bars
-          },
-        },
       },
     };
   },
@@ -73,7 +66,7 @@ export default {
   },
 
   mounted() {
-    const ctx = document.getElementById('barChart1').getContext('2d');
+    const ctx = document.getElementById('barChart').getContext('2d');
     new Chart(ctx, {
       type: 'bar',
       data: this.chartData,

@@ -25,7 +25,7 @@
 </style>
 
 <template>
-  <div class="main source-400 pt-5 h-100 w-100">
+  <div class="main source-400 pt-5 w-75">
     <div class="h-100 w-100">
       <canvas id="doughnutChart1"></canvas>
     </div>
@@ -52,7 +52,7 @@ export default {
           },
           title: {
             display: true,
-            text: 'Pie Chart',
+            text: 'Doughnut Chart',
           },
         },
       },

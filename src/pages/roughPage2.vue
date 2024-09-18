@@ -22,6 +22,22 @@
   --easy-table-body-row-font-size: 1rem;
 }
 
+.buttons-pagination .item.button.active[data-v-4c681fa2] {
+  background-color: rgb(179, 104, 120);
+}
+
+.button-pagination {
+  background-color: rgb(25, 26, 25);
+}
+
+.button-pagination div {
+  background-color: rgb(25, 26, 25);
+}
+
+.item {
+  background-color: rgb(25, 26, 25);
+}
+
 .main {
 }
 .table-icon {
@@ -472,8 +488,6 @@ export default {
         item.name.toLowerCase().includes(this.search.toLowerCase())
       );
     },
-
-    
 
     handleUserUpdate(id) {
       this.$router.push(`/update/user/${id}`);

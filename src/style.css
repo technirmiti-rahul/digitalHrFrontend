@@ -25,9 +25,23 @@
 }
 
 .action_icon_color {
-  color: rgb(159, 59, 221);
+  color: rgb(43, 57, 106);
 }
 
 .button_bg {
   background-color: rgb(43, 57, 106);
+}
+
+.button_bg:hover {
+  background-color: rgba(43, 57, 106, 0.918);
+  box-shadow: 4px 4px 6px rgba(0, 0, 0, 0.445);
+  transition: background-color 0.3s ease-out, box-shadow 0.3s ease-out;
+}
+
+.page-title {
+  color: rgb(43, 57, 106);
+}
+
+.modal-title {
+  color: rgb(43, 57, 106);
 }

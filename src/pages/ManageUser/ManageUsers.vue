@@ -26,9 +26,6 @@
 }
 .table-icon {
 }
-h1 {
-  color: rgb(118, 165, 42);
-}
 
 .animated_input {
   height: 3rem;
@@ -65,9 +62,9 @@ h1 {
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
-          <h1 class="modal-title fs-5 source-400 text-capitalize" id="ModalLabel">
+          <h5 class="modal-title source-400 text-capitalize" id="ModalLabel">
             Update Password For {{ updateUser.name }}
-          </h1>
+          </h5>
           <button
             type="button"
             class="btn-close"
@@ -88,11 +85,13 @@ h1 {
           </div>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">
+            Close
+          </button>
           <button
             @click="handleChangePassword"
             type="button"
-            class="btn btn-primary"
+            class="btn text-light border-0 button_bg btn-sm"
             data-bs-dismiss="modal"
           >
             Update
@@ -112,9 +111,9 @@ h1 {
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header border-0">
-          <h1 class="modal-title fs-5 source-400 text-capitalize" id="ModalDeleteLabel">
+          <h5 class="modal-title source-400 text-capitalize" id="ModalDeleteLabel">
             Are you sure that you want to delete {{ updateUser.name }}
-          </h1>
+          </h5>
           <button
             type="button"
             class="btn-close"
@@ -124,11 +123,13 @@ h1 {
         </div>
 
         <div class="modal-footer border-0">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">
+            Close
+          </button>
           <button
             @click="handleDelete(updateUser._id)"
             type="button"
-            class="btn btn-primary"
+            class="btn text-light border-0 button_bg btn-sm"
             data-bs-dismiss="modal"
           >
             Delete
@@ -148,22 +149,22 @@ h1 {
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header border-0 text-capitalize">
-          <h1
+          <h5
             v-if="updateUser.approved == true"
-            class="modal-title fs-5 source-400"
+            class="modal-title source-400"
             id="ModalToogleApprovedLabel"
           >
-            Are you sure that you want to disapprove
+            disapprove
             <span class="text-capitalize">
               {{ updateUser.name }}
             </span>
-          </h1>
-          <h1 v-else class="modal-title fs-5 source-400" id="ModalToogleApprovedLabel">
-            Are you sure that you want to approve
+          </h5>
+          <h5 v-else class="modal-title source-400" id="ModalToogleApprovedLabel">
+            approve
             <span class="text-capitalize">
               {{ updateUser.name }}
             </span>
-          </h1>
+          </h5>
           <button
             type="button"
             class="btn-close"
@@ -173,12 +174,14 @@ h1 {
         </div>
 
         <div class="modal-footer border-0">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">
+            Close
+          </button>
           <button
             v-if="updateUser.approved == true"
             @click="toggleUserApproved(updateUser._id)"
             type="button"
-            class="btn btn-primary"
+            class="btn text-light border-0 button_bg btn-sm"
             data-bs-dismiss="modal"
           >
             Disapprove
@@ -187,7 +190,7 @@ h1 {
             v-else
             @click="toggleUserApproved(updateUser._id)"
             type="button"
-            class="btn btn-primary"
+            class="btn text-light border-0 button_bg btn-sm"
             data-bs-dismiss="modal"
           >
             Approve
@@ -207,9 +210,9 @@ h1 {
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
-          <h1 class="modal-title fs-5 source-400" id="ModalAddMessageLabel">
+          <h5 class="modal-title source-400" id="ModalAddMessageLabel">
             Send notification to {{ updateUser.name }}
-          </h1>
+          </h5>
           <button
             type="button"
             class="btn-close"
@@ -240,14 +243,16 @@ h1 {
           </div>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">
+            Close
+          </button>
           <button
             @click="handleSendMessage"
             type="button"
-            class="btn btn-primary"
+            class="btn text-light border-0 button_bg btn-sm"
             data-bs-dismiss="modal"
           >
-            Update
+            Send
           </button>
         </div>
       </div>
@@ -264,7 +269,7 @@ h1 {
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
-          <h1 class="modal-title fs-5 source-400" id="ModalNotificationLabel">Notification</h1>
+          <h5 class="modal-title source-400" id="ModalNotificationLabel">Notification</h5>
           <button
             type="button"
             class="btn-close"
@@ -312,7 +317,9 @@ h1 {
           </div>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">
+            Close
+          </button>
         </div>
       </div>
     </div>
@@ -322,20 +329,20 @@ h1 {
   <div class="source-400 pt-2 h-100 scroll">
     <div class="border-bottom px-4 d-flex justify-content-between align-items-center py-2">
       <div>
-        <h5 class="source-500">Manage Users</h5>
+        <h5 class="source-500 page-title">Manage Users</h5>
       </div>
       <div class="">
         <div class="position-relative" data-bs-toggle="modal" data-bs-target="#ModalNotification">
-          <i class="bi bi-bell-fill pointer" style="font-size: 1.2rem"></i>
+          <i class="bi bi-bell-fill pointer text-danger" style="font-size: 1.2rem"></i>
           <span
             v-if="notifications.length > 0"
-            class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"
+            class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-dark bg-gradient"
           >
             {{ notifications.length }}
           </span>
           <span
             v-if="notifications.length > 99"
-            class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"
+            class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-dark bg-gradient"
           >
             99+
           </span>

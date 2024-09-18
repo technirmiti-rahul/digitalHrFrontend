@@ -25,7 +25,7 @@
 </style>
 
 <template>
-  <div class="main source-400 pt-5 h-100 w-100">
+  <div class="main source-400 pt-5 w-75">
     <div class="h-100 w-100 d-flex justify-content-center">
       <canvas class="" id="pieChart"></canvas>
     </div>

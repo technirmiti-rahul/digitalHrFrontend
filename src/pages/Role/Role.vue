@@ -70,7 +70,7 @@ h1 {
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
-          <h1 class="modal-title fs-5 source-400" id="ModalLabel">Update team</h1>
+          <h5 class="modal-title source-400" id="ModalLabel">Update team</h5>
           <button
             type="button"
             class="btn-close"
@@ -91,8 +91,16 @@ h1 {
           </div>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-          <button @click="handleUpdate" type="button" class="btn btn-primary">Update</button>
+          <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">
+            Close
+          </button>
+          <button
+            @click="handleUpdate"
+            type="button"
+            class="btn text-light border-0 button_bg btn-sm"
+          >
+            Update
+          </button>
         </div>
       </div>
     </div>
@@ -108,7 +116,7 @@ h1 {
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
-          <h1 class="modal-title fs-5 source-400" id="ModalAddLabel">Add Role</h1>
+          <h5 class="modal-title source-400" id="ModalAddLabel">Add Role</h5>
           <button
             type="button"
             class="btn-close"
@@ -129,8 +137,16 @@ h1 {
           </div>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-          <button @click="handleAddRole" type="button" class="btn btn-primary">Add</button>
+          <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">
+            Close
+          </button>
+          <button
+            @click="handleAddRole"
+            type="button"
+            class="btn text-light border-0 button_bg btn-sm"
+          >
+            Add
+          </button>
         </div>
       </div>
     </div>
@@ -146,9 +162,9 @@ h1 {
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header border-0">
-          <h1 class="modal-title fs-5 source-400 text-capitalize" id="ModalDeleteLabel">
+          <h5 class="modal-title source-400 text-capitalize" id="ModalDeleteLabel">
             Delete Role {{ updateRole.name }}
-          </h1>
+          </h5>
           <button
             type="button"
             class="btn-close"
@@ -158,11 +174,13 @@ h1 {
         </div>
 
         <div class="modal-footer border-0">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">
+            Close
+          </button>
           <button
             @click="handleDelete(updateRole._id)"
             type="button"
-            class="btn btn-primary"
+            class="btn text-light border-0 button_bg btn-sm"
             data-bs-dismiss="modal"
           >
             Delete
@@ -175,7 +193,7 @@ h1 {
   <!-- /////////////////////////////////////////////////////////////////////////////////////////////////////////// -->
   <div class="main source-400 pt-2 h-100 scroll">
     <div class="border-bottom px-3">
-      <h5 class="source-600">Roles</h5>
+      <h5 class="source-600 page-title">Roles</h5>
     </div>
 
     <!-- <div class="overflow-y-hidden pb-5 h-100">
@@ -207,7 +225,7 @@ h1 {
                     data-bs-toggle="modal"
                     data-bs-target="#ModalAdd"
                     type="button"
-                    class="btn btn-primary border-0 button_bg btn-sm source-400"
+                    class="btn text-light border-0 button_bg btn-sm source-400"
                   >
                     Add Role
                   </button>

@@ -25,7 +25,7 @@
 </style>
 
 <template>
-  <div class="main source-400 pt-5 h-100 w-100">
+  <div class="main source-400 w-100">
     <div class="h-100 w-100">
       <canvas id="lineChart"></canvas>
     </div>

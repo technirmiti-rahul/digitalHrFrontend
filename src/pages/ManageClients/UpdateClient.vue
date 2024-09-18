@@ -34,9 +34,7 @@
 
 .form-control {
   background-color: #f8f9fa;
-  border: none;
-  border-radius: 10px;
-  box-shadow: inset 2px 2px 5px #e9ecef, inset -2px -2px 5px #ffffff;
+
   color: #333;
 }
 
@@ -67,7 +65,7 @@
   <div class="main h-100">
     <div class="border-bottom px-4 d-flex justify-content-between">
       <div>
-        <h5 class="pt-2 hind-medium source-500">Update Client</h5>
+        <h5 class="pt-2 hind-medium source-500 page-title">Update Client</h5>
       </div>
       <div class="d-flex align-items-center capitalize source-400">
         <div v-auto-animate class="border-end px-2">

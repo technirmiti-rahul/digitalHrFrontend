@@ -48,7 +48,7 @@
 <template>
   <div v-auto-animate class="main h-100">
     <div class="border-bottom px-4">
-      <h5 class="pt-2 source-500">View User</h5>
+      <h5 class="pt-2 source-500 page-title">View User</h5>
     </div>
 
     <div class="overflow-y-hidden pb-5 h-100">

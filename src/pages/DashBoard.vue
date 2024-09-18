@@ -64,18 +64,30 @@
       <div class="h-100 overflow-y-auto">
         <div class="container py-3">
           <div class="d-flex flex-column flex-md-row gap-1">
-            <div class="left scroll border rounded-4 px-4" id="bar_graph">
+            <div
+              class="left scroll border d-flex justify-content-center align-items-center rounded-4 px-4"
+              id="bar_graph"
+            >
               <BarGraph :propsChartData="graphData" />
             </div>
-            <div class="right scroll border pb-4 rounded-4" id="doughnut">
+            <div
+              class="right scroll border d-flex justify-content-center align-items-center pb-4 rounded-4"
+              id="doughnut"
+            >
               <DoughnutChart :propsChartData="pieData" />
             </div>
           </div>
           <div class="d-flex flex-column flex-md-row gap-1 mt-3">
-            <div class="left scroll border rounded-4 px-4" id="pie">
+            <div
+              class="left scroll border d-flex justify-content-center align-items-center rounded-4 px-4"
+              id="pie"
+            >
               <PieChart :propsChartData="pieData" />
             </div>
-            <div class="right scroll px-3 border pb-4 rounded-4" id="line">
+            <div
+              class="right scroll px-3 border d-flex justify-content-center align-items-center pb-4 rounded-4"
+              id="line"
+            >
               <LineChart :propsChartData="graphData" />
             </div>
           </div>
@@ -113,22 +125,22 @@ export default {
             label: 'Dataset 1',
             data: [12, 19, 3, 5, 2, 3],
             backgroundColor: ['rgba(255, 99, 132, 1)'],
-            borderColor: 'grey',
-            borderRadius: 10,
+
+            borderRadius: 5,
           },
           {
             label: 'Dataset 2',
             data: [5, 3, 12, 7, 19, 3],
             backgroundColor: ['rgba(0, 255, 64, 1)'],
-            borderColor: 'grey',
-            borderRadius: 10,
+
+            borderRadius: 5,
           },
           {
             label: 'Dataset 3',
             data: [7, 6, 10, 15, 14, 5],
             backgroundColor: ['rgba(100 , 0, 255, 1)'],
-            borderColor: 'grey',
-            borderRadius: 10,
+
+            borderRadius: 5,
           },
         ],
       },
