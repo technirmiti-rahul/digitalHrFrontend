@@ -363,7 +363,7 @@ ul {
                     >
                       <i
                         class="bi bi-person-rolodex text-light mx-2 text_shadow"
-                        style="font-size: 1.1rem"
+                        style="font-size: 1rem"
                       ></i>
                       Manage Employees
                     </div>
@@ -372,7 +372,7 @@ ul {
                       class="pointer text-light py-1 px-2 rounded-4 mb-1"
                       @click="handleRedirect('manage/employees')"
                     >
-                      <i class="bi bi-person-rolodex text-light mx-2" style="font-size: 1.1rem"></i>
+                      <i class="bi bi-person-rolodex text-light mx-2" style="font-size: 1rem"></i>
                       Manage Employees
                     </div>
                   </div>
