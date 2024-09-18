@@ -4,12 +4,6 @@
 
 .form-container {
   width: 100%;
-  max-width: 600px;
-  padding: 15px;
-  margin: auto;
-  background-color: #fff;
-  border-radius: 20px;
-  box-shadow: 20px 20px 60px #d9d9d9, -20px -20px 60px #ffffff;
 }
 
 .form-group label {
@@ -17,20 +11,10 @@
 }
 
 .form-control {
-  background-color: #f8f9fa;
+  background-color: #ffffff;
   border: none;
-  border-radius: 10px;
-  box-shadow: inset 2px 2px 5px #e9ecef, inset -2px -2px 5px #ffffff;
+
   color: #333;
-}
-
-.form-control:focus {
-  box-shadow: inset 2px 2px 5px #e9ecef, inset -2px -2px 5px #ffffff, 0 0 10px #007bff;
-}
-
-.btn-primary:hover {
-  background-color: #0056b3;
-  box-shadow: 2px 2px 5px #e9ecef, -2px -2px 5px #ffffff, 0 0 10px #0056b3;
 }
 
 @media (max-width: 576px) {
@@ -59,13 +43,12 @@
     </div>
 
     <div class="overflow-y-hidden pb-5 h-100">
-      <div class="h-100 overflow-y-auto d-flex justify-content-center align-items-center">
-        <div class="container py-3">
-          <form class="form-container border shadow-lg rounded-3">
-            <h1 class="text-center source-600 text-dark mb-4">Add User</h1>
-            <div class="row">
-              <div class="form-group col-12 col-md-6">
-                <label for="name source-500" class="source-500">Name</label>
+      <div class="h-100 overflow-y-auto d-flex justify-content-center">
+        <div class="container">
+          <form class="form-container">
+            <div class="row source-400">
+              <div class="form-group col-12 col-sm-6 col-md-4 col-lg-3">
+                <label for="name source-500" class="">Name</label>
                 <input
                   v-model="form.name"
                   type="text"
@@ -73,7 +56,10 @@
                   id="name"
                   placeholder="Enter name"
                 />
-                <label for="email" class="source-500 mt-2">Email address</label>
+              </div>
+
+              <div class="form-group col-12 col-sm-6 col-md-4 col-lg-3">
+                <label for="email" class="mt-2 mt-sm-2 mt-md-0">Email address</label>
                 <input
                   v-model="form.email"
                   type="email"
@@ -81,7 +67,10 @@
                   id="email"
                   placeholder="Enter email"
                 />
-                <label for="pin_code" class="source-500 mt-2">Pin Code</label>
+              </div>
+
+              <div class="form-group col-12 col-sm-6 col-md-4 col-lg-3">
+                <label for="pin_code" class="mt-2 mt-sm-2 mt-md-0">Pin Code</label>
                 <input
                   v-model="form.pin_code"
                   @input="validatePinCode"
@@ -90,7 +79,10 @@
                   id="pin_code"
                   placeholder="Enter pin code"
                 />
-                <label for="state" class="source-500 mt-2">State</label>
+              </div>
+
+              <div class="form-group col-12 col-sm-6 col-md-4 col-lg-3">
+                <label for="state" class="mt-2 mt-sm-2 mt-lg-0">State</label>
                 <input
                   v-model="form.state"
                   type="text"
@@ -98,9 +90,11 @@
                   id="state"
                   placeholder="Enter state"
                 />
+              </div>
 
-                <div class="mt-2">
-                  <label for="department" class="source-500">Department</label>
+              <div class="form-group col-12 col-sm-6 col-md-4 col-lg-3">
+                <div class="mt-2 mt-sm-2 mt-md-2">
+                  <label for="department" class="">Department</label>
                   <multiselect
                     v-model="selected_department"
                     :options="departments"
@@ -109,9 +103,11 @@
                     track-by="name"
                   ></multiselect>
                 </div>
+              </div>
 
-                <div class="mt-2">
-                  <label for="team" class="source-500">Team</label>
+              <div class="form-group col-12 col-sm-6 col-md-4 col-lg-3">
+                <div class="mt-2 mt-sm-2 mt-md-2">
+                  <label for="team" class="">Team</label>
                   <multiselect
                     v-model="selected_team"
                     :options="teams"
@@ -121,9 +117,10 @@
                   ></multiselect>
                 </div>
               </div>
+
               <!-- ///////////////////////////////////////////// -->
-              <div class="form-group col-12 col-md-6">
-                <label for="phone_number source-500" class="source-500">Phone Number</label>
+              <div class="form-group col-12 col-sm-6 col-md-4 col-lg-3">
+                <label for="phone_number " class="mt-2 mt-sm-2 mt-md-2">Phone Number</label>
                 <input
                   v-model="form.whatsapp_no"
                   type="number"
@@ -131,8 +128,10 @@
                   id="phone_number"
                   placeholder="Enter phone number"
                 />
+              </div>
 
-                <label for="password" class="source-500 mt-2">Password</label>
+              <div class="form-group col-12 col-sm-6 col-md-4 col-lg-3">
+                <label for="password" class="mt-2 mt-sm-2 mt-md-2">Password</label>
                 <input
                   v-model="form.password"
                   type="password"
@@ -140,7 +139,10 @@
                   id="password"
                   placeholder="Password"
                 />
-                <label for="city" class="source-500 mt-2">City</label>
+              </div>
+
+              <div class="form-group col-12 col-sm-6 col-md-4 col-lg-3">
+                <label for="city" class="mt-2 mt-sm-2 mt-md-2">City</label>
                 <input
                   v-model="form.city"
                   type="text"
@@ -148,8 +150,10 @@
                   id="city"
                   placeholder="Enter city"
                 />
+              </div>
 
-                <label for="country" class="source-500 mt-2">Country</label>
+              <div class="form-group col-12 col-sm-6 col-md-4 col-lg-3">
+                <label for="country" class="mt-2 mt-sm-2 mt-md-2">Country</label>
                 <input
                   v-model="form.country"
                   type="text"
@@ -157,9 +161,11 @@
                   id="country"
                   placeholder="Enter country"
                 />
+              </div>
 
-                <div class="mt-2">
-                  <label for="role_type" class="source-500">Role Type</label>
+              <div class="form-group col-12 col-sm-6 col-md-4 col-lg-3">
+                <div class="mt-2 mt-sm-2 mt-md-2">
+                  <label for="role_type" class="">Role Type</label>
                   <multiselect
                     v-model="selected_roleType"
                     :options="roles"
@@ -168,8 +174,10 @@
                     track-by="name"
                   ></multiselect>
                 </div>
+              </div>
 
-                <label for="address" class="source-500 mt-2">Address</label>
+              <div class="form-group col-12 col-sm-6 col-md-4 col-lg-3">
+                <label for="address" class="mt-2 mt-sm-2 mt-md-2">Address</label>
                 <textarea
                   v-model="form.address"
                   type="text"
@@ -183,7 +191,7 @@
               <button
                 @click="handleAddUser"
                 type="button"
-                class="btn bg-dark bg-gradient source-500 text-light mt-4 w-50"
+                class="btn btn-primary border-0 button_bg text-light mt-4 px-5"
               >
                 Add User
               </button>

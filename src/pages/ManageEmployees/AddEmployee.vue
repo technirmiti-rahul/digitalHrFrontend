@@ -4,12 +4,6 @@
 
 .form-container {
   width: 100%;
-  max-width: 1000px;
-  padding: 15px;
-  margin: auto;
-  background-color: #fff;
-  border-radius: 20px;
-  box-shadow: 20px 20px 60px #d9d9d9, -20px -20px 60px #ffffff;
 }
 
 .form-group label {
@@ -17,20 +11,10 @@
 }
 
 .form-control {
-  background-color: #f8f9fa;
+  background-color: #ffffff;
   border: none;
-  border-radius: 10px;
-  box-shadow: inset 2px 2px 5px #e9ecef, inset -2px -2px 5px #ffffff;
+
   color: #333;
-}
-
-.form-control:focus {
-  box-shadow: inset 2px 2px 5px #e9ecef, inset -2px -2px 5px #ffffff, 0 0 10px #007bff;
-}
-
-.btn-primary:hover {
-  background-color: #0056b3;
-  box-shadow: 2px 2px 5px #e9ecef, -2px -2px 5px #ffffff, 0 0 10px #0056b3;
 }
 
 @media (max-width: 576px) {
@@ -59,15 +43,12 @@
     </div>
 
     <div class="overflow-y-hidden pb-5 h-100">
-      <div
-        class="h-100 overflow-y-auto d-flex justify-content-center align-items-start my-auto my-sm-5"
-      >
-        <div class="container py-3">
-          <form class="form-container border shadow-lg rounded-3">
-            <h1 class="text-center source-600 text-dark mb-4">Add Employee</h1>
-            <div class="row">
+      <div class="h-100 overflow-y-auto d-flex justify-content-center align-items-start my-auto">
+        <div class="container">
+          <form class="form-container">
+            <div class="row source-400">
               <div class="form-group col-12 col-sm-6 col-md-4">
-                <label for="name source-500" class="source-500">Name</label>
+                <label for="name " class="">Name</label>
                 <input
                   v-model="form.name"
                   type="text"
@@ -77,7 +58,7 @@
                 />
               </div>
               <div class="form-group col-12 col-sm-6 col-md-4">
-                <label for="email" class="source-500 mt-2">Email address</label>
+                <label for="email" class="mt-2">Email address</label>
                 <input
                   v-model="form.email"
                   type="email"
@@ -87,7 +68,7 @@
                 />
               </div>
               <div class="form-group col-12 col-sm-6 col-md-4">
-                <label for="password" class="source-500 mt-2">Password</label>
+                <label for="password" class="mt-2">Password</label>
                 <input
                   v-model="form.password"
                   type="password"
@@ -97,7 +78,7 @@
                 />
               </div>
               <div class="form-group col-12 col-sm-6 col-md-4">
-                <label for="pin_code" class="source-500 mt-2">Designation</label>
+                <label for="pin_code" class="mt-2">Designation</label>
                 <input
                   v-model="form.designation"
                   type="text"
@@ -107,7 +88,7 @@
                 />
               </div>
               <div class="form-group col-12 col-sm-6 col-md-4">
-                <label for="pin_code" class="source-500 mt-2">Pin Code</label>
+                <label for="pin_code" class="mt-2">Pin Code</label>
                 <input
                   v-model="form.pin_code"
                   @input="validatePinCode"
@@ -118,7 +99,7 @@
                 />
               </div>
               <div class="form-group col-12 col-sm-6 col-md-4">
-                <label for="state" class="source-500 mt-2">State</label>
+                <label for="state" class="mt-2">State</label>
                 <input
                   v-model="form.state"
                   type="text"
@@ -129,7 +110,7 @@
               </div>
               <div class="form-group col-12 col-sm-6 col-md-4">
                 <div class="mt-2">
-                  <label for="department" class="source-500">Department</label>
+                  <label for="department" class="">Department</label>
                   <multiselect
                     v-model="selected_department"
                     :options="departments"
@@ -141,7 +122,7 @@
               </div>
               <div class="form-group col-12 col-sm-6 col-md-4">
                 <div class="mt-2">
-                  <label for="team" class="source-500">Team</label>
+                  <label for="team" class="">Team</label>
                   <multiselect
                     v-model="selected_team"
                     :options="teams"
@@ -154,7 +135,7 @@
 
               <!-- ///////////////////////////////////////////// -->
               <div class="form-group col-12 col-sm-6 col-md-4">
-                <label for="phone_number source-500 " class="source-500 mt-2">Phone Number</label>
+                <label for="phone_number  " class="mt-2">Phone Number</label>
                 <input
                   v-model="form.whatsapp_no"
                   type="number"
@@ -165,7 +146,7 @@
               </div>
 
               <div class="form-group col-12 col-sm-6 col-md-4">
-                <label for="date_of_joining" class="source-500 mt-2">Date of Joining</label>
+                <label for="date_of_joining" class="mt-2">Date of Joining</label>
                 <input
                   v-model="form.date_of_joining"
                   type="date"
@@ -175,7 +156,7 @@
                 />
               </div>
               <div class="form-group col-12 col-sm-6 col-md-4">
-                <label for="city" class="source-500 mt-2">City</label>
+                <label for="city" class="mt-2">City</label>
                 <input
                   v-model="form.city"
                   type="text"
@@ -185,7 +166,7 @@
                 />
               </div>
               <div class="form-group col-12 col-sm-6 col-md-4">
-                <label for="country" class="source-500 mt-2">Country</label>
+                <label for="country" class="mt-2">Country</label>
                 <input
                   v-model="form.country"
                   type="text"
@@ -195,7 +176,7 @@
                 />
               </div>
               <div class="form-group col-12 col-sm-6 col-md-4">
-                <label for="address" class="source-500 mt-2">Address</label>
+                <label for="address" class="mt-2">Address</label>
                 <textarea
                   v-model="form.address"
                   type="text"
@@ -209,7 +190,7 @@
               <button
                 @click="handleAddEmployee"
                 type="button"
-                class="btn bg-dark bg-gradient source-500 text-light mt-4 px-5"
+                class="btn btn-primary border-0 button_bg source-500 text-light mt-4 px-5"
               >
                 Add Employee
               </button>

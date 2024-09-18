@@ -44,11 +44,6 @@
   box-shadow: inset 2px 2px 5px #e9ecef, inset -2px -2px 5px #ffffff, 0 0 10px #007bff;
 }
 
-.btn-primary:hover {
-  background-color: #0056b3;
-  box-shadow: 2px 2px 5px #e9ecef, -2px -2px 5px #ffffff, 0 0 10px #0056b3;
-}
-
 @media (max-width: 576px) {
 }
 
@@ -104,19 +99,15 @@
           v-auto-animate
           class="container h-100 py-3 d-flex justify-content-center align-items-start align-items-sm-center"
         >
-          <form
-            v-if="formPage == 1"
-            v-auto-animate
-            class="form-container border shadow-lg rounded-3"
-          >
+          <form v-if="formPage == 1" v-auto-animate class="form-container border rounded-3">
             <div class="d-flex justify-content-center">
               <div class="w-100">
                 <h4 class="text-center source-600 text-dark mb-4">Client Information</h4>
               </div>
             </div>
-            <div class="row">
+            <div class="row source-400">
               <div class="form-group col-12 col-sm-6 col-lg-4">
-                <label for="name source-500" class="source-500">
+                <label for="name source-500" class="">
                   Name
                   <span class="text-danger">*</span>
                 </label>
@@ -129,7 +120,7 @@
                 />
               </div>
               <div class="form-group col-12 col-sm-6 col-lg-4">
-                <label for="email" class="source-500 mt-2 mt-sm-0">
+                <label for="email" class="mt-2 mt-sm-0">
                   Email Address
                   <span class="text-danger">*</span>
                 </label>
@@ -144,7 +135,7 @@
               </div>
 
               <div class="form-group col-12 col-sm-6 col-lg-4">
-                <label for="phone_number source-500" class="source-500 mt-2 mt-sm-0">
+                <label for="phone_number source-500" class="mt-2 mt-sm-0">
                   WhatsApp Number
                   <span class="text-danger">*</span>
                 </label>
@@ -157,7 +148,7 @@
                 />
               </div>
               <div class="form-group col-12 col-sm-6 col-lg-4">
-                <label for="pin_code" class="source-500 mt-2">
+                <label for="pin_code" class="mt-2">
                   Pin Code
                   <span class="text-danger">*</span>
                 </label>
@@ -171,7 +162,7 @@
                 />
               </div>
               <div class="form-group col-12 col-sm-6 col-lg-4">
-                <label for="state" class="source-500 mt-2">
+                <label for="state" class="mt-2">
                   State
                   <span class="text-danger">*</span>
                 </label>
@@ -185,7 +176,7 @@
               </div>
 
               <div class="form-group col-12 col-sm-6 col-lg-4">
-                <label for="city" class="source-500 mt-2">
+                <label for="city" class="mt-2">
                   City
                   <span class="text-danger">*</span>
                 </label>
@@ -198,7 +189,7 @@
                 />
               </div>
               <div class="form-group col-12 col-sm-6 col-lg-4">
-                <label for="country" class="source-500 mt-2">
+                <label for="country" class="mt-2">
                   Country
                   <span class="text-danger">*</span>
                 </label>
@@ -212,7 +203,7 @@
               </div>
 
               <div class="form-group col-12 col-sm-6 col-lg-4">
-                <label for="address" class="source-500 mt-2">
+                <label for="address" class="mt-2">
                   Address
                   <span class="text-danger">*</span>
                 </label>
@@ -231,18 +222,14 @@
                 v-if="formPage == 1"
                 @click="validateFormPage1"
                 type="button"
-                class="btn bg-dark bg-gradient source-500 text-light mt-4 px-5"
+                class="btn btn-primary border-0 button_bg source-500 text-light mt-4 px-5"
               >
                 Next
               </button>
             </div>
           </form>
           <!-- /////////////////////////////////////////////////////////////////////// -->
-          <form
-            v-if="formPage == 2"
-            v-auto-animate
-            class="form-container2 border shadow-lg rounded-3"
-          >
+          <form v-if="formPage == 2" v-auto-animate class="form-container2 border rounded-3">
             <div class="d-flex justify-content-center">
               <div class="ps-3">
                 <i @click="formPage = 1" class="bi bi-arrow-left icon-font-2 pointer"></i>
@@ -252,9 +239,9 @@
               </div>
             </div>
 
-            <div class="row">
+            <div class="row source-400">
               <div class="form-group col-12 col-sm-6">
-                <label for="pan_card" class="source-500 mt-2">
+                <label for="pan_card" class="mt-2">
                   Pan Card
                   <span class="text-danger">*</span>
                 </label>
@@ -267,7 +254,7 @@
                 />
               </div>
               <div class="form-group col-12 col-sm-6">
-                <label for="gst_no" class="source-500 mt-2">GST Number</label>
+                <label for="gst_no" class="mt-2">GST Number</label>
                 <input
                   v-model="form.gst_no"
                   type="text"
@@ -278,7 +265,7 @@
               </div>
 
               <div class="form-group col-12 col-sm-6">
-                <label for="adhar_card" class="source-500 mt-2">
+                <label for="adhar_card" class="mt-2">
                   Adhar Card
                   <span class="text-danger">*</span>
                 </label>
@@ -292,7 +279,7 @@
               </div>
 
               <div class="form-group col-12 col-sm-6">
-                <label for="cin_no" class="source-500 mt-2">CIN Number</label>
+                <label for="cin_no" class="mt-2">CIN Number</label>
                 <input
                   v-model="form.cin_no"
                   type="text"
@@ -303,7 +290,7 @@
               </div>
               <div class="form-group col-12 col-sm-6">
                 <div class="mt-3">
-                  <label for="incorporation_type" class="source-500">
+                  <label for="incorporation_type" class="">
                     Incorporation Type
                     <span class="text-danger">*</span>
                   </label>
@@ -317,7 +304,7 @@
               </div>
               <div class="form-group col-12 col-sm-6">
                 <div class="mt-3">
-                  <label for="industry_type" class="source-500">
+                  <label for="industry_type" class="">
                     Industry Type
                     <span class="text-danger">*</span>
                   </label>
@@ -329,7 +316,7 @@
                 </div>
               </div>
               <div class="form-group col-12 col-sm-6">
-                <label for="pan_card" class="source-500 mt-2">
+                <label for="pan_card" class="mt-2">
                   Number Of Employees
                   <span class="text-danger">*</span>
                 </label>
@@ -348,18 +335,14 @@
                 v-if="formPage == 2"
                 @click="validateFormPage2"
                 type="button"
-                class="btn bg-dark bg-gradient source-500 text-light mt-4 px-5"
+                class="btn btn-primary border-0 button_bg source-500 text-light mt-4 px-5"
               >
                 Next
               </button>
             </div>
           </form>
           <!-- /////////////////////////////////////////////////////////////////////// -->
-          <form
-            v-if="formPage == 3"
-            v-auto-animate
-            class="form-container2 border shadow-lg rounded-3"
-          >
+          <form v-if="formPage == 3" v-auto-animate class="form-container2 border rounded-3">
             <div class="d-flex justify-content-center">
               <div class="ps-3">
                 <i @click="formPage = 2" class="bi bi-arrow-left icon-font-2 pointer"></i>
@@ -369,9 +352,9 @@
               </div>
             </div>
 
-            <div class="row">
+            <div class="row source-400">
               <div class="form-group col-12 col-md-6">
-                <label for="contact_person.name" class="source-500 mt-2">
+                <label for="contact_person.name" class="mt-2">
                   Conatact Name
                   <span class="text-danger">*</span>
                 </label>
@@ -382,7 +365,7 @@
                   id="contact_person.name"
                   placeholder="Enter Contact Name"
                 />
-                <label for="contact_person.contact_no" class="source-500 mt-2">
+                <label for="contact_person.contact_no" class="mt-2">
                   Conatct Number
                   <span class="text-danger">*</span>
                 </label>
@@ -395,7 +378,7 @@
                 />
               </div>
               <div class="form-group col-12 col-md-6">
-                <label for="contact_person.email" class="source-500 mt-2">
+                <label for="contact_person.email" class="mt-2">
                   Conatct Email
                   <span class="text-danger">*</span>
                 </label>
@@ -406,7 +389,7 @@
                   id="contact_person.email"
                   placeholder="Enter Conatct Email "
                 />
-                <label for="contact_person.designation" class="source-500 mt-2">
+                <label for="contact_person.designation" class="mt-2">
                   Contact Designation
                   <span class="text-danger">*</span>
                 </label>
@@ -425,7 +408,7 @@
                 v-if="formPage == 3"
                 @click="handleUpadateClient"
                 type="button"
-                class="btn bg-dark bg-gradient source-500 text-light mt-4 px-5"
+                class="btn btn-primary border-0 button_bg source-500 text-light mt-4 px-5"
               >
                 Update Client
               </button>
@@ -439,7 +422,7 @@
             <div class="row mb-4">
               <div class="form-group col-12 col-md-6">
                 <div class="">
-                  <label for="incorporation_type" class="source-500">Select Document Type</label>
+                  <label for="incorporation_type" class="">Select Document Type</label>
                   <multiselect
                     class="text-capitalize"
                     v-model="form.document_type"
@@ -451,7 +434,7 @@
               <div class="form-group col-12 col-md-6 d-flex justify-content-end">
                 <div class="d-flex gap-4 w-100">
                   <div class="d-flex align-items-end w-100">
-                    <label for="formFile" class="source-500"></label>
+                    <label for="formFile" class=""></label>
                     <input
                       class="form-control"
                       accept="image/png, image/jpeg, application/pdf"

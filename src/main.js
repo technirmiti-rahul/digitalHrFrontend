@@ -1,5 +1,6 @@
 import { createApp } from 'vue';
 import router from './routes/router.js';
+import './fontStyle.css';
 import './style.css';
 import 'bootstrap-icons/font/bootstrap-icons.css';
 import App from './App.vue';

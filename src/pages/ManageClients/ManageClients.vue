@@ -355,11 +355,6 @@ h1 {
                 placeholder="Type to search"
               />
             </div>
-            <div>
-              <router-link to="/add/client" class="d-flex align-items-center text-decoration-none">
-                <button type="button" class="btn btn-dark source-400">Add Client</button>
-              </router-link>
-            </div>
           </div>
           <div class="table border rounded">
             <div class="w-100">
@@ -521,14 +516,19 @@ export default {
   async created() {
     await this.getCurrent();
 
-    try {
-      const res = await axiosClient.get(`/api/v1/client/getall`);
-      this.originalItems = res.data.data;
-      const notifications = await axiosClient.get(`/api/v1/notification/getall/${this.user._id}`);
-      this.notifications = notifications.data.data;
-      console.log(' this.notifications: ', this.notifications);
-    } catch (err) {
-      console.log('error: ', err);
+    console.log('this.user: ', this.user);
+    if (this.user.roleType.name == 'super_admin') {
+      try {
+        const res = await axiosClient.get(`/api/v1/client/getall`);
+        this.originalItems = res.data.data;
+        const notifications = await axiosClient.get(`/api/v1/notification/getall/${this.user._id}`);
+        this.notifications = notifications.data.data;
+        console.log(' this.notifications: ', this.notifications);
+      } catch (err) {
+        console.log('error: ', err);
+      }
+    } else {
+      this.originalItems = [this.user];
     }
 
     this.items = this.originalItems;
@@ -681,7 +681,6 @@ export default {
           this.$router.push('/login');
         }
         this.user = token.data.user;
-        console.log(' this.user : ', this.user);
       } catch (err) {
         console.log('error: ', err);
         this.$router.push('/login');

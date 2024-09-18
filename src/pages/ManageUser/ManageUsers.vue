@@ -357,7 +357,9 @@ h1 {
             </div>
             <div>
               <router-link to="/add/user" class="d-flex align-items-center text-decoration-none">
-                <button type="button" class="btn btn-dark source-400">Add User</button>
+                <button type="button" class="btn btn-primary border-0 button_bg source-400">
+                  Add User
+                </button>
               </router-link>
             </div>
           </div>

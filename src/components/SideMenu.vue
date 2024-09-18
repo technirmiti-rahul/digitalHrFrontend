@@ -125,7 +125,7 @@ ul {
             </div>
           </div>
 
-          <div class="rounded-2 bg overflow-hidden">
+          <div class="rounded-2 bg overflow-hidden" v-if="role == 'super_admin'">
             <div
               @click="handleRedirect('mannage/users')"
               data-bs-toggle="collapse"
@@ -432,6 +432,7 @@ export default {
     return {
       offcanvas: null,
       user: {},
+      role: '',
       profile: '',
       glowMenuItem: 'dashboard',
       bootstrap: {
@@ -540,7 +541,8 @@ export default {
           this.$router.push('/login');
         }
         this.user = token.data.user;
-        console.log('User : ', this.user);
+        this.role = token.data.user.roleType.name;
+        console.log('User : ', this.user, ' role : ', this.role);
       } catch (err) {
         console.log('error: ', err);
         this.$router.push('/login');

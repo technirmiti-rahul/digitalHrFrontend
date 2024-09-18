@@ -18,7 +18,6 @@
 }
 
 .table-icon {
-  color: rgb(118, 165, 42);
 }
 h1 {
   color: rgb(118, 165, 42);
@@ -195,7 +194,7 @@ h1 {
                     data-bs-toggle="modal"
                     data-bs-target="#ModalAdd"
                     type="button"
-                    class="btn btn-dark btn-sm source-400"
+                    class="btn btn-primary border-0 button_bg btn-sm source-400"
                   >
                     Add New
                   </button>
@@ -215,7 +214,7 @@ h1 {
                     <template #item-actions="item">
                       <div class="d-flex justify-content-evenly">
                         <div
-                          class="table-icon w-100"
+                          class="table-icon action_icon_color w-100"
                           @click="updateDepartment = item"
                           data-bs-toggle="modal"
                           data-bs-target="#Modal"
@@ -226,7 +225,7 @@ h1 {
                         </div>
 
                         <div
-                          class="table-icon w-100"
+                          class="table-icon action_icon_color w-100"
                           @click="updateDepartment = item"
                           data-bs-toggle="modal"
                           data-bs-target="#ModalDelete"
