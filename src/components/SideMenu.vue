@@ -475,8 +475,9 @@ export default {
       if (link == 'dashboard') {
         this.glowMenuItem = 'dashboard';
 
-        const route = this.$router.resolve(`/${link}`);
-        window.open(route.href, '_blank');
+        /*  const route = this.$router.resolve(`/${link}`);
+        window.open(route.href, '_blank'); */
+        this.$router.push(`/${link}`);
         localStorage.setItem('currPage', link);
         return;
       }
