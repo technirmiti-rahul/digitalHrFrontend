@@ -127,7 +127,6 @@ ul {
 
           <div class="rounded-2 bg overflow-hidden" v-if="role == 'super_admin'">
             <div
-              @click="handleRedirect('mannage/users')"
               data-bs-toggle="collapse"
               class="text-light pointer py-1 px-2 d-flex justify-content-between"
               href="#multiCollapseUser"
@@ -248,7 +247,6 @@ ul {
           <!-- ////////////////Clients////////////////// -->
           <div class="rounded-2 bg overflow-hidden">
             <div
-              @click="handleRedirect('mannage/users')"
               data-bs-toggle="collapse"
               class="text-light pointer py-1 px-2 d-flex justify-content-between"
               href="#multiCollapseClient"
@@ -330,7 +328,6 @@ ul {
           <!-- ////////////////////////////////////////////////Employees/////////////////////////////////////////////////////////// -->
           <div class="rounded-2 bg overflow-hidden">
             <div
-              @click="handleRedirect('mannage/employees')"
               data-bs-toggle="collapse"
               class="text-light pointer py-1 px-2 d-flex justify-content-between"
               href="#multiCollapseEmployee"
@@ -376,7 +373,7 @@ ul {
                       Manage Employees
                     </div>
                   </div>
-                  <div>
+                  <div v-if="role != 'super_admin'">
                     <div
                       v-if="
                         glowMenuItem == 'add/employee' || glowMenuItem.match(/^add\/employee\/.*/)
@@ -402,7 +399,48 @@ ul {
                       Add Employee
                     </div>
                   </div>
+                  <div>
+                    <div
+                      v-if="glowMenuItem == 'upload/xl'"
+                      class="pointer selected text-light py-1 px-2 rounded-4 mb-1"
+                      @click="handleRedirect('upload/xl')"
+                    >
+                      <i
+                        class="bi bi-file-earmark-spreadsheet-fill text-light mx-2 text_shadow"
+                        style="font-size: 1rem"
+                      ></i>
+                      Upload Xl
+                    </div>
+                    <div
+                      v-else
+                      class="pointer text-light py-1 px-2 rounded-4 mb-1"
+                      @click="handleRedirect('upload/xl')"
+                    >
+                      <i
+                        class="bi bi-file-earmark-spreadsheet-fill text-light mx-2"
+                        style="font-size: 1rem"
+                      ></i>
+                      Upload Xl
+                    </div>
+                  </div>
+                  <div
+                    v-if="glowMenuItem == 'employee/attendance'"
+                    class="pointer selected text-light py-1 px-2 rounded-4 mb-1"
+                    @click="handleRedirect('employee/attendance')"
+                  >
+                    <i class="bi bi-table text-light mx-2 text_shadow" style="font-size: 1rem"></i>
+                    Employee Attendance
+                  </div>
+                  <div
+                    v-else
+                    class="pointer text-light py-1 px-2 rounded-4 mb-1"
+                    @click="handleRedirect('employee/attendance')"
+                  >
+                    <i class="bi bi-table text-light mx-2" style="font-size: 1rem"></i>
+                    Employee Attendance
+                  </div>
                 </div>
+                <div></div>
               </div>
             </div>
           </div>
@@ -472,11 +510,14 @@ export default {
 
     handleRedirect(link) {
       console.log('link: ', link);
-      if (link == 'dashboard') {
+      this.glowMenuItem = link;
+
+      this.$router.push(`/${link}`);
+      localStorage.setItem('currPage', link);
+      /* if (link == 'dashboard') {
         this.glowMenuItem = 'dashboard';
 
-        /*  const route = this.$router.resolve(`/${link}`);
-        window.open(route.href, '_blank'); */
+       
         this.$router.push(`/${link}`);
         localStorage.setItem('currPage', link);
         return;
@@ -532,6 +573,20 @@ export default {
         localStorage.setItem('currPage', link);
         return;
       }
+
+      if (link == 'upload/xl') {
+        this.glowMenuItem = 'upload/xl';
+        this.$router.push(`/${link}`);
+        localStorage.setItem('currPage', link);
+        return;
+      }
+
+      if (link == 'employee/attandance') {
+        this.glowMenuItem = 'employee/attandance';
+        this.$router.push(`/${link}`);
+        localStorage.setItem('currPage', link);
+        return;
+      } */
     },
 
     async getCurrent() {

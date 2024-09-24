@@ -33,11 +33,6 @@
   box-shadow: inset 2px 2px 5px #e9ecef, inset -2px -2px 5px #ffffff, 0 0 10px #007bff;
 }
 
-.btn-primary:hover {
-  background-color: #0056b3;
-  box-shadow: 2px 2px 5px #e9ecef, -2px -2px 5px #ffffff, 0 0 10px #0056b3;
-}
-
 @media (max-width: 576px) {
 }
 
@@ -85,7 +80,7 @@
         <button
           type="button"
           @click="handleLogin"
-          class="btn bg-dark bg-gradient hind-medium text-light w-100 mt-4"
+          class="btn btn-primary border-0 button_bg hind-medium text-light w-100 mt-4"
         >
           Login
         </button>

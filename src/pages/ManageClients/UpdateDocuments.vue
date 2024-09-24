@@ -28,11 +28,6 @@
   box-shadow: inset 2px 2px 5px #e9ecef, inset -2px -2px 5px #ffffff, 0 0 10px #007bff;
 }
 
-.btn-primary:hover {
-  background-color: #0056b3;
-  box-shadow: 2px 2px 5px #e9ecef, -2px -2px 5px #ffffff, 0 0 10px #0056b3;
-}
-
 @media (max-width: 576px) {
 }
 
@@ -242,7 +237,7 @@
                 <button
                   @click="uploadFile"
                   type="button"
-                  class="btn bg-dark bg-gradient source-500 text-light mt-4 px-3"
+                  class="btn btn-primary border-0 button_bg source-500 text-light mt-4 px-3"
                 >
                   <span v-if="documentUploaded == false">Update Document</span>
                   <span v-else>Add Another</span>
@@ -250,7 +245,7 @@
                 <router-link to="/manage/clients" v-if="documentUploaded == true">
                   <button
                     type="button"
-                    class="btn bg-dark bg-gradient source-500 text-light mt-4 px-3"
+                    class="btn btn-primary border-0 button_bg source-500 text-light mt-4 px-3"
                   >
                     <span>Done</span>
                   </button>

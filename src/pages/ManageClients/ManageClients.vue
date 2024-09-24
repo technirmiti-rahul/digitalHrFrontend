@@ -463,6 +463,15 @@
                         <i class="bi bi-people-fill pointer" style="font-size"></i>
                       </el-tooltip>
                     </div>
+                    <div
+                      @click="$router.push(`/add/employee/by/super/admin/${item._id}`)"
+                      v-if="user.roleType.name == 'super_admin'"
+                      class="table-icon action_icon_color"
+                    >
+                      <el-tooltip content="Add Employee" placement="bottom">
+                        <i class="bi bi-person-plus-fill pointer"></i>
+                      </el-tooltip>
+                    </div>
                   </div>
                 </template>
               </EasyDataTable>

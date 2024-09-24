@@ -31,6 +31,9 @@ import UpdateEmployee from '../pages/ManageEmployees/UpdateEmployee.vue';
 import ViewEmployee from '../pages/ManageEmployees/ViewEmployee.vue';
 import ManageEmployees from '../pages/ManageEmployees/ManageEmployees.vue';
 import EmployeesByClient from '../pages/ManageEmployees/EmployeesByClient.vue';
+import AddEmployeeBySuperAdmin from '../pages/ManageEmployees/AddEmployeeBySuperAdmin.vue';
+import UploadXl from '../pages/ManageEmployees/UploadXl.vue';
+import EmployeeAttendance from '../pages/ManageEmployees/EmployeeAttendance.vue';
 
 import roughPage from '../pages/roughPage.vue';
 import roughPage2 from '../pages/roughPage2.vue';
@@ -142,6 +145,10 @@ const routes = [
         }),
       },
       {
+        path: '/documents',
+        component: UpdateDocuments,
+      },
+      {
         path: '/update/client/:clientId',
         component: UpdateClient,
         props: (route) => ({
@@ -157,6 +164,11 @@ const routes = [
       },
 
       {
+        path: '/upload/Xl',
+        component: UploadXl,
+      },
+
+      {
         path: '/add/employee',
         component: AddEmployee,
       },
@@ -169,8 +181,20 @@ const routes = [
       },
 
       {
+        path: '/add/employee/by/super/admin/:clientId',
+        component: AddEmployeeBySuperAdmin,
+        props: (route) => ({
+          clientId: route.params.clientId,
+        }),
+      },
+
+      {
         path: '/manage/employees',
         component: ManageEmployees,
+      },
+      {
+        path: '/employee/attendance',
+        component: EmployeeAttendance,
       },
 
       {

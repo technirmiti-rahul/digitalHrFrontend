@@ -364,7 +364,7 @@ h1 {
                 placeholder="Type to search"
               />
             </div>
-            <div>
+            <div v-if="role != 'super_admin'">
               <router-link
                 to="/add/employee"
                 class="d-flex align-items-center text-decoration-none"
@@ -493,6 +493,8 @@ export default {
     return {
       id: '',
       user: {},
+      role: '',
+
       notifications: [],
       headers: [
         { text: 'Name', value: 'name', sortable: true },
@@ -690,6 +692,10 @@ export default {
     async getCurrent() {
       try {
         const token = await axiosClient.get(`api/v1/user/getCurrent/`);
+
+        this.user = token.data.user;
+        this.role = this.user.roleType.name;
+        //console.log('user', this.user, ' this.role ', this.role);
         if (!token) {
           this.$router.push('/login');
         }

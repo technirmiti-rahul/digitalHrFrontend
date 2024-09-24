@@ -578,6 +578,7 @@ export default {
       event.returnValue = 'Are you sure you want to go back?';
       window.history.pushState(null, null, null);
     },
+
     async validatePinCode() {
       /* if (this.form.pin_code.length >= 6) {
         try {
