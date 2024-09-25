@@ -64,7 +64,7 @@ h1 {
   <div class="source-400 pt-2 h-100 scroll">
     <div class="border-bottom px-4 d-flex justify-content-between align-items-center py-2">
       <div>
-        <h5 class="source-500 page-title">Manage Clients</h5>
+        <h5 class="source-500 page-title">Employee Attendance</h5>
       </div>
       <div class="">
         <div class="position-relative" data-bs-toggle="modal" data-bs-target="#ModalNotification">
@@ -98,7 +98,7 @@ h1 {
               />
             </div>
             <div class="d-flex justify-content-center align-items-center gap-2">
-              <div>
+              <div :key="renderKey">
                 <VueDatePicker v-model="month_year" month-picker />
               </div>
               <div>
@@ -209,14 +209,17 @@ export default {
       this.originalItems = res.data.AttendanceData;
       const temp = res.data.month_year.split('/');
       this.month = temp[0];
-      this.month_year = res.data.month_year;
+      this.month_year.month = temp[0];
+      this.month_year.year = temp[1];
+      console.log('month_year: ', this.month_year, ' temp : ', temp);
+      this.renderKey++;
     } catch (err) {
       console.log('error: ', err);
     }
 
     this.items = this.originalItems;
 
-    console.log('Users: ', this.items);
+    console.log('employee: ', this.items);
   },
 
   mounted() {
