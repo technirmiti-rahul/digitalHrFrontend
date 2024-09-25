@@ -97,10 +97,7 @@ h1 {
                 placeholder="Type to search"
               />
             </div>
-            <div
-              v-if="role != 'super_admin'"
-              class="d-flex justify-content-center align-items-center gap-2"
-            >
+            <div class="d-flex justify-content-center align-items-center gap-2">
               <div>
                 <VueDatePicker v-model="month_year" month-picker />
               </div>
