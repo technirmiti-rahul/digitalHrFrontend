@@ -124,9 +124,9 @@ h1 {
                 border-cell
                 buttons-pagination
               >
-                <template #item-present="item">
+                <template #item-absent="item">
                   <div>
-                    {{ months[month - 1].days - item.absent }}
+                    {{ months[month - 1].days - item.present }}
                   </div>
                 </template>
               </EasyDataTable>
