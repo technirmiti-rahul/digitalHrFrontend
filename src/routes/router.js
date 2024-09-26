@@ -34,6 +34,7 @@ import EmployeesByClient from '../pages/ManageEmployees/EmployeesByClient.vue';
 import AddEmployeeBySuperAdmin from '../pages/ManageEmployees/AddEmployeeBySuperAdmin.vue';
 import UploadXl from '../pages/ManageEmployees/UploadXl.vue';
 import EmployeeAttendance from '../pages/ManageEmployees/EmployeeAttendance.vue';
+import ManageAttendance from '../pages/ManageEmployees/ManageAttendance.vue';
 
 import roughPage from '../pages/roughPage.vue';
 import roughPage2 from '../pages/roughPage2.vue';
@@ -193,8 +194,15 @@ const routes = [
         component: ManageEmployees,
       },
       {
-        path: '/employee/attendance',
+        path: '/employee/attendance/:attandanceId',
         component: EmployeeAttendance,
+        props: (route) => ({
+          attandanceId: route.params.attandanceId,
+        }),
+      },
+      {
+        path: '/manage/attendance',
+        component: ManageAttendance,
       },
 
       {

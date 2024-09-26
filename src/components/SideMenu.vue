@@ -424,20 +424,20 @@ ul {
                     </div>
                   </div>
                   <div
-                    v-if="glowMenuItem == 'employee/attendance'"
+                    v-if="glowMenuItem == 'manage/attendance'"
                     class="pointer selected text-light py-1 px-2 rounded-4 mb-1"
-                    @click="handleRedirect('employee/attendance')"
+                    @click="handleRedirect('manage/attendance')"
                   >
                     <i class="bi bi-table text-light mx-2 text_shadow" style="font-size: 1rem"></i>
-                    Employee Attendance
+                    Manage Attendance
                   </div>
                   <div
                     v-else
                     class="pointer text-light py-1 px-2 rounded-4 mb-1"
-                    @click="handleRedirect('employee/attendance')"
+                    @click="handleRedirect('manage/attendance')"
                   >
                     <i class="bi bi-table text-light mx-2" style="font-size: 1rem"></i>
-                    Employee Attendance
+                    Manage Attendance
                   </div>
                 </div>
                 <div></div>

@@ -70,9 +70,7 @@ h1 {
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title source-400" id="ModalNotificationLabel">
-            Edit {{ updateEmployee.name }}
-          </h5>
+          <h5 class="modal-title source-400" id="ModalNotificationLabel">Edit</h5>
           <button
             type="button"
             class="btn-close"
@@ -164,7 +162,7 @@ h1 {
   <div class="source-400 pt-2 h-100 scroll">
     <div class="border-bottom px-4 d-flex justify-content-between align-items-center py-2">
       <div>
-        <h5 class="source-500 page-title">Employee Attendance {{ data.month_year }}</h5>
+        <h5 class="source-500 page-title">Manage Attendance</h5>
       </div>
       <div class="">
         <div class="position-relative" data-bs-toggle="modal" data-bs-target="#ModalNotification">
@@ -198,13 +196,8 @@ h1 {
               />
             </div>
             <div class="d-flex justify-content-center align-items-center gap-2">
-              <button
-                type="button"
-                class="btn text-light border-0 button_bg btn-sm"
-                data-bs-toggle="modal"
-                data-bs-target="#ModalAddAttendance"
-              >
-                Add Attendance
+              <button type="button" class="btn text-light border-0 button_bg btn-sm">
+                Upload Excel
               </button>
             </div>
           </div>
@@ -214,12 +207,19 @@ h1 {
                 table-class-name="customize-table text-capitalize pointer"
                 :headers="headers"
                 :items="items"
-                search-field="name"
+                search-field="month_year"
                 :search-value="search"
                 :rows-per-page="10"
                 border-cell
                 buttons-pagination
               >
+                <template #item-month="item">
+                  <div v-for="month in months" :key="month" class="">
+                    <div v-if="item.month == month.month">
+                      {{ month.name }}
+                    </div>
+                  </div>
+                </template>
                 <template #item-absent="item">
                   <div>
                     {{ months[month - 1].days - item.present }}
@@ -227,14 +227,9 @@ h1 {
                 </template>
                 <template #item-action="item">
                   <div class="d-flex justify-content-evenly">
-                    <div
-                      class="table-icon action_icon_color"
-                      data-bs-toggle="modal"
-                      data-bs-target="#ModalNotification"
-                      @click="updateEmployee = JSON.parse(JSON.stringify(item))"
-                    >
-                      <el-tooltip content="Edit" placement="bottom">
-                        <i class="bi bi-pen-fill pointer" style="font-size"></i>
+                    <div class="table-icon action_icon_color" @click="handleRedirect(item._id)">
+                      <el-tooltip content="View" placement="bottom">
+                        <i class="bi bi-eye-fill pointer" style="font-size"></i>
                       </el-tooltip>
                     </div>
                   </div>
@@ -262,15 +257,10 @@ import axiosClient from '../../axiosClient';
 
 import VueDatePicker from '@vuepic/vue-datepicker';
 import '@vuepic/vue-datepicker/dist/main.css';
+import { th } from 'element-plus/es/locales.mjs';
 
 export default {
-  name: 'EmployeeAttendance',
-  props: {
-    attandanceId: {
-      type: String,
-      required: true,
-    },
-  },
+  name: 'ManageAttendance',
   components: {
     EasyDataTable,
     Multiselect,
@@ -287,9 +277,9 @@ export default {
 
       notifications: [],
       headers: [
-        { text: 'Name', value: 'name', sortable: true },
-        { text: 'Present', value: 'present', sortable: false },
-        { text: 'Absent', value: 'absent', sortable: true },
+        { text: 'month', value: 'month' },
+        { text: 'year', value: 'month_year', sortable: true },
+
         { text: 'Action', value: 'action', sortable: false },
       ],
       optionTypes: ['success', 'warning', 'danger'],
@@ -297,7 +287,6 @@ export default {
         month: '',
         year: '',
       },
-      data: '',
 
       form: {
         name: '',
@@ -308,6 +297,7 @@ export default {
         emp_id: '',
         present: '',
       },
+      data: '',
       months: [],
       month: null,
       newPassword: '',
@@ -326,22 +316,24 @@ export default {
     this.getMonths();
 
     try {
-      const res = await axiosClient.get(`/api/v1/attendance/get/${this.attandanceId}`);
+      const res = await axiosClient.get(`/api/v1/attendance/get/all/${this.user._id}`);
       console.log('res.data.data: ', res.data);
       this.data = res.data;
-      this.attendance_id = res.data._id;
-      this.originalItems = res.data.AttendanceData;
+      this.originalItems = res.data;
+      for (let i in this.originalItems) {
+        const temp = this.originalItems[i].month_year.split('/');
+        this.originalItems[i].month = temp[0];
+      }
+
+      this.items = this.originalItems;
+
       const temp = res.data.month_year.split('/');
       this.month = temp[0];
-      this.month_year.month = temp[0];
-      this.month_year.year = temp[1];
-      console.log('month_year: ', this.month_year, ' temp : ', temp);
+
       this.renderKey++;
     } catch (err) {
       console.log('error: ', err);
     }
-
-    this.items = this.originalItems;
 
     console.log('employee: ', this.items);
   },
@@ -364,9 +356,13 @@ export default {
   setup() {},
 
   methods: {
+    handleRedirect(id) {
+      console.log('id: ', id);
+      this.$router.push(`/employee/attendance/${id}`);
+    },
+
     async handleAddAttendance() {
       console.log('formAdd', this.formAdd);
-      if (this.validateFormAdd() == false) return;
       try {
         const res = await axiosClient.post(
           `/api/v1/attendance/add/record/${this.attendance_id}`,
@@ -376,8 +372,10 @@ export default {
         toast.success('Attendance Added Successfully', {
           autoClose: 1500,
         });
-        this.originalItems = res.data.AttendanceData;
-        this.items = this.originalItems;
+
+        setTimeout(() => {
+          this.$router.go('0');
+        }, 2000);
       } catch (err) {
         console.log('error: ', err);
         toast.error('Some Thing Went Wrong');
@@ -397,7 +395,6 @@ export default {
         present: this.updateEmployee.present,
       };
 
-      if (this.validateForm() == false) return;
       try {
         const res = await axiosClient.put(
           `/api/v1/attendance/edit/${this.attendance_id}/${this.updateEmployee._id}`,
@@ -414,9 +411,45 @@ export default {
           }
         }
 
-        this.items = this.originalItems;
+        for (let i in this.items) {
+          if (this.items[i]._id == this.updateEmployee._id) {
+            this.items[i].name = this.form.name;
+            this.items[i].present = this.form.present;
+          }
+        }
+
+        console.log('items: ', this.items);
+
+        this.renderKey++;
+        setTimeout(() => {
+          this.$router.go('0');
+        }, 2000);
       } catch (err) {
         console.log('error: ', err);
+        toast.error('Some Thing Went Wrong');
+      }
+    },
+    async getAttendanceByMonthYear() {
+      const month_year = this.month_year.month + 1 + '/' + this.month_year.year;
+      console.log('getAttendanceByMonthYear called', '  ', month_year);
+      const form = {
+        month_year: month_year,
+      };
+      try {
+        const res = await axiosClient.post(`/api/v1/attendance/get/${this.user._id}`, form);
+        console.log('res.data.data: ', res.data);
+        this.originalItems = res.data.AttendanceData;
+        const temp = res.data.month_year.split('/');
+        this.month = temp[0];
+        //this.month_year = res.data.month_year;
+        this.items = this.originalItems;
+      } catch (err) {
+        console.log('errror: ', err);
+        if (err.response.status == 404) {
+          toast.error(`No Data Found For ${month_year}`, {
+            autoClose: 1500,
+          });
+        }
       }
     },
 
@@ -446,65 +479,20 @@ export default {
 
     getMonths() {
       const months = [
-        { month: 1, days: 31 },
-        { month: 2, days: 28 },
-        { month: 3, days: 31 },
-        { month: 4, days: 30 },
-        { month: 5, days: 31 },
-        { month: 6, days: 30 },
-        { month: 7, days: 31 },
-        { month: 8, days: 31 },
-        { month: 9, days: 30 },
-        { month: 10, days: 31 },
-        { month: 11, days: 30 },
-        { month: 12, days: 31 },
+        { month: 1, name: 'January', days: 31 },
+        { month: 2, name: 'February', days: 28 },
+        { month: 3, name: 'March', days: 31 },
+        { month: 4, name: 'April', days: 30 },
+        { month: 5, name: 'May', days: 31 },
+        { month: 6, name: 'June', days: 30 },
+        { month: 7, name: 'July', days: 31 },
+        { month: 8, name: 'August', days: 31 },
+        { month: 9, name: 'September', days: 30 },
+        { month: 10, name: 'October', days: 31 },
+        { month: 11, name: 'November', days: 30 },
+        { month: 12, name: 'December', days: 31 },
       ];
       this.months = months;
-    },
-
-    validateFormAdd() {
-      console.log('validateFormAdd called');
-      if (this.formAdd.name == '') {
-        toast.info('Please Enter Employee Name', {
-          autoClose: 1500,
-        });
-        return false;
-      }
-
-      if (this.formAdd.present == '') {
-        toast.info('Please Enter Present', {
-          autoClose: 1500,
-        });
-        return false;
-      }
-
-      if (this.formAdd.emp_id == '') {
-        toast.info('Please Enter Employee Id', {
-          autoClose: 1500,
-        });
-        return false;
-      }
-
-      return true;
-    },
-
-    validateForm() {
-      console.log('validateFormAdd called');
-      if (this.form.name == '') {
-        toast.info('Please Enter Employee Name', {
-          autoClose: 1500,
-        });
-        return false;
-      }
-
-      if (this.form.present == '') {
-        toast.info('Please Enter Present', {
-          autoClose: 1500,
-        });
-        return false;
-      }
-
-      return true;
     },
   },
 };
