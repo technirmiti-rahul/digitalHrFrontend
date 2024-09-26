@@ -399,7 +399,7 @@ ul {
                       Add Employee
                     </div>
                   </div>
-                  <div>
+                  <div v-if="role != 'super_admin'">
                     <div
                       v-if="glowMenuItem == 'upload/xl'"
                       class="pointer selected text-light py-1 px-2 rounded-4 mb-1"
@@ -423,6 +423,7 @@ ul {
                       Upload Xl
                     </div>
                   </div>
+                  <div v-if="role != 'super_admin'"></div>
                   <div
                     v-if="glowMenuItem == 'manage/attendance'"
                     class="pointer selected text-light py-1 px-2 rounded-4 mb-1"
