@@ -83,7 +83,8 @@ h1 {
               />
             </div>
             <div>
-              <VueDatePicker v-model="month_year" month-picker />
+              <!-- <VueDatePicker v-model="month_year" month-picker /> -->
+              <input type="date" class="form-control form-control-sm" v-model="form.month_year" />
             </div>
 
             <div>
@@ -206,11 +207,13 @@ export default {
         console.log('Excel Data:', this.excelData);
         this.form.employeeData = jsonData;
       };
-      this.form.month_year = this.month_year.month + 1 + '/' + this.month_year.year;
+      // this.form.month_year = this.month_year.month + 1 + '/' + this.month_year.year;
       console.log('this.month_year: ', this.month_year);
       console.log('this.form: ', this.form);
 
       reader.readAsArrayBuffer(this.file);
+      const date = Date.now();
+      console.log('date: ', Date.now());
       if (this.form.employeeData.length > 0) {
         console.log('adding data');
         try {
@@ -220,7 +223,7 @@ export default {
             autoClose: 1500,
           });
           setTimeout(() => {
-            this.$router.push('/employee/attendance');
+            this.$router.push('/manage/attendance');
           });
         } catch (err) {
           console.log('error: ', err);

@@ -237,6 +237,22 @@ h1 {
                         <i class="bi bi-pen-fill pointer" style="font-size"></i>
                       </el-tooltip>
                     </div>
+                    <div
+                      class="table-icon action_icon_color"
+                      @click="updateEmployee = JSON.parse(JSON.stringify(item))"
+                    >
+                      <el-tooltip content="Salary Slip" placement="bottom">
+                        <router-link
+                          :to="'/wage/slip/' + attandanceId + '/' + item.emp_id"
+                          style="text-decoration: none"
+                        >
+                          <i
+                            class="bi bi-receipt-cutoff pointer action_icon_color"
+                            style="font-size"
+                          ></i>
+                        </router-link>
+                      </el-tooltip>
+                    </div>
                   </div>
                 </template>
               </EasyDataTable>
@@ -327,14 +343,15 @@ export default {
 
     try {
       const res = await axiosClient.get(`/api/v1/attendance/get/${this.attandanceId}`);
-      console.log('res.data.data: ', res.data);
       this.data = res.data;
+      console.log('res.data.data: ', this.data);
+      this.data.month_year = this.data.month_year.slice(0, 10);
       this.attendance_id = res.data._id;
       this.originalItems = res.data.AttendanceData;
-      const temp = res.data.month_year.split('/');
-      this.month = temp[0];
-      this.month_year.month = temp[0];
-      this.month_year.year = temp[1];
+      const temp = res.data.month_year.split('-');
+      this.month = temp[1];
+      this.month_year.month = temp[1];
+      this.month_year.year = temp[0];
       console.log('month_year: ', this.month_year, ' temp : ', temp);
       this.renderKey++;
     } catch (err) {
@@ -343,7 +360,7 @@ export default {
 
     this.items = this.originalItems;
 
-    console.log('employee: ', this.items);
+    //console.log('employee: ', this.items);
   },
 
   mounted() {

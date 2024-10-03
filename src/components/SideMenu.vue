@@ -399,30 +399,7 @@ ul {
                       Add Employee
                     </div>
                   </div>
-                  <div v-if="role != 'super_admin'">
-                    <div
-                      v-if="glowMenuItem == 'upload/xl'"
-                      class="pointer selected text-light py-1 px-2 rounded-4 mb-1"
-                      @click="handleRedirect('upload/xl')"
-                    >
-                      <i
-                        class="bi bi-file-earmark-spreadsheet-fill text-light mx-2 text_shadow"
-                        style="font-size: 1rem"
-                      ></i>
-                      Upload Xl
-                    </div>
-                    <div
-                      v-else
-                      class="pointer text-light py-1 px-2 rounded-4 mb-1"
-                      @click="handleRedirect('upload/xl')"
-                    >
-                      <i
-                        class="bi bi-file-earmark-spreadsheet-fill text-light mx-2"
-                        style="font-size: 1rem"
-                      ></i>
-                      Upload Xl
-                    </div>
-                  </div>
+
                   <div v-if="role != 'super_admin'"></div>
                   <div
                     v-if="glowMenuItem == 'manage/attendance'"

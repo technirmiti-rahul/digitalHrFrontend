@@ -196,9 +196,11 @@ h1 {
               />
             </div>
             <div class="d-flex justify-content-center align-items-center gap-2">
-              <button type="button" class="btn text-light border-0 button_bg btn-sm">
-                Upload Excel
-              </button>
+              <router-link to="/upload/excel">
+                <button type="button" class="btn text-light border-0 button_bg btn-sm">
+                  Upload Excel
+                </button>
+              </router-link>
             </div>
           </div>
           <div class="table border rounded">
@@ -321,8 +323,9 @@ export default {
       this.data = res.data;
       this.originalItems = res.data;
       for (let i in this.originalItems) {
-        const temp = this.originalItems[i].month_year.split('/');
-        this.originalItems[i].month = temp[0];
+        this.originalItems[i].month_year = this.originalItems[i].month_year.slice(0, 10);
+        const temp = this.originalItems[i].month_year.split('-');
+        this.originalItems[i].month = temp[1];
       }
 
       this.items = this.originalItems;

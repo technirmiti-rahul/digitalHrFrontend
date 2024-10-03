@@ -364,12 +364,17 @@ h1 {
                 placeholder="Type to search"
               />
             </div>
-            <div v-if="role != 'super_admin'">
+            <div v-if="role != 'super_admin'" class="d-flex justify-content-end gap-2">
+              <router-link to="/upload/employee/excel">
+                <button type="button" class="btn text-light border-0 button_bg btn-sm">
+                  Upload Excel
+                </button>
+              </router-link>
               <router-link
                 to="/add/employee"
                 class="d-flex align-items-center text-decoration-none"
               >
-                <button type="button" class="btn btn-primary border-0 button_bg source-400">
+                <button type="button" class="btn btn-primary btn-sm border-0 button_bg source-400">
                   Add Employee
                 </button>
               </router-link>
@@ -459,6 +464,22 @@ h1 {
                         <i class="bi bi-hand-thumbs-up-fill pointer" style="font-size"></i>
                       </el-tooltip>
                     </div>
+                    <div
+                      class="table-icon action_icon_color"
+                      @click="updateEmployee = JSON.parse(JSON.stringify(item))"
+                    >
+                      <el-tooltip content="Salary Slip" placement="bottom">
+                        <router-link
+                          :to="'/wage/slip/of/months/' + item._id"
+                          style="text-decoration: none"
+                        >
+                          <i
+                            class="bi bi-receipt-cutoff pointer action_icon_color"
+                            style="font-size"
+                          ></i>
+                        </router-link>
+                      </el-tooltip>
+                    </div>
                   </div>
                 </template>
               </EasyDataTable>
@@ -529,7 +550,7 @@ export default {
     await this.getCurrent();
 
     try {
-      const res = await axiosClient.get(`/api/v1/employee/${this.user._id}`);
+      const res = await axiosClient.get(`/api/v1/employee/get/employees/${this.user._id}`);
       console.log('res.data.data: ', res.data.data);
       this.originalItems = res.data.data;
       const notifications = await axiosClient.get(`/api/v1/notification/getall/${this.user._id}`);

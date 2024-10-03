@@ -32,12 +32,17 @@ import ViewEmployee from '../pages/ManageEmployees/ViewEmployee.vue';
 import ManageEmployees from '../pages/ManageEmployees/ManageEmployees.vue';
 import EmployeesByClient from '../pages/ManageEmployees/EmployeesByClient.vue';
 import AddEmployeeBySuperAdmin from '../pages/ManageEmployees/AddEmployeeBySuperAdmin.vue';
-import UploadXl from '../pages/ManageEmployees/UploadXl.vue';
+import UploadXl from '../pages/ManageEmployees/UploadAttendanceExcel.vue';
 import EmployeeAttendance from '../pages/ManageEmployees/EmployeeAttendance.vue';
 import ManageAttendance from '../pages/ManageEmployees/ManageAttendance.vue';
+import UploadEmployeeExcel from '../pages/ManageEmployees/UploadEmployeeExcel.vue';
+
+import WageSlip from '../pages/WageSlip/WageSlip.vue';
+import WageSlipOfMonths from '../pages/WageSlip/WageSlipOfMonths.vue';
 
 import roughPage from '../pages/roughPage.vue';
 import roughPage2 from '../pages/roughPage2.vue';
+
 const routes = [
   {
     path: '/',
@@ -110,6 +115,21 @@ const routes = [
         component: AddUser,
       },
       {
+        path: '/wage/slip/:attandanceId/:employeeId',
+        component: WageSlip,
+        props: (route) => ({
+          attandanceId: route.params.attandanceId,
+          employeeId: route.params.employeeId,
+        }),
+      },
+      {
+        path: '/wage/slip/of/months/:employeeId',
+        component: WageSlipOfMonths,
+        props: (route) => ({
+          employeeId: route.params.employeeId,
+        }),
+      },
+      {
         path: '/update/user/:userId',
         component: UpdateUser,
         props: (route) => ({
@@ -165,8 +185,12 @@ const routes = [
       },
 
       {
-        path: '/upload/Xl',
+        path: '/upload/excel',
         component: UploadXl,
+      },
+      {
+        path: '/upload/employee/excel',
+        component: UploadEmployeeExcel,
       },
 
       {
