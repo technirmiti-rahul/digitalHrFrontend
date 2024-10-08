@@ -33,6 +33,7 @@ import ManageEmployees from '../pages/ManageEmployees/ManageEmployees.vue';
 import EmployeesByClient from '../pages/ManageEmployees/EmployeesByClient.vue';
 import AddEmployeeBySuperAdmin from '../pages/ManageEmployees/AddEmployeeBySuperAdmin.vue';
 import UploadXl from '../pages/ManageEmployees/UploadAttendanceExcel.vue';
+
 import EmployeeAttendance from '../pages/ManageEmployees/EmployeeAttendance.vue';
 import ManageAttendance from '../pages/ManageEmployees/ManageAttendance.vue';
 import UploadEmployeeExcel from '../pages/ManageEmployees/UploadEmployeeExcel.vue';
@@ -218,10 +219,10 @@ const routes = [
         component: ManageEmployees,
       },
       {
-        path: '/employee/attendance/:attandanceId',
+        path: '/employee/attendance/:monthYear',
         component: EmployeeAttendance,
         props: (route) => ({
-          attandanceId: route.params.attandanceId,
+          monthYear: route.params.monthYear,
         }),
       },
       {

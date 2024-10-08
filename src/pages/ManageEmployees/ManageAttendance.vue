@@ -229,7 +229,10 @@ h1 {
                 </template>
                 <template #item-action="item">
                   <div class="d-flex justify-content-evenly">
-                    <div class="table-icon action_icon_color" @click="handleRedirect(item._id)">
+                    <div
+                      class="table-icon action_icon_color"
+                      @click="handleRedirect(item.month_year)"
+                    >
                       <el-tooltip content="View" placement="bottom">
                         <i class="bi bi-eye-fill pointer" style="font-size"></i>
                       </el-tooltip>
@@ -321,7 +324,18 @@ export default {
       const res = await axiosClient.get(`/api/v1/attendance/get/all/${this.user._id}`);
       console.log('res.data.data: ', res.data);
       this.data = res.data;
-      this.originalItems = res.data;
+      let tempData = res.data[0].month_year;
+      let tempData2 = [];
+      tempData2.push(res.data[0]);
+
+      for (let i in res.data) {
+        if (res.data[i].month_year != tempData) {
+          tempData2.push(res.data[i]);
+          tempData = res.data[i].month_year;
+        }
+      }
+
+      this.originalItems = tempData2;
       for (let i in this.originalItems) {
         this.originalItems[i].month_year = this.originalItems[i].month_year.slice(0, 10);
         const temp = this.originalItems[i].month_year.split('-');
@@ -359,9 +373,9 @@ export default {
   setup() {},
 
   methods: {
-    handleRedirect(id) {
-      console.log('id: ', id);
-      this.$router.push(`/employee/attendance/${id}`);
+    handleRedirect(monthYear) {
+      console.log('monthYear: ', monthYear);
+      this.$router.push(`/employee/attendance/${monthYear}`);
     },
 
     async handleAddAttendance() {

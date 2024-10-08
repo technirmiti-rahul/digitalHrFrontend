@@ -88,32 +88,14 @@
 
     <div class="overflow-y-hidden pb-5 h-100">
       <div class="h-100 overflow-y-auto">
-        <div class="container py-3">
+        <div v-auto-animate class="container py-3">
           <div class="w-100 h-100 d-flex justify-content-center gap-3">
             <div>
-              <div class="input-group mb-3">
-                <span class="input-group-text" id="basic-addon1">from</span>
-                <input
-                  type="date"
-                  class="form-control"
-                  placeholder="Username"
-                  aria-label="Username"
-                  aria-describedby="basic-addon1"
-                  v-model="form.from"
-                />
-              </div>
+              <VueDatePicker v-model="from" month-picker placeholder="Select From" />
             </div>
             <div>
-              <div class="input-group mb-3">
-                <span class="input-group-text" id="basic-addon1">to</span>
-                <input
-                  type="date"
-                  class="form-control"
-                  placeholder="Username"
-                  aria-label="Username"
-                  aria-describedby="basic-addon1"
-                  v-model="form.to"
-                />
+              <div>
+                <VueDatePicker v-model="to" month-picker placeholder="Select To" />
               </div>
             </div>
 
@@ -127,310 +109,318 @@
               </button>
             </div>
           </div>
-          <div
-            v-if="showSlip"
-            class="mb-1 mt-5 d-flex justify-content-center gap-2 border py-3"
-            id="slip"
-          >
-            <div class="slip-container border border-dark overflow-hidden">
-              <div class="py-1 border-bottom border-dark text-center source-700 font18">
-                Wage Slip
-              </div>
-              <div class="py-1 border-bottom border-dark text-center source-700 font18">
-                Form IX (Rule 29 (2))
-              </div>
-              <div class="py-1 border-bottom border-dark text-center source-700 font18">
-                Name Of Establishment - M/S ABC
-              </div>
-              <div class="py-1 border-bottom border-dark text-center source-700 font18">
-                Housing Board Sanquelim Goa
-              </div>
-              <div class="border-bottom border-dark"></div>
-              <div class="border-bottom border-dark" style="padding: 0 11px">
-                <div class="row">
-                  <div class="border-end border-dark col-3 d-flex align-items-center source-700">
-                    Name Of The Employee
-                  </div>
-                  <div class="border-end border-dark col-3 d-flex align-items-center source-500">
-                    {{ employee.name }}
-                  </div>
-                  <div class="border-end border-dark col-3 d-flex align-items-center source-700">
-                    UAN No
-                  </div>
-                  <div class="col-3 d-flex align-items-center source-500">8888888888888</div>
+          <div v-if="showSlip" class="mt-2 mb-2 px-5 d-flex justify-content-center">
+            <button
+              type="button"
+              class="btn btn-primary border-0 button_bg"
+              @click="handleDownload"
+            >
+              Download
+            </button>
+          </div>
+          <div v-for="(attendance, i) in attendanceData" :key="i">
+            <div v-if="showSlip" class="my-3 d-flex justify-content-center gap-2 py-2" id="slip">
+              <div class="slip-container border border-dark overflow-hidden">
+                <div class="py-1 border-bottom border-dark text-center source-700 font18">
+                  Wage Slip
                 </div>
-              </div>
-              <div class="border-bottom border-dark" style="padding: 0 11px">
-                <div class="row">
-                  <div class="border-end border-dark col-3 d-flex align-items-center source-700">
-                    Fathers/Husbands Name
-                  </div>
-                  <div class="border-end border-dark col-3 d-flex align-items-center source-500">
-                    Rahul Patil
-                  </div>
-                  <div class="border-end border-dark col-3 d-flex align-items-center source-700">
-                    PF No
-                  </div>
-                  <div class="col-3 d-flex align-items-center source-500 font12">
-                    GAGOA73836277302983823
+                <div class="py-1 border-bottom border-dark text-center source-700 font18">
+                  Form IX (Rule 29 (2))
+                </div>
+                <div class="py-1 border-bottom border-dark text-center source-700 font18">
+                  Name Of Establishment - M/S ABC
+                </div>
+                <div class="py-1 border-bottom border-dark text-center source-700 font18">
+                  Housing Board Sanquelim Goa
+                </div>
+                <div class="border-bottom border-dark"></div>
+                <div class="border-bottom border-dark" style="padding: 0 11px">
+                  <div class="row">
+                    <div class="border-end border-dark col-3 d-flex align-items-center source-700">
+                      Name Of The Employee
+                    </div>
+                    <div class="border-end border-dark col-3 d-flex align-items-center source-500">
+                      {{ employee.name }}
+                    </div>
+                    <div class="border-end border-dark col-3 d-flex align-items-center source-700">
+                      UAN No
+                    </div>
+                    <div class="col-3 d-flex align-items-center source-500">8888888888888</div>
                   </div>
                 </div>
-              </div>
-              <div class="border-bottom border-dark" style="padding: 0 11px">
-                <div class="row">
-                  <div class="border-end border-dark col-3 d-flex align-items-center source-700">
-                    Designation
-                  </div>
-                  <div class="border-end border-dark col-3 d-flex align-items-center source-500">
-                    {{ employee.designation }}
-                  </div>
-                  <div class="border-end border-dark col-3 d-flex align-items-center source-700">
-                    ESIC No
-                  </div>
-                  <div class="border-end border-dark col-3 d-flex align-items-center source-500">
-                    8888888888888
+                <div class="border-bottom border-dark" style="padding: 0 11px">
+                  <div class="row">
+                    <div class="border-end border-dark col-3 d-flex align-items-center source-700">
+                      Fathers/Husbands Name
+                    </div>
+                    <div class="border-end border-dark col-3 d-flex align-items-center source-500">
+                      Rahul Patil
+                    </div>
+                    <div class="border-end border-dark col-3 d-flex align-items-center source-700">
+                      PF No
+                    </div>
+                    <div class="col-3 d-flex align-items-center source-500 font12">
+                      GAGOA73836277302983823
+                    </div>
                   </div>
                 </div>
-              </div>
-              <div class="border-bottom border-dark" style="padding: 0 11px">
-                <div class="row">
-                  <div class="border-end border-dark col-3 d-flex align-items-center source-700">
-                    Wage Period
-                  </div>
-                  <div class="border-end border-dark col-3 d-flex align-items-center source-500">
-                    {{ attendance.wagePeriod }}
-                  </div>
-                  <div class="border-end border-dark col-3 d-flex align-items-center source-700">
-                    Bank A/C No
-                  </div>
-                  <div class="border-end border-dark col-3 d-flex align-items-center source-500">
-                    8888888888888434
+                <div class="border-bottom border-dark" style="padding: 0 11px">
+                  <div class="row">
+                    <div class="border-end border-dark col-3 d-flex align-items-center source-700">
+                      Designation
+                    </div>
+                    <div class="border-end border-dark col-3 d-flex align-items-center source-500">
+                      {{ employee.designation }}
+                    </div>
+                    <div class="border-end border-dark col-3 d-flex align-items-center source-700">
+                      ESIC No
+                    </div>
+                    <div class="border-end border-dark col-3 d-flex align-items-center source-500">
+                      8888888888888
+                    </div>
                   </div>
                 </div>
-              </div>
-              <div class="border-bottom border-dark" style="padding: 0 11px">
-                <div class="row">
-                  <div class="border-end border-dark col-3 d-flex align-items-center source-700">
-                    Days In Month
-                  </div>
-                  <div class="border-end border-dark col-3 d-flex align-items-center source-500">
-                    {{ attendance.totalDays }}
-                  </div>
-                  <div class="border-end border-dark col-3 d-flex align-items-center source-700">
-                    Total Attendance
-                  </div>
-                  <div class="border-end border-dark col-3 d-flex align-items-center source-500">
-                    {{ attendance.totalPresent }}
+                <div class="border-bottom border-dark" style="padding: 0 11px">
+                  <div class="row">
+                    <div class="border-end border-dark col-3 d-flex align-items-center source-700">
+                      Wage Period
+                    </div>
+                    <div class="border-end border-dark col-3 d-flex align-items-center source-500">
+                      {{ attendance.wagePeriod }}
+                    </div>
+                    <div class="border-end border-dark col-3 d-flex align-items-center source-700">
+                      Bank A/C No
+                    </div>
+                    <div class="border-end border-dark col-3 d-flex align-items-center source-500">
+                      8888888888888434
+                    </div>
                   </div>
                 </div>
-              </div>
-              <div class="border-bottom border-dark"></div>
-              <div class="" style="padding: 0 11px">
-                <div class="row">
-                  <div class="col-5 border-end border-dark" style="padding: 0 11px">
-                    <div class="row border-bottom border-dark">
-                      <div
-                        class="border-end border-dark col-7 d-flex align-items-center source-700"
-                      >
-                        PF Basic
-                      </div>
-                      <div class="col-5 d-flex align-items-center source-500">15000</div>
+                <div class="border-bottom border-dark" style="padding: 0 11px">
+                  <div class="row">
+                    <div class="border-end border-dark col-3 d-flex align-items-center source-700">
+                      Days In Month
                     </div>
-                    <div class="row border-bottom border-dark">
-                      <div
-                        class="border-end border-dark col-7 d-flex align-items-center source-700"
-                      >
-                        Basic
-                      </div>
-                      <div class="col-5 d-flex align-items-center source-500">40000</div>
+                    <div class="border-end border-dark col-3 d-flex align-items-center source-500">
+                      {{ attendance.totalDays }}
                     </div>
-                    <div class="row border-bottom border-dark">
-                      <div
-                        class="border-end border-dark col-7 d-flex align-items-center source-700"
-                      >
-                        D.A
-                      </div>
-                      <div class="col-5 d-flex align-items-center source-500">15000</div>
+                    <div class="border-end border-dark col-3 d-flex align-items-center source-700">
+                      Total Attendance
                     </div>
-                    <div class="row border-bottom border-dark">
-                      <div
-                        class="border-end border-dark col-7 d-flex align-items-center source-700"
-                      >
-                        HRA
-                      </div>
-                      <div class="col-5 d-flex align-items-center source-500">15000</div>
-                    </div>
-                    <div class="row border-bottom border-dark">
-                      <div
-                        class="border-end border-dark col-7 d-flex align-items-center source-700"
-                      >
-                        Food Allow
-                      </div>
-                      <div class="col-5 d-flex align-items-center source-500">15000</div>
-                    </div>
-                    <div class="row border-bottom border-dark">
-                      <div
-                        class="border-end border-dark col-7 d-flex align-items-center source-700"
-                      >
-                        Conveyance
-                      </div>
-                      <div class="col-5 d-flex align-items-center source-500">15000</div>
-                    </div>
-                    <div class="row border-bottom border-dark">
-                      <div
-                        class="border-end border-dark col-7 d-flex align-items-center source-700"
-                      >
-                        Reimbursement
-                      </div>
-                      <div class="col-5 d-flex align-items-center source-500">0</div>
-                    </div>
-                    <div class="row border-bottom border-dark">
-                      <div
-                        class="border-end border-dark col-7 d-flex align-items-center source-700"
-                      >
-                        Overtime Wages
-                      </div>
-                      <div class="col-5 d-flex align-items-center source-500">0</div>
-                    </div>
-                    <div class="row">
-                      <div
-                        class="border-end border-dark col-7 d-flex align-items-center source-700"
-                      >
-                        Gross Wages
-                      </div>
-                      <div class="col-5 d-flex align-items-center source-700">15000</div>
+                    <div class="border-end border-dark col-3 d-flex align-items-center source-500">
+                      {{ attendance.totalPresent }}
                     </div>
                   </div>
-                  <div class="col-7" style="padding: 0 11px">
-                    <div class="row">
-                      <div
-                        class="border-end border-bottom border-dark col-6"
-                        style="padding: 0 11px"
-                      >
-                        <div class="row">
-                          <div class="border-bottom border-dark col-12 source-700 text-center">
-                            Employee's Contribution
-                          </div>
+                </div>
+                <div class="border-bottom border-dark"></div>
+                <div class="" style="padding: 0 11px">
+                  <div class="row">
+                    <div class="col-5 border-end border-dark" style="padding: 0 11px">
+                      <div class="row border-bottom border-dark">
+                        <div
+                          class="border-end border-dark col-7 d-flex align-items-center source-700"
+                        >
+                          PF Basic
+                        </div>
+                        <div class="col-5 d-flex align-items-center source-500">15000</div>
+                      </div>
+                      <div class="row border-bottom border-dark">
+                        <div
+                          class="border-end border-dark col-7 d-flex align-items-center source-700"
+                        >
+                          Basic
+                        </div>
+                        <div class="col-5 d-flex align-items-center source-500">40000</div>
+                      </div>
+                      <div class="row border-bottom border-dark">
+                        <div
+                          class="border-end border-dark col-7 d-flex align-items-center source-700"
+                        >
+                          D.A
+                        </div>
+                        <div class="col-5 d-flex align-items-center source-500">15000</div>
+                      </div>
+                      <div class="row border-bottom border-dark">
+                        <div
+                          class="border-end border-dark col-7 d-flex align-items-center source-700"
+                        >
+                          HRA
+                        </div>
+                        <div class="col-5 d-flex align-items-center source-500">15000</div>
+                      </div>
+                      <div class="row border-bottom border-dark">
+                        <div
+                          class="border-end border-dark col-7 d-flex align-items-center source-700"
+                        >
+                          Food Allow
+                        </div>
+                        <div class="col-5 d-flex align-items-center source-500">15000</div>
+                      </div>
+                      <div class="row border-bottom border-dark">
+                        <div
+                          class="border-end border-dark col-7 d-flex align-items-center source-700"
+                        >
+                          Conveyance
+                        </div>
+                        <div class="col-5 d-flex align-items-center source-500">15000</div>
+                      </div>
+                      <div class="row border-bottom border-dark">
+                        <div
+                          class="border-end border-dark col-7 d-flex align-items-center source-700"
+                        >
+                          Reimbursement
+                        </div>
+                        <div class="col-5 d-flex align-items-center source-500">0</div>
+                      </div>
+                      <div class="row border-bottom border-dark">
+                        <div
+                          class="border-end border-dark col-7 d-flex align-items-center source-700"
+                        >
+                          Overtime Wages
+                        </div>
+                        <div class="col-5 d-flex align-items-center source-500">0</div>
+                      </div>
+                      <div class="row">
+                        <div
+                          class="border-end border-dark col-7 d-flex align-items-center source-700"
+                        >
+                          Gross Wages
+                        </div>
+                        <div class="col-5 d-flex align-items-center source-700">15000</div>
+                      </div>
+                    </div>
+                    <div class="col-7" style="padding: 0 11px">
+                      <div class="row">
+                        <div
+                          class="border-end border-bottom border-dark col-6"
+                          style="padding: 0 11px"
+                        >
+                          <div class="row">
+                            <div class="border-bottom border-dark col-12 source-700 text-center">
+                              Employee's Contribution
+                            </div>
 
-                          <div
-                            class="border-bottom border-end border-dark col-7 d-flex align-items-center source-700"
-                          >
-                            EPF
+                            <div
+                              class="border-bottom border-end border-dark col-7 d-flex align-items-center source-700"
+                            >
+                              EPF
+                            </div>
+                            <div
+                              class="border-bottom border-dark col-5 d-flex align-items-center source-500"
+                            >
+                              1800
+                            </div>
+                            <div
+                              class="border-bottom border-end border-dark col-7 d-flex align-items-center source-700"
+                            >
+                              ESIC
+                            </div>
+                            <div
+                              class="border-bottom border-dark col-5 d-flex align-items-center source-500"
+                            >
+                              0
+                            </div>
+                            <div
+                              class="border-bottom border-end border-dark col-7 d-flex align-items-center source-700"
+                            >
+                              LWF
+                            </div>
+                            <div
+                              class="border-bottom border-dark col-5 d-flex align-items-center source-500"
+                            >
+                              0
+                            </div>
+                            <div
+                              class="border-bottom border-end border-dark col-7 d-flex align-items-center source-700"
+                            >
+                              Advances
+                            </div>
+                            <div
+                              class="border-bottom border-dark col-5 d-flex align-items-center source-500"
+                            >
+                              0
+                            </div>
+                            <div
+                              class="border-bottom border-end border-dark col-7 d-flex align-items-center source-700"
+                            >
+                              Other Dead
+                            </div>
+                            <div
+                              class="border-bottom border-dark col-5 d-flex align-items-center source-500"
+                            >
+                              9000
+                            </div>
+                            <div
+                              class="border-bottom border-end border-dark col-7 d-flex align-items-center source-700"
+                            >
+                              Total Dead
+                            </div>
+                            <div
+                              class="border-bottom border-dark col-5 d-flex align-items-center source-700"
+                            >
+                              1800
+                            </div>
+                            <div
+                              class="border-end border-dark col-7 d-flex align-items-center source-700"
+                            >
+                              Net Wages
+                            </div>
+                            <div class="border-dark col-5 d-flex align-items-center source-700">
+                              1800
+                            </div>
                           </div>
-                          <div
-                            class="border-bottom border-dark col-5 d-flex align-items-center source-500"
-                          >
-                            1800
-                          </div>
-                          <div
-                            class="border-bottom border-end border-dark col-7 d-flex align-items-center source-700"
-                          >
-                            ESIC
-                          </div>
-                          <div
-                            class="border-bottom border-dark col-5 d-flex align-items-center source-500"
-                          >
-                            0
-                          </div>
-                          <div
-                            class="border-bottom border-end border-dark col-7 d-flex align-items-center source-700"
-                          >
-                            LWF
-                          </div>
-                          <div
-                            class="border-bottom border-dark col-5 d-flex align-items-center source-500"
-                          >
-                            0
-                          </div>
-                          <div
-                            class="border-bottom border-end border-dark col-7 d-flex align-items-center source-700"
-                          >
-                            Advances
-                          </div>
-                          <div
-                            class="border-bottom border-dark col-5 d-flex align-items-center source-500"
-                          >
-                            0
-                          </div>
-                          <div
-                            class="border-bottom border-end border-dark col-7 d-flex align-items-center source-700"
-                          >
-                            Other Dead
-                          </div>
-                          <div
-                            class="border-bottom border-dark col-5 d-flex align-items-center source-500"
-                          >
-                            9000
-                          </div>
-                          <div
-                            class="border-bottom border-end border-dark col-7 d-flex align-items-center source-700"
-                          >
-                            Total Dead
-                          </div>
-                          <div
-                            class="border-bottom border-dark col-5 d-flex align-items-center source-700"
-                          >
-                            1800
-                          </div>
-                          <div
-                            class="border-end border-dark col-7 d-flex align-items-center source-700"
-                          >
-                            Net Wages
-                          </div>
-                          <div class="border-dark col-5 d-flex align-items-center source-700">
-                            1800
+                        </div>
+                        <div class="col-6" style="padding: 0 11px">
+                          <div class="row border-bottom border-dark">
+                            <div class="border-bottom border-dark col-12 source-700 text-center">
+                              Employer's Contribution
+                            </div>
+
+                            <div
+                              class="border-bottom border-end border-dark col-7 d-flex align-items-center source-700"
+                            >
+                              E_EPF
+                            </div>
+                            <div
+                              class="border-bottom border-dark col-5 d-flex align-items-center source-500"
+                            >
+                              1950
+                            </div>
+                            <div
+                              class="border-bottom border-end border-dark col-7 d-flex align-items-center source-700"
+                            >
+                              E_ESIC
+                            </div>
+                            <div
+                              class="border-bottom border-dark col-5 d-flex align-items-center source-500"
+                            >
+                              0
+                            </div>
+                            <div
+                              class="border-bottom border-end border-dark col-7 d-flex align-items-center source-700"
+                            >
+                              Total
+                            </div>
+                            <div
+                              class="border-bottom border-dark col-5 d-flex align-items-center source-700"
+                            >
+                              1950
+                            </div>
+                            <div class="col-12 source-700 text-center" style="height: 99px">
+                              Employer's Signature
+                            </div>
                           </div>
                         </div>
                       </div>
-                      <div class="col-6" style="padding: 0 11px">
-                        <div class="row border-bottom border-dark">
-                          <div class="border-bottom border-dark col-12 source-700 text-center">
-                            Employer's Contribution
-                          </div>
-
-                          <div
-                            class="border-bottom border-end border-dark col-7 d-flex align-items-center source-700"
-                          >
-                            E_EPF
-                          </div>
-                          <div
-                            class="border-bottom border-dark col-5 d-flex align-items-center source-500"
-                          >
-                            1950
-                          </div>
-                          <div
-                            class="border-bottom border-end border-dark col-7 d-flex align-items-center source-700"
-                          >
-                            E_ESIC
-                          </div>
-                          <div
-                            class="border-bottom border-dark col-5 d-flex align-items-center source-500"
-                          >
-                            0
-                          </div>
-                          <div
-                            class="border-bottom border-end border-dark col-7 d-flex align-items-center source-700"
-                          >
-                            Total
-                          </div>
-                          <div
-                            class="border-bottom border-dark col-5 d-flex align-items-center source-700"
-                          >
-                            1950
-                          </div>
-                          <div class="col-12 source-700 text-center" style="height: 99px">
-                            Employer's Signature
-                          </div>
-                        </div>
-                      </div>
                     </div>
                   </div>
                 </div>
-              </div>
-              <div class="border-top border-dark text-center source-700">
-                This Is Computer Generated Slip ,Seal And Signature Is Not Required
+                <div class="border-top border-dark text-center source-700">
+                  This Is Computer Generated Slip ,Seal And Signature Is Not Required
+                </div>
               </div>
             </div>
+            <div class="border-top border-secondary border-opacity-25"></div>
           </div>
           <div v-if="showSlip" class="mt-4 mb-2 px-5 d-flex justify-content-center">
             <button
@@ -450,17 +440,23 @@
 </template>
 
 <script>
-import html2pdf from 'html2pdf.js';
+import VueDatePicker from '@vuepic/vue-datepicker';
+import '@vuepic/vue-datepicker/dist/main.css';
+import { months } from '../../months';
+
+import jsPDF from 'jspdf';
+import html2canvas from 'html2canvas';
 import { toast } from 'vue3-toastify';
 import 'vue3-toastify/dist/index.css';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import axiosClient from '../../axiosClient';
-import { ca } from 'element-plus/es/locales.mjs';
 
 export default {
   name: 'WageSlip',
-  components: {},
+  components: {
+    VueDatePicker,
+  },
 
   props: {
     employeeId: {
@@ -484,6 +480,14 @@ export default {
         { title: 'Name', field: 'name', sortable: true },
         { title: 'Actions', field: 'actions', sortable: false, slot: 'actions' },
       ],
+      from: {
+        month: '0',
+        year: '2024',
+      },
+      to: {
+        month: '11',
+        year: '2024',
+      },
       form: {
         name: '',
         from: '',
@@ -527,6 +531,7 @@ export default {
   async created() {
     this.getCurrent();
     this.getMonths();
+    console.log('months', months);
 
     try {
       const employee = await axiosClient.get(`/api/v1/employee/get/${this.employeeId}`);
@@ -559,6 +564,23 @@ export default {
 
   methods: {
     async handleGenerateSlip() {
+      console.log('this.from: ', this.from, ' this.to: ', this.to);
+
+      let temp = parseInt(this.to.month);
+      if (temp >= 9) {
+        this.form.to = this.to.year + '-' + (temp + 1) + '-' + months[temp].days;
+      } else {
+        this.form.to = this.to.year + '-' + '0' + (temp + 1) + '-' + months[temp].days;
+      }
+      console.log('form: ', this.form);
+      temp = parseInt(this.from.month);
+
+      if (temp >= 9) {
+        this.form.from = this.from.year + '-' + (temp + 1) + '-' + '01';
+      } else {
+        this.form.from = this.from.year + '-' + '0' + (temp + 1) + '-' + '01';
+      }
+
       console.log('form: ', this.form);
 
       if (this.validateForm() == false) {
@@ -566,11 +588,14 @@ export default {
       }
 
       try {
+        this.showSlip = false;
+
         const response = await axiosClient.post(
           `/api/v1/attendance/get/from/to/${this.user._id}/${this.employeeId}`,
           this.form
         );
 
+        console.log('response.data: ', response.data);
         const fromDate = this.form.from.slice(5, 7);
         const toDate = this.form.to.slice(5, 7);
         console.log('fromDate: ', fromDate, ' toDate: ', toDate);
@@ -582,10 +607,21 @@ export default {
         this.attendance.totalDays = totalDays;
         this.attendanceData = response.data;
         for (let i = 0; i < this.attendanceData.length; i++) {
-          const temp = parseInt(this.attendanceData[i].AttendanceData[0].present);
+          this.attendanceData[i].month_year = this.attendanceData[i].month_year.slice(0, 10);
+
+          this.attendanceData[i].totalDays =
+            months[parseInt(this.attendanceData[i].month_year.slice(5, 7)) - 1].days;
+          const temp = parseInt(this.attendanceData[i].present);
+
+          this.attendanceData[i].wagePeriod =
+            months[parseInt(this.attendanceData[i].month_year.slice(5, 7)) - 1].short +
+            '-' +
+            this.attendanceData[i].month_year.slice(2, 4);
           totalPresent += temp;
         }
+        console.log('this.attendanceData: ', this.attendanceData);
         this.attendance.totalPresent = totalPresent;
+
         //creating wage period
         this.attendance.wagePeriod =
           this.months[fromDate - 1].short +
@@ -606,8 +642,44 @@ export default {
       }
     },
 
-    handleDownload() {
-      html2pdf(document.getElementById('slip'), {});
+    async handleDownload() {
+      const element = document.getElementById('slip');
+      const canvas = await html2canvas(element, {
+        scale: 2, // Higher scale for better resolution
+      });
+      const imgData = canvas.toDataURL('image/png');
+
+      // Get element's width and height in pixels
+      const elementWidth = canvas.width;
+      const elementHeight = canvas.height;
+
+      // A4 paper size dimensions in mm (portrait)
+      const a4Width = 210;
+      const a4Height = 297;
+
+      // Calculate the aspect ratio of the element
+      const aspectRatio = elementWidth / elementHeight;
+
+      // Calculate PDF width and height based on A4 dimensions and the element's aspect ratio
+      let pdfWidth = a4Width;
+      let pdfHeight = a4Width / aspectRatio;
+
+      // If the calculated height is larger than A4, adjust to fit within A4
+      if (pdfHeight > a4Height) {
+        pdfHeight = a4Height;
+        pdfWidth = a4Height * aspectRatio;
+      }
+
+      // Create a PDF with A4 format and portrait orientation
+      const pdf = new jsPDF({
+        orientation: 'portrait',
+        unit: 'mm',
+        format: 'a4', // Standard A4 format
+      });
+
+      // Add the image to the PDF, centered within the A4 dimensions
+      pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight);
+      pdf.save('file.pdf');
     },
 
     getMonths() {
@@ -629,6 +701,11 @@ export default {
     },
 
     validateForm() {
+      if (this.form.from == '') {
+        toast.info('Please select from date');
+        return false;
+      }
+
       if (this.form.from == '') {
         toast.info('Please select from date');
         return false;

@@ -164,7 +164,10 @@ h1 {
   <div class="source-400 pt-2 h-100 scroll">
     <div class="border-bottom px-4 d-flex justify-content-between align-items-center py-2">
       <div>
-        <h5 class="source-500 page-title">Employee Attendance {{ data.month_year }}</h5>
+        <h5 class="source-500 page-title">
+          Employee Attendance
+          {{ month_year }}
+        </h5>
       </div>
       <div class="">
         <div class="position-relative" data-bs-toggle="modal" data-bs-target="#ModalNotification">
@@ -243,7 +246,7 @@ h1 {
                     >
                       <el-tooltip content="Salary Slip" placement="bottom">
                         <router-link
-                          :to="'/wage/slip/' + attandanceId + '/' + item.emp_id"
+                          :to="'/wage/slip/' + item._id + '/' + item.emp_id"
                           style="text-decoration: none"
                         >
                           <i
@@ -282,7 +285,7 @@ import '@vuepic/vue-datepicker/dist/main.css';
 export default {
   name: 'EmployeeAttendance',
   props: {
-    attandanceId: {
+    monthYear: {
       type: String,
       required: true,
     },
@@ -325,7 +328,7 @@ export default {
         present: '',
       },
       months: [],
-      month: null,
+      month: '',
       newPassword: '',
       updateEmployee: {},
       showDeleteModal: false,
@@ -338,20 +341,26 @@ export default {
   },
 
   async created() {
+    console.log('monthYear: ', this.monthYear);
     await this.getCurrent();
     this.getMonths();
 
     try {
-      const res = await axiosClient.get(`/api/v1/attendance/get/${this.attandanceId}`);
+      const res = await axiosClient.get(
+        `/api/v1/attendance/get/${this.user._id}/${this.monthYear}`
+      );
       this.data = res.data;
       console.log('res.data.data: ', this.data);
-      this.data.month_year = this.data.month_year.slice(0, 10);
+      for (let i in this.data) {
+        this.data[i].month_year = this.data[i].month_year.slice(0, 10);
+      }
+
       this.attendance_id = res.data._id;
-      this.originalItems = res.data.AttendanceData;
-      const temp = res.data.month_year.split('-');
+      this.originalItems = this.data;
+      const temp = this.data[0].month_year.split('-');
       this.month = temp[1];
-      this.month_year.month = temp[1];
-      this.month_year.year = temp[0];
+      this.month_year = this.data[0].month_year;
+
       console.log('month_year: ', this.month_year, ' temp : ', temp);
       this.renderKey++;
     } catch (err) {
@@ -360,7 +369,7 @@ export default {
 
     this.items = this.originalItems;
 
-    //console.log('employee: ', this.items);
+    console.log('this.items : ', this.items);
   },
 
   mounted() {

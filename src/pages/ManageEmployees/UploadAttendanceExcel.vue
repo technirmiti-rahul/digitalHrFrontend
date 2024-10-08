@@ -83,8 +83,8 @@ h1 {
               />
             </div>
             <div>
-              <!-- <VueDatePicker v-model="month_year" month-picker /> -->
-              <input type="date" class="form-control form-control-sm" v-model="form.month_year" />
+              <VueDatePicker v-model="month_year" month-picker />
+              <!-- <input type="date" class="form-control form-control-sm" v-model="form.month_year" /> -->
             </div>
 
             <div>
@@ -209,11 +209,18 @@ export default {
       };
       // this.form.month_year = this.month_year.month + 1 + '/' + this.month_year.year;
       console.log('this.month_year: ', this.month_year);
+      const temp = parseInt(this.month_year.month);
+      if (temp >= 9) {
+        this.form.month_year = this.month_year.year + '-' + (temp + 1) + '-' + '01';
+      } else {
+        this.form.month_year = this.month_year.year + '-' + '0' + (temp + 1) + '-' + '01';
+      }
+
       console.log('this.form: ', this.form);
 
       reader.readAsArrayBuffer(this.file);
-      const date = Date.now();
-      console.log('date: ', Date.now());
+      const date = Date();
+      console.log('date: ', Date());
       if (this.form.employeeData.length > 0) {
         console.log('adding data');
         try {
@@ -222,8 +229,11 @@ export default {
           toast.success(`Data Added`, {
             autoClose: 1500,
           });
+
+          console.log('res.data: ', res.data);
+
           setTimeout(() => {
-            this.$router.push('/manage/attendance');
+            //this.$router.push('/manage/attendance');
           });
         } catch (err) {
           console.log('error: ', err);

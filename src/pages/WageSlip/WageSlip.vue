@@ -89,7 +89,7 @@
     <div class="overflow-y-hidden pb-5 h-100">
       <div class="h-100 overflow-y-auto">
         <div class="container py-3">
-          <div class="mb-1 mt-5 d-flex justify-content-center gap-2 border py-3" id="slip">
+          <div class="mb-1 mt-5 d-flex justify-content-center gap-2 py-3" id="slip">
             <div class="slip-container border border-dark overflow-hidden">
               <div class="py-1 border-bottom border-dark text-center source-700 font18">
                 Wage Slip
@@ -156,7 +156,11 @@
                     Wage Period
                   </div>
                   <div class="border-end border-dark col-3 d-flex align-items-center source-500">
-                    {{ months[month - 1].short }}-{{ year.slice(2, 4) }}
+                    {{
+                      month && month <= months.length
+                        ? months[month - 1].short + '-' + year.slice(2, 4)
+                        : ''
+                    }}
                   </div>
                   <div class="border-end border-dark col-3 d-flex align-items-center source-700">
                     Bank A/C No
@@ -172,7 +176,7 @@
                     Days In Month
                   </div>
                   <div class="border-end border-dark col-3 d-flex align-items-center source-500">
-                    {{ months[month - 1].days }}
+                    {{ months[month - 1]?.days }}
                   </div>
                   <div class="border-end border-dark col-3 d-flex align-items-center source-700">
                     Total Attendance
@@ -409,6 +413,8 @@
 
 <script>
 import html2pdf from 'html2pdf.js';
+import jsPDF from 'jspdf';
+import html2canvas from 'html2canvas';
 import { toast } from 'vue3-toastify';
 import 'vue3-toastify/dist/index.css';
 import { gsap } from 'gsap';
@@ -432,7 +438,20 @@ export default {
 
   data() {
     return {
-      months: [],
+      months: [
+        { month: 1, name: 'January', short: 'Jan', days: 31 },
+        { month: 2, name: 'February', short: 'Feb', days: 28 },
+        { month: 3, name: 'March', short: 'Mar', days: 31 },
+        { month: 4, name: 'April', short: 'Apr', days: 30 },
+        { month: 5, name: 'May', short: 'May', days: 31 },
+        { month: 6, name: 'June', short: 'Jun', days: 30 },
+        { month: 7, name: 'July', short: 'Jul', days: 31 },
+        { month: 8, name: 'August', short: 'Aug', days: 31 },
+        { month: 9, name: 'September', short: 'Sep', days: 30 },
+        { month: 10, name: 'October', short: 'Oct', days: 31 },
+        { month: 11, name: 'November', short: 'Nov', days: 30 },
+        { month: 12, name: 'December', short: 'Dec', days: 31 },
+      ],
       month: '',
       year: '',
       attendance: '',
@@ -457,18 +476,6 @@ export default {
       items: [],
       originalItems: [],
 
-      /*   headers: [
-        { text: 'PLAYER', value: 'player', sortable: true },
-        { text: 'TEAM', value: 'team' },
-        { text: 'NUMBER', value: 'number' },
-        { text: 'POSITION', value: 'position' },
-        { text: 'HEIGHT', value: 'indicator.height' },
-        { text: 'WEIGHT (lbs)', value: 'indicator.weight', sortable: true },
-        { text: 'LAST ATTENDED', value: 'lastAttended', width: 200 },
-        { text: 'COUNTRY', value: 'country' },
-        { text: 'Actions', value: 'actions', sortable: false },
-      ], */
-
       headers: [
         { text: 'Name', value: 'name', sortable: true },
         { text: 'Email', value: 'email' },
@@ -481,29 +488,33 @@ export default {
   },
 
   async created() {
+    console.log(this.attandanceId, this.employeeId);
     this.getCurrent();
     this.getMonths();
 
     try {
-      const res = await axiosClient.get(
-        `/api/v1/attendance/get/employee/${this.attandanceId}/${this.employeeId}`
-      );
+      const res = await axiosClient.post(`/api/v1/attendance/get/employee/${this.attandanceId}`);
       this.attendance = res.data;
+      console.log('res.data: ', res.data);
 
-      const attendance = await axiosClient.get(`/api/v1/attendance/get/${this.attandanceId}`);
+      /*   const attendance = await axiosClient.get(`/api/v1/attendance/get/${this.attandanceId}`);
+      console.log('attendanceData: ', this.attendanceData);
       this.attendanceData = attendance.data;
       this.attandanceData = this.attendanceData.month_year.slice(0, 10);
-      const split = this.attendanceData.month_year.split('-');
-
-      this.month = parseInt(split[1]);
-      this.year = split[0];
+      */
 
       const employee = await axiosClient.get(`/api/v1/employee/get/${this.employeeId}`);
       this.employee = employee.data.data;
 
-      console.log('res.data.data: ', res.data);
-      console.log('attendanceData: ', this.attendanceData);
+      this.attendance.month_year = this.attendance.month_year.slice(0, 10);
+
+      const split = this.attendance.month_year.split('-');
+
+      this.month = parseInt(split[1]);
+      this.year = split[0];
+
       console.log('employee: ', this.employee);
+      console.log('attendance: ', this.attendance);
     } catch (err) {
       console.log('error: ', err);
     }
@@ -529,8 +540,44 @@ export default {
   setup() {},
 
   methods: {
-    handleDownload() {
-      html2pdf(document.getElementById('slip'), {});
+    async handleDownload() {
+      const element = document.getElementById('slip');
+      const canvas = await html2canvas(element, {
+        scale: 2, // Higher scale for better resolution
+      });
+      const imgData = canvas.toDataURL('image/png');
+
+      // Get element's width and height in pixels
+      const elementWidth = canvas.width;
+      const elementHeight = canvas.height;
+
+      // A4 paper size dimensions in mm (portrait)
+      const a4Width = 210;
+      const a4Height = 297;
+
+      // Calculate the aspect ratio of the element
+      const aspectRatio = elementWidth / elementHeight;
+
+      // Calculate PDF width and height based on A4 dimensions and the element's aspect ratio
+      let pdfWidth = a4Width;
+      let pdfHeight = a4Width / aspectRatio;
+
+      // If the calculated height is larger than A4, adjust to fit within A4
+      if (pdfHeight > a4Height) {
+        pdfHeight = a4Height;
+        pdfWidth = a4Height * aspectRatio;
+      }
+
+      // Create a PDF with A4 format and portrait orientation
+      const pdf = new jsPDF({
+        orientation: 'portrait',
+        unit: 'mm',
+        format: 'a4', // Standard A4 format
+      });
+
+      // Add the image to the PDF, centered within the A4 dimensions
+      pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight);
+      pdf.save('file.pdf');
     },
 
     getMonths() {
@@ -548,6 +595,7 @@ export default {
         { month: 11, name: 'November', short: 'Nov', days: 30 },
         { month: 12, name: 'December', short: 'Dec', days: 31 },
       ];
+
       this.months = months;
     },
 
