@@ -85,13 +85,13 @@
                 <div>
                   <!-- Form Group (username)-->
                   <div class="mb-3">
-                    <label class="small mb-1" for="name">Name</label>
+                    <label class="small mb-1" for="name">Notame</label>
                     <input
                       :disabled="true"
                       class="form-control"
                       id="name"
                       type="text"
-                      v-model="name"
+                      v-model="user.name"
                     />
                   </div>
                   <!-- Form Row        -->
@@ -110,7 +110,7 @@
                           class="form-control"
                           id="email"
                           type="text"
-                          v-model="email"
+                          v-model="user.email"
                         />
                       </div>
                       <!-- Form Group (location)-->
@@ -121,7 +121,7 @@
                           class="form-control"
                           id="mobile_no"
                           type="text"
-                          v-model="mobile_no"
+                          v-model="user.whatsapp_no"
                         />
                       </div>
                     </div>
@@ -154,10 +154,13 @@
 <script>
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+import axiosClient from '../axiosClient';
 export default {
   name: 'MyAccount',
   data() {
     return {
+      user: {},
       id: '',
       name: 'xyz',
       mobile_no: '11111111',
@@ -167,6 +170,10 @@ export default {
 
       token: '',
     };
+  },
+
+  created() {
+    this.getCurrent();
   },
 
   mounted() {
@@ -182,6 +189,23 @@ export default {
         toggleActions: 'play none none reverse',
       },
     });
+  },
+
+  methods: {
+    async getCurrent() {
+      try {
+        const token = await axiosClient.get(`api/v1/user/getCurrent/`);
+        if (!token) {
+          this.$router.push('/login');
+        }
+        this.user = token.data.user;
+      } catch (err) {
+        console.log('error: ', err);
+        this.$router.push('/login');
+      }
+
+      return;
+    },
   },
 };
 </script>

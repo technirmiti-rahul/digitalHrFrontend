@@ -542,7 +542,7 @@ export default {
     console.log('this.user: ', this.user);
     if (this.user.roleType.name == 'super_admin') {
       try {
-        const res = await axiosClient.get(`/api/v1/client/getall`);
+        const res = await axiosClient.get(`/api/v1/client/get/all/clients`);
         this.originalItems = res.data.data;
         const notifications = await axiosClient.get(`/api/v1/notification/getall/${this.user._id}`);
         this.notifications = notifications.data.data;

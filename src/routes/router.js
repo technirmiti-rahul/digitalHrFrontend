@@ -90,6 +90,9 @@ const routes = [
       {
         path: '/account',
         component: MyAccount,
+        props: (route) => ({
+          id: route.params.id,
+        }),
       },
       {
         path: '/teams',

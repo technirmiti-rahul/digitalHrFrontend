@@ -378,6 +378,13 @@ h1 {
                   Add Employee
                 </button>
               </router-link>
+              <button
+                type="button"
+                @click="downloadExcel"
+                class="btn btn-primary btn-sm border-0 button_bg source-400"
+              >
+                Download Excel
+              </button>
             </div>
           </div>
           <div class="table border rounded">
@@ -494,6 +501,8 @@ h1 {
 </template>
 
 <script>
+import * as XLSX from 'xlsx'; // Import the XLSX library
+import { saveAs } from 'file-saver'; // Import the file-saver library
 import Multiselect from 'vue-multiselect';
 import 'vue-multiselect/dist/vue-multiselect.css';
 import EasyDataTable from 'vue3-easy-data-table';
@@ -583,6 +592,28 @@ export default {
   setup() {},
 
   methods: {
+    downloadExcel() {
+      // Create a worksheet from the JSON data
+      const worksheet = XLSX.utils.json_to_sheet(this.originalItems);
+
+      // Create a new workbook
+      const workbook = XLSX.utils.book_new();
+
+      // Append the worksheet to the workbook
+      XLSX.utils.book_append_sheet(workbook, worksheet, 'Sheet1');
+
+      // Write the workbook to binary string
+      const excelBuffer = XLSX.write(workbook, { bookType: 'xlsx', type: 'array' });
+
+      // Create a Blob from the buffer and save it as an Excel file
+      const blob = new Blob([excelBuffer], {
+        type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+      });
+
+      // Use file-saver to download the file
+      saveAs(blob, 'Employees.xlsx');
+    },
+
     async handleDismiss(id) {
       console.log(id);
       try {

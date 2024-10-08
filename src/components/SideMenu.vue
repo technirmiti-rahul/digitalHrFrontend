@@ -73,7 +73,7 @@ ul {
       <div class="header py-2">
         <div class="w-100 h-100 d-flex">
           <div class="d-flex justify-content-center align-items-center h-100 px-2">
-            <div class="">
+            <div @click="handleRedirect(`account`)" class="">
               <img
                 v-if="profile"
                 class="img-account-profile profile-image pointer rounded-circle mb-2"
@@ -400,22 +400,26 @@ ul {
                     </div>
                   </div>
 
-                  <div v-if="role != 'super_admin'"></div>
-                  <div
-                    v-if="glowMenuItem == 'manage/attendance'"
-                    class="pointer selected text-light py-1 px-2 rounded-4 mb-1"
-                    @click="handleRedirect('manage/attendance')"
-                  >
-                    <i class="bi bi-table text-light mx-2 text_shadow" style="font-size: 1rem"></i>
-                    Manage Attendance
-                  </div>
-                  <div
-                    v-else
-                    class="pointer text-light py-1 px-2 rounded-4 mb-1"
-                    @click="handleRedirect('manage/attendance')"
-                  >
-                    <i class="bi bi-table text-light mx-2" style="font-size: 1rem"></i>
-                    Manage Attendance
+                  <div v-if="role != 'super_admin'">
+                    <div
+                      v-if="glowMenuItem == 'manage/attendance'"
+                      class="pointer selected text-light py-1 px-2 rounded-4 mb-1"
+                      @click="handleRedirect('manage/attendance')"
+                    >
+                      <i
+                        class="bi bi-table text-light mx-2 text_shadow"
+                        style="font-size: 1rem"
+                      ></i>
+                      Manage Attendance
+                    </div>
+                    <div
+                      v-else
+                      class="pointer text-light py-1 px-2 rounded-4 mb-1"
+                      @click="handleRedirect('manage/attendance')"
+                    >
+                      <i class="bi bi-table text-light mx-2" style="font-size: 1rem"></i>
+                      Manage Attendance
+                    </div>
                   </div>
                 </div>
                 <div></div>
