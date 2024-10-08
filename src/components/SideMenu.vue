@@ -88,7 +88,7 @@ ul {
               />
             </div>
           </div>
-          <div class="w-100 overflow-x-hidden">
+          <div class="w-100 overflow-x-hidden pe-2">
             <div class="text-light font-14px source-600 text-capitalize">{{ user.name }}</div>
             <div class="text-secondary font-14px source-500">{{ user.email }}</div>
             <div class="text-secondary font-14px source-500">
