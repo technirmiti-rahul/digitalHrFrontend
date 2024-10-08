@@ -233,7 +233,7 @@ export default {
           console.log('res.data: ', res.data);
 
           setTimeout(() => {
-            //this.$router.push('/manage/attendance');
+            this.$router.push('/manage/attendance');
           });
         } catch (err) {
           console.log('error: ', err);
