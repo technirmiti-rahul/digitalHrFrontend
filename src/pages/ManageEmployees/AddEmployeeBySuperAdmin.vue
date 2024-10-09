@@ -267,9 +267,9 @@ export default {
 
       const teams = await axiosClient.get(`/api/v1/team/getall`);
       this.teams = teams.data.data;
-      /*  console.log('departments : ', this.departments);
+      console.log('departments : ', this.departments);
       console.log('roles : ', this.roles);
-      console.log('teams : ', this.teams); */
+      console.log('teams : ', this.teams);
       for (let i = 0; i < this.roles.length; i++) {
         if (this.roles[i].name === 'employee') {
           this.selected_roleType = this.roles[i];

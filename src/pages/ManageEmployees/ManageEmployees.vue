@@ -365,26 +365,38 @@ h1 {
               />
             </div>
             <div v-if="role != 'super_admin'" class="d-flex justify-content-end gap-2">
-              <router-link to="/upload/employee/excel">
-                <button type="button" class="btn text-light border-0 button_bg btn-sm">
-                  Upload Excel
+              <el-tooltip content="Upload Employee Excel" placement="bottom">
+                <router-link to="/upload/employee/excel">
+                  <button type="button" class="btn text-light border-0 button_bg btn-sm">
+                    <i class="bi bi-file-earmark-arrow-up"></i>
+                    Excel
+                  </button>
+                </router-link>
+              </el-tooltip>
+              <el-tooltip content="Add Employee" placement="bottom">
+                <router-link
+                  to="/add/employee"
+                  class="d-flex align-items-center text-decoration-none"
+                >
+                  <button
+                    type="button"
+                    class="btn btn-primary btn-sm border-0 button_bg source-400"
+                  >
+                    <i class="bi bi-person-fill-add"></i>
+                    Employee
+                  </button>
+                </router-link>
+              </el-tooltip>
+              <el-tooltip content="Download Employee Excel" placement="bottom">
+                <button
+                  type="button"
+                  @click="downloadExcel"
+                  class="btn btn-primary btn-sm border-0 button_bg source-400"
+                >
+                  <i class="bi bi-download"></i>
+                  Employees
                 </button>
-              </router-link>
-              <router-link
-                to="/add/employee"
-                class="d-flex align-items-center text-decoration-none"
-              >
-                <button type="button" class="btn btn-primary btn-sm border-0 button_bg source-400">
-                  Add Employee
-                </button>
-              </router-link>
-              <button
-                type="button"
-                @click="downloadExcel"
-                class="btn btn-primary btn-sm border-0 button_bg source-400"
-              >
-                Download Excel
-              </button>
+              </el-tooltip>
             </div>
           </div>
           <div class="table border rounded">

@@ -39,47 +39,6 @@
 </style>
 
 <template>
-  <div
-    class="modal fade"
-    id="exampleModal"
-    tabindex="-1"
-    aria-labelledby="exampleModalLabel"
-    aria-hidden="true"
-  >
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h1 class="modal-title fs-5 mooli text-capitalize" id="exampleModalLabel">
-            Update Password For {{ updateUser.name }}
-          </h1>
-          <button
-            type="button"
-            class="btn-close"
-            data-bs-dismiss="modal"
-            aria-label="Close"
-          ></button>
-        </div>
-        <div class="modal-body">
-          <div class="">
-            <input
-              type="text"
-              class="form-control"
-              placeholder="Enter New Password"
-              aria-label="Enter New Password"
-              aria-describedby="addon-wrapping"
-              v-model="newPassword"
-            />
-          </div>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-          <button @click="handleChangePassword" type="button" class="btn btn-primary">
-            Update
-          </button>
-        </div>
-      </div>
-    </div>
-  </div>
   <!-- /////////////////////////////////////////////////////////////////////////////////////////////////////////// -->
   <div class="hind-regular pt-2 h-100 scroll">
     <div class="border-bottom px-3">
@@ -459,7 +418,8 @@
                   class="btn btn-primary border-0 button_bg"
                   @click="handleDownloadWageSlip(i)"
                 >
-                  Download {{ attendance.wagePeriod }}
+                  <i class="bi bi-download mx-1"></i>
+                  {{ attendance.wagePeriod }}
                 </button>
               </div>
             </div>
@@ -468,7 +428,10 @@
               class="border-top border-secondary border-opacity-25 mb-3"
             ></div>
           </div>
-          <div v-if="showSlip" class="mt-4 mb-2 px-5 d-flex justify-content-center">
+          <div
+            v-if="showSlip && attendanceData.length > 1"
+            class="mt-4 mb-2 px-5 d-flex justify-content-center"
+          >
             <button
               type="button"
               class="btn btn-dark btn-primary border-0 button_bg bg-gradient px-5"

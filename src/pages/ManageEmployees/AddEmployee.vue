@@ -322,7 +322,7 @@ export default {
           });
 
           setTimeout(() => {
-            this.$router.push(`/manage/employees`);
+            //this.$router.push(`/manage/employees`);
           }, 2000);
         }
       } catch (err) {

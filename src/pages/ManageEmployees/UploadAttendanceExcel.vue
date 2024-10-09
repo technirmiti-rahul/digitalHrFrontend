@@ -234,7 +234,7 @@ export default {
 
           setTimeout(() => {
             this.$router.push('/manage/attendance');
-          });
+          }, 2000);
         } catch (err) {
           console.log('error: ', err);
           toast.error(`Something Went Wrong`, {
