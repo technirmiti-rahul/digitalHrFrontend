@@ -115,7 +115,31 @@
                       </div>
                       <!-- Form Group (location)-->
                       <div class="mt-2">
-                        <label class="small mb-1" for="mobile_no">Mobile Number</label>
+                        <label class="small mb-1" for="mobile_no">Team</label>
+                        <input
+                          :disabled="true"
+                          class="form-control"
+                          id="mobile_no"
+                          type="text"
+                          v-model="user.team.name"
+                        />
+                      </div>
+                      <div class="mt-2">
+                        <label class="small mb-1" for="mobile_no">Role</label>
+                        <input
+                          :disabled="true"
+                          class="form-control capitalize"
+                          id="mobile_no"
+                          type="text"
+                          v-model="user.roleType.name"
+                        />
+                      </div>
+                    </div>
+
+                    <!-- ///////////////////////////////// New colunn starts //////////////////////////////////// -->
+                    <div class="col-md-6">
+                      <div class="mt-2">
+                        <label class="small mb-1" for="mobile_no">Whats App Number</label>
                         <input
                           :disabled="true"
                           class="form-control"
@@ -124,19 +148,14 @@
                           v-model="user.whatsapp_no"
                         />
                       </div>
-                    </div>
-
-                    <!-- ///////////////////////////////// New colunn starts //////////////////////////////////// -->
-                    <div class="col-md-6">
-                      <div class="mt-2" v-if="whatsapp_status">
-                        <label class="small mb-1" for="whatsapp_no">Whatsapp Number</label>
+                      <div class="mt-2">
+                        <label class="small mb-1" for="mobile_no">Team</label>
                         <input
                           :disabled="true"
-                          class="form-control"
-                          id="whatsapp_no"
+                          class="form-control capitalize"
+                          id="mobile_no"
                           type="text"
-                          name="birthday"
-                          v-model="whatsapp_no"
+                          v-model="user.department.name"
                         />
                       </div>
                     </div>

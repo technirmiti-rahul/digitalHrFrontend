@@ -48,7 +48,7 @@
           <form class="form-container">
             <div class="row source-400">
               <div class="form-group col-12 col-sm-6 col-md-4">
-                <label for="name " class="">Name</label>
+                <label for="name " class="mt-2">Name</label>
                 <input
                   v-model="form.name"
                   type="text"
@@ -135,13 +135,13 @@
 
               <!-- ///////////////////////////////////////////// -->
               <div class="form-group col-12 col-sm-6 col-md-4">
-                <label for="phone_number  " class="mt-2">Phone Number</label>
+                <label for="phone_number  " class="mt-2">Whats App Number</label>
                 <input
                   v-model="form.whatsapp_no"
                   type="number"
                   class="form-control border"
                   id="phone_number"
-                  placeholder="Enter phone number"
+                  placeholder="Enter Whats App number"
                 />
               </div>
 
@@ -186,6 +186,197 @@
                 />
               </div>
             </div>
+            <!-- ///////////////////////////////////////////////////////////////////////////////////////// -->
+            <div class="row source-400 mt-3">
+              <div class="form-group col-12 col-sm-6 col-md-4">
+                <label for="Adhar " class="mt-2">Adhar No</label>
+                <input
+                  v-model="form.adhar_card"
+                  type="number"
+                  class="form-control border"
+                  id="Adhar"
+                  placeholder="Enter Adhar No"
+                />
+              </div>
+              <div class="form-group col-12 col-sm-6 col-md-4">
+                <label for="UAN " class="mt-2">UAN No</label>
+                <input
+                  v-model="form.uan_no"
+                  type="number"
+                  class="form-control border"
+                  id="UAN"
+                  placeholder="Enter UAN No"
+                />
+              </div>
+              <div class="form-group col-12 col-sm-6 col-md-4">
+                <label for="PF" class="mt-2">PF No</label>
+                <input
+                  v-model="form.pf_no"
+                  type="number"
+                  class="form-control border"
+                  id="PF"
+                  placeholder="Enter  PF No"
+                />
+              </div>
+              <div class="form-group col-12 col-sm-6 col-md-4">
+                <label for="ESIC No" class="mt-2">ESIC No</label>
+                <input
+                  v-model="form.esic_no"
+                  type="number"
+                  class="form-control border"
+                  id="ESIC No"
+                  placeholder="ESIC No"
+                />
+              </div>
+              <div class="form-group col-12 col-sm-6 col-md-4">
+                <label for="Bank_name" class="mt-2">Bank Name</label>
+                <input
+                  v-model="form.bank_name"
+                  type="text"
+                  class="form-control border"
+                  id="Bank_name"
+                  placeholder="Enter Bank Name"
+                />
+              </div>
+              <div class="form-group col-12 col-sm-6 col-md-4">
+                <label for="bankAc" class="mt-2">Bank A/C No</label>
+                <input
+                  v-model="form.bank_ac_no"
+                  type="number"
+                  class="form-control border"
+                  id="bankAc"
+                  placeholder="Enter Bank A/C No"
+                />
+              </div>
+              <div class="form-group col-12 col-sm-6 col-md-4">
+                <label for="bankIfsc" class="mt-2">Bank IFSC</label>
+                <input
+                  v-model="form.bank_ifsc"
+                  type="text"
+                  class="form-control border"
+                  id="bankIfsc"
+                  placeholder="Enter  Bank IFSC"
+                />
+              </div>
+              <div class="form-group col-12 col-sm-6 col-md-4">
+                <label for=" PFBasic" class="mt-2">PF Basic</label>
+                <input
+                  v-model="form.pf_basic"
+                  type="number"
+                  class="form-control border"
+                  id="PFBasic"
+                  placeholder="Enter  PF Basic"
+                />
+              </div>
+              <div class="form-group col-12 col-sm-6 col-md-4">
+                <div class="">
+                  <label for=" number" class="mt-2">Basic</label>
+                  <input
+                    v-model="form.basic"
+                    type="number"
+                    class="form-control border"
+                    id="Basic"
+                    placeholder="Enter  Basic"
+                  />
+                </div>
+              </div>
+              <div class="form-group col-12 col-sm-6 col-md-4">
+                <div class="">
+                  <label for="  D.A" class="mt-2">D.A</label>
+                  <input
+                    v-model="form.da"
+                    type="number"
+                    class="form-control border"
+                    id=" D.A"
+                    placeholder="Enter   D.A"
+                  />
+                </div>
+              </div>
+
+              <!-- ///////////////////////////////////////////// -->
+              <div class="form-group col-12 col-sm-6 col-md-4">
+                <label for="HRA  " class="mt-2">HRA</label>
+                <input
+                  v-model="form.hra"
+                  type="number"
+                  class="form-control border"
+                  id="HRA"
+                  placeholder="Enter HRA"
+                />
+              </div>
+
+              <div class="form-group col-12 col-sm-6 col-md-4">
+                <label for=" FoodAllow" class="mt-2">Food Allow</label>
+                <input
+                  v-model="form.food_allow"
+                  type="number"
+                  class="form-control border"
+                  id=" FoodAllow"
+                  placeholder="Enter  Food Allow"
+                />
+              </div>
+              <div class="form-group col-12 col-sm-6 col-md-4">
+                <label for="Conveyance" class="mt-2">Conveyance</label>
+                <input
+                  v-model="form.conveyance"
+                  type="number"
+                  class="form-control border"
+                  id="Conveyance"
+                  placeholder="Enter Conveyance"
+                />
+              </div>
+              <div class="form-group col-12 col-sm-6 col-md-4">
+                <label for="EPF" class="mt-2">EPF</label>
+                <input
+                  v-model="form.epf"
+                  type="number"
+                  class="form-control border"
+                  id="EPF"
+                  placeholder="Enter EPF"
+                />
+              </div>
+              <div class="form-group col-12 col-sm-6 col-md-4">
+                <label for="ESIC" class="mt-2">ESIC</label>
+                <input
+                  v-model="form.esic"
+                  type="number"
+                  class="form-control border"
+                  id="ESIC"
+                  placeholder="Enter ESIC"
+                />
+              </div>
+              <div class="form-group col-12 col-sm-6 col-md-4">
+                <label for="LWF" class="mt-2">LWF</label>
+                <input
+                  v-model="form.lwf"
+                  type="number"
+                  class="form-control border"
+                  id="LWF"
+                  placeholder="Enter LWF"
+                />
+              </div>
+              <div class="form-group col-12 col-sm-6 col-md-4">
+                <label for="E_EPF" class="mt-2">E_EPF</label>
+                <input
+                  v-model="form.e_epf"
+                  type="number"
+                  class="form-control border"
+                  id="E_EPF"
+                  placeholder="Enter E_EPF"
+                />
+              </div>
+              <div class="form-group col-12 col-sm-6 col-md-4">
+                <label for="E_ESIC" class="mt-2">E_ESIC</label>
+                <input
+                  v-model="form.e_esic"
+                  type="number"
+                  class="form-control border"
+                  id="E_ESIC"
+                  placeholder="Enter E_ESIC"
+                />
+              </div>
+            </div>
+
             <div class="w-100 d-flex justify-content-center align-items-center">
               <button
                 @click="handleAddEmployee"
@@ -217,7 +408,7 @@ export default {
   },
   data() {
     return {
-      form: {
+      /*   form: {
         client_user_id: '',
         client_id: '',
         name: '',
@@ -234,6 +425,61 @@ export default {
         pin_code: '',
         designation: '',
         date_of_joining: '',
+
+        uan_no: '',
+        pf_no: '',
+        esic_no: '',
+        bank_name: '',
+        bank_ac_no: '',
+        bank_ifsc: '',
+        pf_basic: '',
+        basic: '',
+        da: '',
+        hra: '',
+        food_allow: '',
+        conveyance: '',
+        epf: '',
+        esic: '',
+        lwf: '',
+        e_epf: '',
+        e_esic: '',
+      }, */
+      form: {
+        client_user_id: '',
+        client_id: '',
+        name: '',
+        email: '',
+        password: '',
+        whatsapp_no: '',
+        roleType: '',
+        team: '',
+        department: '',
+        city: '',
+        state: '',
+        country: '',
+        address: '',
+        pin_code: '',
+        designation: 'developer',
+        date_of_joining: '',
+
+        adhar_card: '111111111111',
+        uan_no: '111111111111',
+        pf_no: '111111111111',
+        esic_no: '111111111111',
+        bank_name: 'boi',
+        bank_ac_no: '111111111111',
+        bank_ifsc: '111111111111',
+        pf_basic: '5000',
+        basic: '9000',
+        da: '3000',
+        hra: '2000',
+        food_allow: '1000',
+        conveyance: '2000',
+        epf: '1000',
+        esic: '2000',
+        lwf: '2000',
+        e_epf: '4000',
+        e_esic: '6000',
       },
       selected_roleType: '',
       selected_team: '',
@@ -410,6 +656,90 @@ export default {
       }
       if (this.selected_team == '') {
         toast.info(`Select Team `, { autoClose: 1000 });
+        return false;
+      }
+
+      if (this.form.uan_no == '') {
+        toast.info(`Enter UAN Number`, { autoClose: 1000 });
+        return false;
+      }
+      if (this.form.pf_no == '') {
+        toast.info(`Enter PF Number`, { autoClose: 1000 });
+        return false;
+      }
+
+      if (this.form.esic_no == '') {
+        toast.info(`Enter ESIC Number`, { autoClose: 1000 });
+        return false;
+      }
+
+      if (this.form.bank_name == '') {
+        toast.info(`Enter Bank Name`, { autoClose: 1000 });
+        return false;
+      }
+
+      if (this.form.bank_ac_no == '') {
+        toast.info(`Enter Bank Account Number`, { autoClose: 1000 });
+        return false;
+      }
+
+      if (this.form.bank_ifsc == '') {
+        toast.info(`Enter Bank IFSC Code`, { autoClose: 1000 });
+        return false;
+      }
+
+      if (this.form.pf_basic == '') {
+        toast.info(`Enter PF Basic`, { autoClose: 1000 });
+        return false;
+      }
+
+      if (this.form.basic == '') {
+        toast.info(`Enter Basic`, { autoClose: 1000 });
+        return false;
+      }
+
+      if (this.form.da == '') {
+        toast.info(`Enter DA`, { autoClose: 1000 });
+        return false;
+      }
+
+      if (this.form.hra == '') {
+        toast.info(`Enter HRA`, { autoClose: 1000 });
+        return false;
+      }
+
+      if (this.form.food_allow == '') {
+        toast.info(`Enter Food Allow`, { autoClose: 1000 });
+        return false;
+      }
+
+      if (this.form.conveyance == '') {
+        toast.info(`Enter Conveyance`, { autoClose: 1000 });
+        return false;
+      }
+
+      if (this.form.epf == '') {
+        toast.info(`Enter EPF`, { autoClose: 1000 });
+        return false;
+      }
+
+      if (this.form.esic == '') {
+        toast.info(`Enter ESIC`, { autoClose: 1000 });
+        return false;
+      }
+
+      if (this.form.lwf == '') {
+        toast.info(`Enter LWF`, { autoClose: 1000 });
+        return false;
+      }
+
+      if (this.form.e_epf == '') {
+        toast.info(`Enter E-EPF`, { autoClose: 1000 });
+        return false;
+      }
+
+      if (this.form.e_esic == '') {
+        toast.info(`Enter E-ESIC`, { autoClose: 1000 });
         return false;
       }
 

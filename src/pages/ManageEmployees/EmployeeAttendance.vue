@@ -132,12 +132,13 @@ h1 {
         </div>
         <div class="modal-body">
           <div class="mb-3">
-            <label for="name" class="form-label source-400">Employee Id</label>
-            <input type="text" class="form-control" id="name" v-model="formAdd.emp_id" />
-          </div>
-          <div class="mb-3">
-            <label for="name" class="form-label source-400">Name</label>
-            <input type="text" class="form-control" id="name" v-model="formAdd.name" />
+            <multiselect
+              v-model="selectedEmployee"
+              :options="employees"
+              placeholder="Select Employee"
+              label="name"
+              track-by="name"
+            ></multiselect>
           </div>
           <div class="mb-3">
             <label for="present" class="form-label source-400">Present</label>
@@ -246,7 +247,7 @@ h1 {
                     >
                       <el-tooltip content="Salary Slip" placement="bottom">
                         <router-link
-                          :to="'/wage/slip/' + item._id + '/' + item.emp_id"
+                          :to="'/wage/slip/' + item._id + '/' + item.email"
                           style="text-decoration: none"
                         >
                           <i
@@ -303,6 +304,8 @@ export default {
       role: '',
       renderKey: 0,
       attendance_id: '',
+      employees: [],
+      selectedEmployee: '',
 
       notifications: [],
       headers: [
@@ -326,6 +329,7 @@ export default {
         name: '',
         emp_id: '',
         present: '',
+        month_year: '',
       },
       months: [],
       month: '',
@@ -361,6 +365,12 @@ export default {
       this.month = temp[1];
       this.month_year = this.data[0].month_year;
 
+      const resEmployees = await axiosClient.get(
+        `/api/v1/employee/get/employees/by/client/${this.user._id}`
+      );
+      console.log('resEmployees.data.data: ', resEmployees.data.data);
+      this.employees = resEmployees.data.data;
+
       console.log('month_year: ', this.month_year, ' temp : ', temp);
       this.renderKey++;
     } catch (err) {
@@ -391,19 +401,30 @@ export default {
 
   methods: {
     async handleAddAttendance() {
+      this.formAdd.name = this.selectedEmployee.name;
+      this.formAdd.emp_id = this.selectedEmployee._id;
+      this.formAdd.month_year = this.month_year;
       console.log('formAdd', this.formAdd);
+
       if (this.validateFormAdd() == false) return;
+
       try {
         const res = await axiosClient.post(
-          `/api/v1/attendance/add/record/${this.attendance_id}`,
+          `/api/v1/attendance/add/single/${this.user._id}`,
           this.formAdd
         );
         console.log('res.data.data: ', res.data);
         toast.success('Attendance Added Successfully', {
           autoClose: 1500,
         });
+
+        setTimeout(() => {
+          this.$router.go(0);
+        });
+
         this.originalItems = res.data.AttendanceData;
         this.items = this.originalItems;
+        this.selectedEmployee = '';
       } catch (err) {
         console.log('error: ', err);
         toast.error('Some Thing Went Wrong');
@@ -426,7 +447,7 @@ export default {
       if (this.validateForm() == false) return;
       try {
         const res = await axiosClient.put(
-          `/api/v1/attendance/edit/${this.attendance_id}/${this.updateEmployee._id}`,
+          `/api/v1/attendance/edit/${this.updateEmployee._id}`,
           this.form
         );
         console.log('res.data.data: ', res.data);
@@ -497,15 +518,15 @@ export default {
         return false;
       }
 
-      if (this.formAdd.present == '') {
-        toast.info('Please Enter Present', {
+      if (this.formAdd.emp_id == '') {
+        toast.info('Please Enter Employee Id', {
           autoClose: 1500,
         });
         return false;
       }
 
-      if (this.formAdd.emp_id == '') {
-        toast.info('Please Enter Employee Id', {
+      if (this.formAdd.present == '') {
+        toast.info('Please Enter Present', {
           autoClose: 1500,
         });
         return false;

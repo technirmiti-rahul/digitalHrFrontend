@@ -37,6 +37,7 @@ import UploadXl from '../pages/ManageEmployees/UploadAttendanceExcel.vue';
 import EmployeeAttendance from '../pages/ManageEmployees/EmployeeAttendance.vue';
 import ManageAttendance from '../pages/ManageEmployees/ManageAttendance.vue';
 import UploadEmployeeExcel from '../pages/ManageEmployees/UploadEmployeeExcel.vue';
+import AddSingleAttendance from '../pages/Attendance/AddSingleAttendance.vue';
 
 import WageSlip from '../pages/WageSlip/WageSlip.vue';
 import WageSlipOfMonths from '../pages/WageSlip/WageSlipOfMonths.vue';
@@ -119,11 +120,11 @@ const routes = [
         component: AddUser,
       },
       {
-        path: '/wage/slip/:attandanceId/:employeeId',
+        path: '/wage/slip/:attandanceId/:email',
         component: WageSlip,
         props: (route) => ({
           attandanceId: route.params.attandanceId,
-          employeeId: route.params.employeeId,
+          email: route.params.email,
         }),
       },
       {
@@ -195,6 +196,10 @@ const routes = [
       {
         path: '/upload/employee/excel',
         component: UploadEmployeeExcel,
+      },
+      {
+        path: '/add/single/attendance',
+        component: AddSingleAttendance,
       },
 
       {

@@ -384,27 +384,15 @@
               >
                 <template #item-actions="item">
                   <div class="d-flex justify-content-evenly">
-                    <div class="table-icon action_icon_color" @click="handleUserUpdate(item._id)">
-                      <el-tooltip content="Update " placement="bottom">
-                        <i class="bi bi-pen-fill pointer" style="font-size"></i>
-                      </el-tooltip>
-                    </div>
-
                     <div class="table-icon action_icon_color" @click="handleViewUser(item._id)">
                       <el-tooltip content="View " placement="bottom">
                         <i class="bi bi-eye-fill pointer" style="font-size"></i>
                       </el-tooltip>
                     </div>
 
-                    <div
-                      v-if="user.roleType.name == 'super_admin'"
-                      class="table-icon action_icon_color"
-                      @click="updateClient = item"
-                      data-bs-toggle="modal"
-                      data-bs-target="#ModalDelete"
-                    >
-                      <el-tooltip content="Delete " placement="bottom">
-                        <i class="bi bi-trash-fill pointer" style="font-size"></i>
+                    <div class="table-icon action_icon_color" @click="handleUserUpdate(item._id)">
+                      <el-tooltip content="Update " placement="bottom">
+                        <i class="bi bi-pen-fill pointer" style="font-size"></i>
                       </el-tooltip>
                     </div>
 
@@ -431,6 +419,25 @@
                     </div> -->
 
                     <div
+                      @click="getAllEmployeesOfClient(item.name, item._id)"
+                      v-if="user.roleType.name == 'super_admin'"
+                      class="table-icon action_icon_color"
+                    >
+                      <el-tooltip content="Employees" placement="bottom">
+                        <i class="bi bi-people-fill pointer" style="font-size"></i>
+                      </el-tooltip>
+                    </div>
+                    <div
+                      @click="$router.push(`/add/employee/by/super/admin/${item._id}`)"
+                      v-if="user.roleType.name == 'super_admin'"
+                      class="table-icon action_icon_color"
+                    >
+                      <el-tooltip content="Add Employee" placement="bottom">
+                        <i class="bi bi-person-plus-fill pointer"></i>
+                      </el-tooltip>
+                    </div>
+
+                    <div
                       @click="updateClient = item"
                       data-bs-toggle="modal"
                       data-bs-target="#ModalToogleApproved"
@@ -455,21 +462,14 @@
                     </div>
 
                     <div
-                      @click="getAllEmployeesOfClient(item.name, item._id)"
                       v-if="user.roleType.name == 'super_admin'"
                       class="table-icon action_icon_color"
+                      @click="updateClient = item"
+                      data-bs-toggle="modal"
+                      data-bs-target="#ModalDelete"
                     >
-                      <el-tooltip content="Employees" placement="bottom">
-                        <i class="bi bi-people-fill pointer" style="font-size"></i>
-                      </el-tooltip>
-                    </div>
-                    <div
-                      @click="$router.push(`/add/employee/by/super/admin/${item._id}`)"
-                      v-if="user.roleType.name == 'super_admin'"
-                      class="table-icon action_icon_color"
-                    >
-                      <el-tooltip content="Add Employee" placement="bottom">
-                        <i class="bi bi-person-plus-fill pointer"></i>
+                      <el-tooltip content="Delete " placement="bottom">
+                        <i class="bi bi-trash-fill pointer" style="font-size"></i>
                       </el-tooltip>
                     </div>
                   </div>

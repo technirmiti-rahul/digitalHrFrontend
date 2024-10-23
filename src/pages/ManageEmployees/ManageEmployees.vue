@@ -413,29 +413,17 @@ h1 {
               >
                 <template #item-actions="item">
                   <div class="d-flex justify-content-evenly">
+                    <div class="table-icon action_icon_color" @click="handleViewEmployee(item._id)">
+                      <el-tooltip content="View " placement="bottom">
+                        <i class="bi bi-eye-fill pointer" style="font-size"></i>
+                      </el-tooltip>
+                    </div>
                     <div
                       class="table-icon action_icon_color"
                       @click="handleEmployeeUpdate(item._id)"
                     >
                       <el-tooltip content="Update " placement="bottom">
                         <i class="bi bi-pen-fill pointer" style="font-size"></i>
-                      </el-tooltip>
-                    </div>
-
-                    <div class="table-icon action_icon_color" @click="handleViewEmployee(item._id)">
-                      <el-tooltip content="View " placement="bottom">
-                        <i class="bi bi-eye-fill pointer" style="font-size"></i>
-                      </el-tooltip>
-                    </div>
-
-                    <div
-                      class="table-icon action_icon_color"
-                      @click="updateEmployee = item"
-                      data-bs-toggle="modal"
-                      data-bs-target="#ModalDelete"
-                    >
-                      <el-tooltip content="Delete " placement="bottom">
-                        <i class="bi bi-trash-fill pointer" style="font-size"></i>
                       </el-tooltip>
                     </div>
 
@@ -457,6 +445,23 @@ h1 {
                     >
                       <el-tooltip content="Change Password" placement="bottom">
                         <i class="bi bi-key-fill pointer" style="font-size"></i>
+                      </el-tooltip>
+                    </div>
+
+                    <div
+                      class="table-icon action_icon_color"
+                      @click="updateEmployee = JSON.parse(JSON.stringify(item))"
+                    >
+                      <el-tooltip content="Salary Slip" placement="bottom">
+                        <router-link
+                          :to="'/wage/slip/of/months/' + item._id"
+                          style="text-decoration: none"
+                        >
+                          <i
+                            class="bi bi-receipt-cutoff pointer action_icon_color"
+                            style="font-size"
+                          ></i>
+                        </router-link>
                       </el-tooltip>
                     </div>
 
@@ -483,20 +488,15 @@ h1 {
                         <i class="bi bi-hand-thumbs-up-fill pointer" style="font-size"></i>
                       </el-tooltip>
                     </div>
+
                     <div
                       class="table-icon action_icon_color"
-                      @click="updateEmployee = JSON.parse(JSON.stringify(item))"
+                      @click="updateEmployee = item"
+                      data-bs-toggle="modal"
+                      data-bs-target="#ModalDelete"
                     >
-                      <el-tooltip content="Salary Slip" placement="bottom">
-                        <router-link
-                          :to="'/wage/slip/of/months/' + item._id"
-                          style="text-decoration: none"
-                        >
-                          <i
-                            class="bi bi-receipt-cutoff pointer action_icon_color"
-                            style="font-size"
-                          ></i>
-                        </router-link>
+                      <el-tooltip content="Delete " placement="bottom">
+                        <i class="bi bi-trash-fill pointer" style="font-size"></i>
                       </el-tooltip>
                     </div>
                   </div>
@@ -571,7 +571,9 @@ export default {
     await this.getCurrent();
 
     try {
-      const res = await axiosClient.get(`/api/v1/employee/get/employees/${this.user._id}`);
+      const res = await axiosClient.get(
+        `/api/v1/employee/get/employees/by/client/${this.user._id}`
+      );
       console.log('res.data.data: ', res.data.data);
       this.originalItems = res.data.data;
       const notifications = await axiosClient.get(`/api/v1/notification/getall/${this.user._id}`);
@@ -606,7 +608,27 @@ export default {
   methods: {
     downloadExcel() {
       // Create a worksheet from the JSON data
-      const worksheet = XLSX.utils.json_to_sheet(this.originalItems);
+
+      let tempItems = [];
+
+      for (let i = 0; i < this.originalItems.length; i++) {
+        tempItems.push({
+          emloyer_name: this.user.name,
+          name: this.originalItems[i].name,
+          email: this.originalItems[i].email,
+          whatsapp_no: this.originalItems[i].whatsapp_no,
+          designation: this.originalItems[i].designation,
+          country: this.originalItems[i].country,
+          city: this.originalItems[i].city,
+          state: this.originalItems[i].state,
+          address: this.originalItems[i].address,
+          pin_code: this.originalItems[i].pin_code,
+        });
+      }
+
+      console.log(tempItems);
+
+      const worksheet = XLSX.utils.json_to_sheet(tempItems);
 
       // Create a new workbook
       const workbook = XLSX.utils.book_new();

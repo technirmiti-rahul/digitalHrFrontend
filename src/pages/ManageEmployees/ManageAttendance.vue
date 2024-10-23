@@ -201,6 +201,11 @@ h1 {
                   Upload Excel
                 </button>
               </router-link>
+              <router-link to="/add/single/attendance">
+                <button type="button" class="btn text-light border-0 button_bg btn-sm">
+                  Add Single
+                </button>
+              </router-link>
             </div>
           </div>
           <div class="table border rounded">

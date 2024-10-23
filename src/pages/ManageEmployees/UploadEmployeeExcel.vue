@@ -71,22 +71,192 @@ h1 {
     <div class="overflow-y-hidden pb-5 h-100">
       <div class="h-100 overflow-y-auto">
         <div class="container py-3 h-100">
-          <div class="w-100 h-100 d-flex justify-content-center gap-3">
-            <div>
-              <input
-                type="file"
-                class="form-control"
-                id="inputGroupFile04"
-                aria-describedby="inputGroupFileAddon04"
-                aria-label="Upload"
-                @change="handleFileUpload"
-              />
-            </div>
+          <div class="w-100 d-flex justify-content-center gap-3">
+            <div class="row w-100">
+              <div class="col-12 col-sm-6 col-md-3 d-flex align-items-center">
+                <div>
+                  <input
+                    type="file"
+                    class="form-control"
+                    id="inputGroupFile04"
+                    aria-describedby="inputGroupFileAddon04"
+                    aria-label="Upload"
+                    @change="handleFileUpload"
+                  />
+                </div>
+              </div>
+              <div class="col-12 col-sm-6 col-md-3">
+                <div class="">
+                  <multiselect
+                    v-model="selected_team"
+                    :options="teams"
+                    placeholder="Select Team"
+                    label="name"
+                    track-by="name"
+                  ></multiselect>
+                </div>
+              </div>
+              <div class="col-12 col-sm-6 col-md-3">
+                <div class="">
+                  <multiselect
+                    v-model="selected_department"
+                    :options="departments"
+                    placeholder="Select Department"
+                    label="name"
+                    track-by="name"
+                  ></multiselect>
+                </div>
+              </div>
 
-            <div>
-              <button type="button" class="btn btn-primary border-0 button_bg" @click="uploadFile">
-                Upload
-              </button>
+              <div class="col-12 col-sm-6 col-md-3 d-flex align-items-center">
+                <div :key="showSpinner">
+                  <button
+                    v-if="showSpinner == false"
+                    type="button"
+                    class="btn btn-primary border-0 button_bg"
+                    @click="uploadFile"
+                  >
+                    <span>Upload</span>
+                  </button>
+                  <div v-if="showSpinner" class="spinner-border text-secondary" role="status">
+                    <span class="visually-hidden">Loading...</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div
+            v-if="employeesToSelect.length > 0 && showResponse == false"
+            class="table border rounded mt-3"
+          >
+            <div class="w-100">
+              <EasyDataTable
+                table-class-name="customize-table text-capitalize"
+                v-model:items-selected="itemsSelected"
+                :headers="employeesToSelectHeaders"
+                :items="employeesToSelect"
+                search-field="name"
+                :search-value="search"
+                :rows-per-page="10"
+                @row-click="getByRow"
+                border-cell
+                buttons-pagination
+              ></EasyDataTable>
+            </div>
+          </div>
+
+          <div v-if="employeesNotToSelect.length > 0 && showResponse == false">
+            <div class="p-2 mt-3 source-500">Employess With Required Feilds Missing</div>
+
+            <div class="table border rounded">
+              <div class="w-100">
+                <EasyDataTable
+                  table-class-name="customize-table text-capitalize"
+                  :headers="employeesNotToSelectHeaders"
+                  :items="employeesNotToSelect"
+                  search-field="name"
+                  :search-value="search"
+                  :rows-per-page="10"
+                  @row-click="getByRow"
+                  border-cell
+                  buttons-pagination
+                >
+                  <template #item-nameActions="item">
+                    <div v-if="!item.name || item.name == '' || item.name == undefined">
+                      <i class="bi bi-x-lg"></i>
+                    </div>
+                    <div v-else>
+                      <i class="bi bi-check-lg"></i>
+                    </div>
+                  </template>
+
+                  <template #item-emailActions="item">
+                    <div v-if="!item.email || item.email == '' || item.email == undefined">
+                      <i class="bi bi-x-lg"></i>
+                    </div>
+                    <div v-else>
+                      <i class="bi bi-check-lg"></i>
+                    </div>
+                  </template>
+                  <template #item-whatsappActions="item">
+                    <div
+                      v-if="
+                        !item.whatsapp_no || item.whatsapp_no == '' || item.whatsapp_no == undefined
+                      "
+                    >
+                      <i class="bi bi-x-lg"></i>
+                    </div>
+                    <div v-else>
+                      <i class="bi bi-check-lg"></i>
+                    </div>
+                  </template>
+                  <template #item-adhar_noActions="item">
+                    <div
+                      v-if="
+                        !item.adhar_card || item.adhar_card == '' || item.adhar_card == undefined
+                      "
+                    >
+                      <i class="bi bi-x-lg text-danger"></i>
+                    </div>
+                    <div v-else>
+                      <i class="bi bi-check text-primary"></i>
+                    </div>
+                  </template>
+                </EasyDataTable>
+              </div>
+            </div>
+          </div>
+          <div v-if="savedEmployees.length > 0 && showResponse == true">
+            <div class="p-2 mt-3 source-500">Saved Employess</div>
+
+            <div class="table border rounded">
+              <div class="w-100">
+                <EasyDataTable
+                  table-class-name="customize-table text-capitalize"
+                  :headers="employeesToSelectHeaders"
+                  :items="savedEmployees"
+                  search-field="name"
+                  :search-value="search"
+                  :rows-per-page="10"
+                  @row-click="getByRow"
+                  border-cell
+                  buttons-pagination
+                ></EasyDataTable>
+              </div>
+            </div>
+          </div>
+          <div v-if="unSavedEmployees.length > 0 && showResponse == true">
+            <div class="p-2 mt-3 source-500">Duplicate Entries</div>
+
+            <div class="table border rounded">
+              <div class="w-100">
+                <EasyDataTable
+                  table-class-name="customize-table text-capitalize"
+                  :headers="employeesToSelectHeaders"
+                  :items="unSavedEmployees"
+                  search-field="name"
+                  :search-value="search"
+                  :rows-per-page="10"
+                  @row-click="getByRow"
+                  border-cell
+                  buttons-pagination
+                ></EasyDataTable>
+              </div>
+            </div>
+          </div>
+          <div v-if="showResponse == true">
+            <div class="row w-100">
+              <div class="col-12 col-sm-6 col-md-3 d-flex align-items-center"></div>
+              <div class="col-12 col-sm-6 col-md-3"></div>
+              <div class="col-12 col-sm-6 col-md-3"></div>
+
+              <div class="col-12 col-sm-6 col-md-3 d-flex align-items-center justify-content-end">
+                <router-link to="/manage/employees">
+                  <button type="button" class="btn btn-primary border-0 button_bg">
+                    <span>Done</span>
+                  </button>
+                </router-link>
+              </div>
             </div>
           </div>
         </div>
@@ -103,17 +273,23 @@ import '@vuepic/vue-datepicker/dist/main.css';
 
 import 'vue-multiselect/dist/vue-multiselect.css';
 import EasyDataTable from 'vue3-easy-data-table';
+
+import Multiselect from 'vue-multiselect';
+import 'vue-multiselect/dist/vue-multiselect.css';
+
 import { toast } from 'vue3-toastify';
 import 'vue3-toastify/dist/index.css';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import axiosClient from '../../axiosClient';
+import { de } from 'element-plus/es/locales.mjs';
 
 export default {
   name: 'UploadXl',
   components: {
     EasyDataTable,
     VueDatePicker,
+    Multiselect,
   },
 
   data() {
@@ -121,6 +297,26 @@ export default {
       id: '',
       user: {},
       role: '',
+
+      showResponse: false,
+      showSpinner: false,
+      itemsSelected: [],
+      employeesToSelectHeaders: [
+        { text: 'Name', value: 'name', sortable: true },
+        { text: 'Email', value: 'email' },
+      ],
+      employeesNotToSelectHeaders: [
+        { text: 'Name', value: 'name', sortable: true },
+        { text: 'Email', value: 'email' },
+        { text: 'Name', value: 'nameActions', sortable: false, width: 250 },
+        { text: 'Email', value: 'emailActions', sortable: false, width: 250 },
+        { text: 'Whatsapp', value: 'whatsappActions', sortable: false, width: 250 },
+        { text: 'Adhar Card', value: 'adhar_cardActions', sortable: false, width: 250 },
+      ],
+      employeesToSelect: [],
+      employeesNotToSelect: [],
+      savedEmployees: [],
+      unSavedEmployees: [],
 
       month_year: {
         month: new Date().getMonth() - 1,
@@ -131,8 +327,15 @@ export default {
         employeeData: [],
         client_user_id: '',
         client_id: '',
+        team: '',
+        role: '',
       },
       file: null,
+      roles: [],
+      teams: [],
+      departments: [],
+      selected_team: '',
+      selected_department: '',
     };
   },
 
@@ -140,7 +343,16 @@ export default {
     await this.getCurrent();
 
     try {
-      const res = await axiosClient.get(`/api/v1/employee/${this.user._id}`);
+      const res = await axiosClient.get(
+        `/api/v1/employee/get/employees/by/client/${this.user._id}`
+      );
+
+      const departments = await axiosClient.get(`/api/v1/department/getall`);
+      this.departments = departments.data.data;
+
+      const teams = await axiosClient.get(`/api/v1/team/getall`);
+      this.teams = teams.data.data;
+
       console.log('res.data.data: ', res.data.data);
       this.originalItems = res.data.data;
       const notifications = await axiosClient.get(`/api/v1/notification/getall/${this.user._id}`);
@@ -150,9 +362,11 @@ export default {
       console.log('error: ', err);
     }
 
-    this.items = this.originalItems;
+    // this.items = this.originalItems;
+  },
 
-    console.log('Users: ', this.items);
+  async getByRow(row) {
+    console.log(row);
   },
 
   mounted() {
@@ -173,17 +387,26 @@ export default {
   setup() {},
 
   methods: {
-    handleFileUpload(event) {
+    async handleFileUpload(event) {
       this.file = event.target.files[0];
+      this.showSpinner = true;
+      setTimeout(async () => {
+        this.showResponse = false;
+        await this.extractEmployeesFromExcel();
+      }, 200);
     },
-    async uploadFile() {
+    async extractEmployeesFromExcel() {
       if (!this.file) {
         console.log('No file selected');
         toast.info(`Select File`, {
           autoClose: 1500,
         });
+        this.showSpinner = false;
         return;
       }
+
+      console.log(' this.showSpinner : ', this.showSpinner);
+
       const reader = new FileReader();
       reader.onload = (event) => {
         const data = new Uint8Array(event.target.result);
@@ -198,30 +421,72 @@ export default {
         this.excelData = jsonData;
 
         // Console the Excel data
-        console.log('Excel Data:', this.excelData);
-        this.form.employeeData = jsonData;
+        let tempEmployeesToSelect = jsonData;
+        console.log('Excel Data:', tempEmployeesToSelect);
+        let tempEmployeesNotToSelect = [];
+
+        for (let i = 0; i < tempEmployeesToSelect.length; i++) {
+          if (
+            tempEmployeesToSelect[i].name != undefined &&
+            tempEmployeesToSelect[i].email != undefined &&
+            tempEmployeesToSelect[i].whatsapp_no != undefined &&
+            tempEmployeesToSelect[i].adhar_card != undefined &&
+            tempEmployeesToSelect[i].name != '' &&
+            tempEmployeesToSelect[i].email != '' &&
+            toString(tempEmployeesToSelect[i].whatsapp_no) != '' &&
+            toString(tempEmployeesToSelect[i].adhar_card) != ''
+          ) {
+            console.log(
+              ' tempEmployeesToSelect[i].adhar_card : ',
+              tempEmployeesToSelect[i].adhar_card
+            );
+            this.employeesToSelect.push(tempEmployeesToSelect[i]);
+          } else {
+            console.log(
+              ' tempEmployeesToSelect[i].adhar_card : ',
+              tempEmployeesToSelect[i].adhar_card
+            );
+            this.employeesNotToSelect.push(tempEmployeesToSelect[i]);
+          }
+        }
+
+        console.log(' this.employeesToSelect: ', this.employeesToSelect);
+        this.showSpinner = false;
+        console.log(' this.showSpinner : ', this.showSpinner);
       };
 
-      console.log('this.form: ', this.form);
-
       reader.readAsArrayBuffer(this.file);
-      if (this.form.employeeData.length > 0) {
-        console.log('adding data');
-        try {
-          const res = await axiosClient.post(`/api/v1/employee/add/employees/excel`, this.form);
 
-          toast.success(`Employees Added`, {
-            autoClose: 1500,
-          });
-          setTimeout(() => {
-            this.$router.push('/manage/employees');
-          }, 2000);
-        } catch (err) {
-          console.log('error: ', err);
-          toast.error(`Something Went Wrong`, {
-            autoClose: 1500,
-          });
-        }
+      return;
+    },
+
+    async uploadFile() {
+      console.log('itemsSelected: ', this.itemsSelected);
+
+      this.form.team = this.selected_team._id;
+      this.form.department = this.selected_department._id;
+      console.log('this.form: ', this.form);
+      if (this.validateForm() == false) return;
+
+      this.form.employeeData = this.itemsSelected;
+
+      try {
+        const res = await axiosClient.post(`/api/v1/employee/add/employees/excel`, this.form);
+        console.log('res: ', res);
+        toast.success(`Employees Added`, {
+          autoClose: 1500,
+        });
+        this.savedEmployees = res.data.newUsers;
+        this.unSavedEmployees = res.data.existingUsers;
+        this.showResponse = true;
+        setTimeout(() => {
+          //this.$router.push('/manage/employees');
+        }, 2000);
+      } catch (err) {
+        console.log('error: ', err);
+        toast.error(`Something Went Wrong`, {
+          autoClose: 1500,
+        });
       }
     },
 
@@ -231,6 +496,38 @@ export default {
 
     handleViewEmployee(id) {
       this.$router.push(`/view/employee/${id}`);
+    },
+
+    validateForm() {
+      if (this.employeesToSelect.length <= 0) {
+        toast.info(`Select Excel File`, {
+          autoClose: 1500,
+        });
+        return false;
+      }
+
+      if (this.form.team == '' || this.form.team == undefined) {
+        toast.info(`Select Team`, {
+          autoClose: 1500,
+        });
+        return false;
+      }
+
+      if (this.form.department == '' || this.form.department == undefined) {
+        toast.info(`Select Department`, {
+          autoClose: 1500,
+        });
+        return false;
+      }
+
+      if (this.itemsSelected.length <= 0) {
+        toast.info(`Select Employees`, {
+          autoClose: 1500,
+        });
+        return false;
+      }
+
+      return true;
     },
 
     async getCurrent() {

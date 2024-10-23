@@ -514,18 +514,6 @@ export default {
       items: [],
       originalItems: [],
 
-      /*   headers: [
-        { text: 'PLAYER', value: 'player', sortable: true },
-        { text: 'TEAM', value: 'team' },
-        { text: 'NUMBER', value: 'number' },
-        { text: 'POSITION', value: 'position' },
-        { text: 'HEIGHT', value: 'indicator.height' },
-        { text: 'WEIGHT (lbs)', value: 'indicator.weight', sortable: true },
-        { text: 'LAST ATTENDED', value: 'lastAttended', width: 200 },
-        { text: 'COUNTRY', value: 'country' },
-        { text: 'Actions', value: 'actions', sortable: false },
-      ], */
-
       headers: [
         { text: 'Name', value: 'name', sortable: true },
         { text: 'Email', value: 'email' },
@@ -600,7 +588,7 @@ export default {
         this.showSlip = false;
 
         const response = await axiosClient.post(
-          `/api/v1/attendance/get/from/to/${this.user._id}/${this.employeeId}`,
+          `/api/v1/attendance/get/from/to/${this.user._id}/${this.employee.email}`,
           this.form
         );
 

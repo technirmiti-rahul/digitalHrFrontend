@@ -184,6 +184,20 @@
                   placeholder="Enter country"
                 />
               </div>
+              <div class="form-group col-12 col-sm-6 col-lg-4">
+                <label for="adhar_card" class="mt-2">
+                  Adhar Card
+
+                  <span class="text-danger">*</span>
+                </label>
+                <input
+                  v-model="form.adhar_card"
+                  type="text"
+                  class="form-control border"
+                  id="adhar_card"
+                  placeholder="Enter Adhar Number"
+                />
+              </div>
 
               <div class="form-group col-12 col-sm-6 col-lg-4">
                 <div class="mt-2">
@@ -288,22 +302,7 @@
               </div>
 
               <div class="form-group col-12 col-sm-6">
-                <label for="adhar_card" class="mt-2">
-                  Adhar Card
-
-                  <span class="text-danger">*</span>
-                </label>
-                <input
-                  v-model="form.adhar_card"
-                  type="text"
-                  class="form-control border"
-                  id="adhar_card"
-                  placeholder="Enter Adhar Number"
-                />
-              </div>
-
-              <div class="form-group col-12 col-sm-6">
-                <label for="cin_no" class="mt-2">CIN Number</label>
+                <label for="cin_no" class="mt-3">CIN Number</label>
                 <input
                   v-model="form.cin_no"
                   type="text"
@@ -327,7 +326,7 @@
                 </div>
               </div>
               <div class="form-group col-12 col-sm-6">
-                <div class="mt-3">
+                <div class="mt-2">
                   <label for="industry_type" class="">
                     Industry Type
                     <span class="text-danger">*</span>
@@ -642,7 +641,7 @@ export default {
       console.log('form: ', this.form);
 
       try {
-        const res = await axiosClient.post(`api/v1/client/update/created`, this.form);
+        const res = await axiosClient.post(`api/v1/client/update/created/client`, this.form);
         this.formPage = 2;
         this.userAdded = true;
       } catch (err) {
@@ -758,6 +757,16 @@ export default {
         toast.info(`Enter country`, { autoClose: 1000 });
         return false;
       }
+      if (this.form.adhar_card == '') {
+        toast.info(`Enter Aadhar Card`, { autoClose: 1000 });
+        return;
+      }
+
+      if (this.form.adhar_card.length < 12) {
+        console.log('adhar length: ', this.form.adhar_card.length);
+        toast.info(`Enter Valid Aadhar Number`, { autoClose: 1000 });
+        return;
+      }
 
       if (this.selected_department == '') {
         toast.info(`Select Department`, { autoClose: 1000 });
@@ -789,16 +798,6 @@ export default {
         return;
       }
 
-      if (this.form.adhar_card == '') {
-        toast.info(`Enter Aadhar Card`, { autoClose: 1000 });
-        return;
-      }
-
-      if (this.form.adhar_card.length < 12) {
-        console.log('adhar length: ', this.form.adhar_card.length);
-        toast.info(`Enter Valid Aadhar Number`, { autoClose: 1000 });
-        return;
-      }
       /*  if (this.form.cin_no == '') {
         toast.info(`Enter CIN Number`, { autoClose: 1000 });
         return;

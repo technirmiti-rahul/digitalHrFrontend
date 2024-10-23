@@ -412,7 +412,6 @@
 </template>
 
 <script>
-import html2pdf from 'html2pdf.js';
 import jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
 import { toast } from 'vue3-toastify';
@@ -430,7 +429,7 @@ export default {
       type: String,
       required: true,
     },
-    employeeId: {
+    email: {
       type: String,
       required: true,
     },
@@ -488,7 +487,7 @@ export default {
   },
 
   async created() {
-    console.log(this.attandanceId, this.employeeId);
+    console.log(this.attandanceId, this.email);
     this.getCurrent();
     this.getMonths();
 
@@ -503,7 +502,7 @@ export default {
       this.attandanceData = this.attendanceData.month_year.slice(0, 10);
       */
 
-      const employee = await axiosClient.get(`/api/v1/employee/get/${this.employeeId}`);
+      const employee = await axiosClient.get(`/api/v1/employee/get/by/email/${this.email}`);
       this.employee = employee.data.data;
 
       this.attendance.month_year = this.attendance.month_year.slice(0, 10);

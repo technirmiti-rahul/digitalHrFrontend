@@ -63,6 +63,51 @@
     <div class="overflow-y-hidden pb-5 h-100">
       <div class="h-100 overflow-y-auto">
         <div class="container py-3">
+          <div v-if="role == 'super_admin'" class="d-flex gap-3">
+            <div
+              class="shadow-s card bg-primary border-0 text-light bg-gradient mb-3"
+              style="max-width: 18rem; min-width: 18rem; height: 10rem"
+            >
+              <div class="card-body d-flex flex-column">
+                <div class="w-100">
+                  <h5 class="card-title">Clients</h5>
+                  <div class="card-text h-100 d-flex justify-content-center align-items-center">
+                    <h2>{{ clients.length }}</h2>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div
+              class="shadow-s card bg-danger border-0 text-light bg-gradient mb-3"
+              style="max-width: 18rem; min-width: 18rem; height: 10rem"
+            >
+              <div class="card-body d-flex flex-column">
+                <div class="w-100">
+                  <h5 class="card-title">Employees</h5>
+                  <div class="card-text h-100 d-flex justify-content-center align-items-center">
+                    <h2>{{ employees.length }}</h2>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div v-if="role == 'client'" class="d-flex">
+            <div
+              class="shadow-s card bg-danger border-0 text-light bg-gradient mb-3"
+              style="max-width: 18rem; min-width: 18rem; height: 10rem"
+            >
+              <div class="card-body d-flex flex-column">
+                <div class="w-100">
+                  <h5 class="card-title">Employees</h5>
+                  <div class="card-text h-100 d-flex justify-content-center align-items-center">
+                    <h2>{{ employees.length }}</h2>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
           <div class="d-flex flex-column flex-md-row gap-1">
             <div
               class="left scroll border d-flex justify-content-center align-items-center rounded-4 px-4"
@@ -118,6 +163,10 @@ export default {
   },
   data() {
     return {
+      user: {},
+      role: '',
+      employees: [],
+      clients: [],
       graphData: {
         labels: ['January', 'February', 'March', 'April', 'May', 'June'],
         datasets: [
@@ -180,7 +229,33 @@ export default {
   },
 
   async created() {
-    this.getCurrent();
+    await this.getCurrent();
+
+    if (this.role === 'super_admin') {
+      try {
+        const res = await axiosClient.get(`/api/v1/employee/getall`);
+
+        this.employees = res.data.data;
+
+        const clientRes = await axiosClient.get(`/api/v1/client/get/all/clients`);
+
+        this.clients = clientRes.data.data;
+      } catch (err) {
+        console.log('error: ', err);
+      }
+    }
+
+    if (this.role === 'client') {
+      try {
+        const res = await axiosClient.get(
+          `/api/v1/employee/get/employees/by/client/${this.user._id}`
+        );
+
+        this.employees = res.data.data;
+      } catch (err) {
+        console.log('error: ', err);
+      }
+    }
   },
 
   mounted() {
@@ -203,6 +278,8 @@ export default {
       try {
         const token = await axiosClient.get(`api/v1/user/getCurrent/`);
         console.log('Token : ', token);
+        this.user = token.data.user;
+        this.role = this.user.roleType.name;
         if (!token) {
           this.$router.push('/login');
         }
@@ -210,6 +287,7 @@ export default {
         console.log('error: ', err);
         this.$router.push('/login');
       }
+      return;
     },
   },
 };

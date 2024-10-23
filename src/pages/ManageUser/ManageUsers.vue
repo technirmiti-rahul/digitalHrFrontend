@@ -385,27 +385,15 @@
               >
                 <template v-auto-animate #item-actions="item">
                   <div class="d-flex justify-content-evenly">
-                    <div class="table-icon action_icon_color" @click="handleUserUpdate(item._id)">
-                      <el-tooltip content="Update User" placement="bottom">
-                        <i class="bi bi-pen-fill pointer" style="font-size"></i>
-                      </el-tooltip>
-                    </div>
-
                     <div class="table-icon action_icon_color" @click="handleViewUser(item._id)">
                       <el-tooltip content="View User" placement="bottom">
                         <i class="bi bi-eye-fill pointer" style="font-size"></i>
                       </el-tooltip>
                     </div>
 
-                    <div
-                      v-if="user.roleType.name == 'super_admin'"
-                      class="table-icon action_icon_color"
-                      @click="updateUser = item"
-                      data-bs-toggle="modal"
-                      data-bs-target="#ModalDelete"
-                    >
-                      <el-tooltip content="Delete User" placement="bottom">
-                        <i class="bi bi-trash-fill pointer" style="font-size"></i>
+                    <div class="table-icon action_icon_color" @click="handleUserUpdate(item._id)">
+                      <el-tooltip content="Update User" placement="bottom">
+                        <i class="bi bi-pen-fill pointer" style="font-size"></i>
                       </el-tooltip>
                     </div>
 
@@ -452,6 +440,18 @@
                     >
                       <el-tooltip content="Disapprove User" placement="bottom">
                         <i class="bi bi-hand-thumbs-up-fill pointer" style="font-size"></i>
+                      </el-tooltip>
+                    </div>
+
+                    <div
+                      v-if="user.roleType.name == 'super_admin'"
+                      class="table-icon action_icon_color"
+                      @click="updateUser = item"
+                      data-bs-toggle="modal"
+                      data-bs-target="#ModalDelete"
+                    >
+                      <el-tooltip content="Delete User" placement="bottom">
+                        <i class="bi bi-trash-fill pointer" style="font-size"></i>
                       </el-tooltip>
                     </div>
                   </div>

@@ -63,23 +63,33 @@ h1 {
   <div class="source-400 pt-2 h-100 scroll">
     <div class="border-bottom px-4 d-flex justify-content-between align-items-center py-2">
       <div>
-        <h5 class="source-500 page-title">Upload Excel</h5>
+        <h5 class="source-500 page-title">Add Single</h5>
       </div>
       <div class=""></div>
     </div>
 
     <div class="overflow-y-hidden pb-5 h-100">
       <div class="h-100 overflow-y-auto">
-        <div class="container py-3 h-100">
-          <div class="w-100 h-100 d-flex justify-content-center gap-3">
-            <div>
+        <div v-auto-animate class="container py-3 h-100">
+          <div class="w-100 d-flex justify-content-center align-items-center gap-3">
+            <div class="">
+              <div class="">
+                <multiselect
+                  v-model="selectedEmployee"
+                  :options="employees"
+                  placeholder="Select Employee"
+                  label="name"
+                  track-by="name"
+                ></multiselect>
+              </div>
+            </div>
+            <div class="">
               <input
-                type="file"
-                class="form-control"
-                id="inputGroupFile04"
-                aria-describedby="inputGroupFileAddon04"
-                aria-label="Upload"
-                @change="handleFileUpload"
+                v-model="form.present"
+                type="text"
+                class="form-control border"
+                id="state"
+                placeholder="Enter Present"
               />
             </div>
             <div>
@@ -87,10 +97,28 @@ h1 {
               <!-- <input type="date" class="form-control form-control-sm" v-model="form.month_year" /> -->
             </div>
 
-            <div>
-              <button type="button" class="btn btn-primary border-0 button_bg" @click="uploadFile">
-                Upload
+            <div v-auto-animate>
+              <button
+                type="button"
+                class="btn btn-primary border-0 button_bg"
+                @click="handleAddSingleAttendance"
+              >
+                {{ items.length > 0 ? 'Add Another' : 'Add' }}
               </button>
+            </div>
+          </div>
+          <div v-if="items.length > 0" class="table border rounded mt-3">
+            <div class="w-100">
+              <EasyDataTable
+                table-class-name="customize-table text-capitalize"
+                :headers="headers"
+                :items="items"
+                search-field="name"
+                :search-value="search"
+                :rows-per-page="10"
+                border-cell
+                buttons-pagination
+              ></EasyDataTable>
             </div>
           </div>
         </div>
@@ -105,6 +133,9 @@ import * as XLSX from 'xlsx';
 import VueDatePicker from '@vuepic/vue-datepicker';
 import '@vuepic/vue-datepicker/dist/main.css';
 
+import Multiselect from 'vue-multiselect';
+import 'vue-multiselect/dist/vue-multiselect.css';
+
 import 'vue-multiselect/dist/vue-multiselect.css';
 import EasyDataTable from 'vue3-easy-data-table';
 import { toast } from 'vue3-toastify';
@@ -114,17 +145,25 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import axiosClient from '../../axiosClient';
 
 export default {
-  name: 'UploadXl',
+  name: 'AddSingleAttendance',
   components: {
     EasyDataTable,
     VueDatePicker,
+    Multiselect,
   },
 
   data() {
     return {
+      headers: [
+        { text: 'Name', value: 'name', sortable: true },
+        { text: 'Email', value: 'email' },
+      ],
+      items: [],
       id: '',
       user: {},
       role: '',
+      employees: [],
+      selectedEmployee: '',
 
       month_year: {
         month: new Date().getMonth() - 1,
@@ -132,10 +171,12 @@ export default {
       },
       excelData: [],
       form: {
-        employeeData: [],
         client_user_id: '',
+        name: '',
+        email: '',
         month: '',
         year: '',
+        present: '',
         month_year: '',
       },
       file: null,
@@ -146,9 +187,12 @@ export default {
     await this.getCurrent();
 
     try {
-      const res = await axiosClient.get(`/api/v1/employee/${this.user._id}`);
+      const res = await axiosClient.get(
+        `/api/v1/employee/get/employees/by/client/${this.user._id}`
+      );
       console.log('res.data.data: ', res.data.data);
       this.originalItems = res.data.data;
+      this.employees = res.data.data;
       const notifications = await axiosClient.get(`/api/v1/notification/getall/${this.user._id}`);
       this.notifications = notifications.data.data;
       console.log(' this.notifications: ', this.notifications);
@@ -156,9 +200,7 @@ export default {
       console.log('error: ', err);
     }
 
-    this.items = this.originalItems;
-
-    console.log('Users: ', this.items);
+    console.log(' this.employees: ', this.employees);
   },
 
   mounted() {
@@ -179,36 +221,13 @@ export default {
   setup() {},
 
   methods: {
-    handleFileUpload(event) {
-      this.file = event.target.files[0];
-    },
-    async uploadFile() {
-      if (!this.file) {
-        console.log('No file selected');
-        toast.info(`Select File`, {
-          autoClose: 1500,
-        });
-        return;
-      }
-      const reader = new FileReader();
-      reader.onload = (event) => {
-        const data = new Uint8Array(event.target.result);
-        const workbook = XLSX.read(data, { type: 'array' });
+    async handleAddSingleAttendance() {
+      console.log('this.selectedEmployee: ', this.selectedEmployee);
+      // this.form.month_year = this.month_year.year + '-' + (this.month_year.month + 1) + '-' + '01';
+      this.form.name = this.selectedEmployee.name;
+      this.form.email = this.selectedEmployee.email;
+      this.form.client_user_id = this.user._id;
 
-        // Assuming you want the first sheet's data
-        const firstSheetName = workbook.SheetNames[0];
-        const worksheet = workbook.Sheets[firstSheetName];
-
-        // Parse Excel data to JSON
-        const jsonData = XLSX.utils.sheet_to_json(worksheet);
-        this.excelData = jsonData;
-
-        // Console the Excel data
-        console.log('Excel Data:', this.excelData);
-        this.form.employeeData = jsonData;
-      };
-      // this.form.month_year = this.month_year.month + 1 + '/' + this.month_year.year;
-      console.log('this.month_year: ', this.month_year);
       const temp = parseInt(this.month_year.month);
       if (temp >= 9) {
         this.form.month_year = this.month_year.year + '-' + (temp + 1) + '-' + '01';
@@ -217,40 +236,31 @@ export default {
       }
 
       console.log('this.form: ', this.form);
-
-      reader.readAsArrayBuffer(this.file);
-      const date = Date();
-      console.log('date: ', Date());
-      return;
-      if (this.form.employeeData.length > 0) {
-        console.log('adding data');
-        try {
-          const res = await axiosClient.post(`/api/v1/attendance/add/${this.user._id}`, this.form);
-
-          toast.success(`Data Added`, {
-            autoClose: 1500,
-          });
-
-          console.log('res.data: ', res.data);
-
-          setTimeout(() => {
-            this.$router.push('/manage/attendance');
-          }, 2000);
-        } catch (err) {
-          console.log('error: ', err);
-          toast.error(`Something Went Wrong`, {
-            autoClose: 1500,
-          });
-        }
+      if (this.validateForm() == false) {
+        return;
       }
-    },
 
-    handleEmployeeUpdate(id) {
-      this.$router.push(`/update/employee/${id}`);
-    },
+      try {
+        const res = await axiosClient.post(
+          `/api/v1/attendance/add/single/${this.user._id}`,
+          this.form
+        );
+        console.log('res: ', res);
 
-    handleViewEmployee(id) {
-      this.$router.push(`/view/employee/${id}`);
+        toast.success(`Attendance Added Successfully`, { autoClose: 1000 });
+        this.selectedEmployee.present = this.form.present;
+        console.log('this.selectedEmployee: ', this.selectedEmployee);
+        this.items.push(this.selectedEmployee);
+        console.log(' this.item: ', this.item);
+        this.selectedEmployee = '';
+        this.form.present = '';
+
+        this.employees = this.employees.filter((emp) => emp._id !== this.form.emp_id);
+      } catch (err) {
+        console.log('error: ', err);
+      }
+
+      console.log('this.form: ', this.form);
     },
 
     async getCurrent() {
@@ -271,6 +281,26 @@ export default {
       }
 
       return;
+    },
+
+    validateForm() {
+      console.log('validateForm');
+      if (this.form.emp_id == '') {
+        toast.info(`Select Employee`, { autoClose: 1000 });
+        return false;
+      }
+
+      if (this.form.present == '') {
+        toast.info(`Enter Present`, { autoClose: 1000 });
+        return false;
+      }
+
+      if (this.form.month_year == '') {
+        toast.info(`Enter Month Year`, { autoClose: 1000 });
+        return false;
+      }
+
+      return true;
     },
   },
 };
