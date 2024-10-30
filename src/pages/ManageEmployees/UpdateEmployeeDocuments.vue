@@ -50,7 +50,7 @@
 <template>
   <div class="main h-100">
     <div class="border-bottom px-4">
-      <h5 class="pt-2 hind-medium source-500 page-title">Add Client</h5>
+      <h5 class="pt-2 hind-medium source-500 page-title">Add Employee</h5>
     </div>
 
     <div class="overflow-y-hidden pb-5 h-100">
@@ -292,12 +292,12 @@ import 'vue3-toastify/dist/index.css';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 export default {
-  name: 'updateClientDocuments',
+  name: 'updateEmployeeDocuments',
   components: {
     Multiselect,
   },
   props: {
-    clientId: {
+    employee_userId: {
       type: String,
     },
   },
@@ -328,10 +328,9 @@ export default {
         incorporation_type: 'Private Limited',
       }, */
       submitedDocuments: [
-        { document_typ: 'pan', uploaded: false },
         { document_typ: 'adhar', uploaded: false },
-        { document_typ: 'gst', uploaded: false },
-        { document_typ: 'cin', uploaded: false },
+        { document_typ: 'asci', uploaded: false },
+        { document_typ: 'bank', uploaded: false },
       ],
       form: {
         user_id: '',
@@ -365,7 +364,7 @@ export default {
           designation: '',
         },
       },
-      documentOoptions: ['pan', 'adhar', 'gst', 'cin'],
+      documentOoptions: ['adhar', 'asci', 'bank'],
       industry_typeOptions: ['Factories', 'Restaurants', 'Hotels', 'IT Company'],
       incorporation_typeOptions: [
         'Proprietory Firm',
@@ -385,22 +384,19 @@ export default {
 
   async created() {
     this.getCurrent();
-    if (this.userId) {
-      try {
-        const userRes = await axiosClient.get(`/api/v1/user/get/${this.clientId}`);
-        this.user = userRes.data.data[0];
-        console.log('res: ', this.user);
 
-        this.form.user_id = this.user._id;
-        this.form.name = this.user.name;
-        this.form.email = this.user.email;
-        this.form.whatsapp_no = this.user.whatsapp_no;
-      } catch (err) {
-        console.log('error: ', err);
-        this.$router.push('/manage/users');
-      }
-    } else {
-      this.$router.push('/manage/clients');
+    try {
+      const userRes = await axiosClient.get(`/api/v1/user/get/${this.employee_userId}`);
+      this.user = userRes.data.data[0];
+      console.log('res: ', this.user);
+
+      this.form.user_id = this.user._id;
+      this.form.name = this.user.name;
+      this.form.email = this.user.email;
+      this.form.whatsapp_no = this.user.whatsapp_no;
+    } catch (err) {
+      console.log('error: ', err);
+      //this.$router.push('/manage/users');
     }
   },
 
@@ -438,12 +434,16 @@ export default {
       formData.append('file', this.file);
 
       try {
-        const documentRes = await axiosClient.post(`/api/v1/document/upload`, formData);
+        const documentRes = await axiosClient.post(
+          `/api/v1/document/upload/${this.form.document_type}/${this.employee_userId}`,
+          formData
+        );
         console.log(documentRes);
-        this.form.doc_url = documentRes.data.location;
+        this.form.document_url = documentRes.data.location.Location;
+        this.form.document_url_id = documentRes.data.file_id;
         console.log('form', this.form);
         const res = await axiosClient.put(
-          `/api/v1/client/update/document/${this.userId}`,
+          `/api/v1/employee/update/document/${this.employee_userId}`,
           this.form
         );
 

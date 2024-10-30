@@ -58,6 +58,16 @@
                 />
               </div>
               <div class="form-group col-12 col-sm-6 col-md-4">
+                <label for="name " class="mt-2">Father/Husbands Name</label>
+                <input
+                  v-model="form.fatherHusband_name"
+                  type="text"
+                  class="form-control border"
+                  id="name"
+                  placeholder="Enter Father/Husband"
+                />
+              </div>
+              <div class="form-group col-12 col-sm-6 col-md-4">
                 <label for="email" class="mt-2">Email address</label>
                 <input
                   v-model="form.email"
@@ -345,16 +355,7 @@
                   placeholder="Enter ESIC"
                 />
               </div>
-              <div class="form-group col-12 col-sm-6 col-md-4">
-                <label for="LWF" class="mt-2">LWF</label>
-                <input
-                  v-model="form.lwf"
-                  type="number"
-                  class="form-control border"
-                  id="LWF"
-                  placeholder="Enter LWF"
-                />
-              </div>
+
               <div class="form-group col-12 col-sm-6 col-md-4">
                 <label for="E_EPF" class="mt-2">E_EPF</label>
                 <input
@@ -374,6 +375,12 @@
                   id="E_ESIC"
                   placeholder="Enter E_ESIC"
                 />
+              </div>
+              <div class="form-group col-12 col-sm-6 col-md-4 d-flex align-items-center">
+                <div class="form-check">
+                  <input v-model="form.lwf" type="checkbox" class="form-check-input" id="LWF" />
+                  <label class="form-check-label" for="LWF">LWF</label>
+                </div>
               </div>
             </div>
 
@@ -448,6 +455,7 @@ export default {
         client_user_id: '',
         client_id: '',
         name: '',
+        fatherHusband_name: '',
         email: '',
         password: '',
         whatsapp_no: '',
@@ -477,7 +485,7 @@ export default {
         conveyance: '2000',
         epf: '1000',
         esic: '2000',
-        lwf: '2000',
+        lwf: false,
         e_epf: '4000',
         e_esic: '6000',
       },
@@ -588,6 +596,10 @@ export default {
     validateForm() {
       console.log('validateForm');
       if (this.form.name == '') {
+        toast.info(`Enter Name`, { autoClose: 1000 });
+        return false;
+      }
+      if (this.form.fatherHusband_name == '') {
         toast.info(`Enter Name`, { autoClose: 1000 });
         return false;
       }
@@ -725,11 +737,6 @@ export default {
 
       if (this.form.esic == '') {
         toast.info(`Enter ESIC`, { autoClose: 1000 });
-        return false;
-      }
-
-      if (this.form.lwf == '') {
-        toast.info(`Enter LWF`, { autoClose: 1000 });
         return false;
       }
 

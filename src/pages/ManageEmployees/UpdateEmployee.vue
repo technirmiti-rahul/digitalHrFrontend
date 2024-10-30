@@ -47,8 +47,32 @@
 
 <template>
   <div v-auto-animate class="main h-100">
-    <div class="border-bottom px-4">
-      <h5 class="pt-2 source-500 page-title">Update Employee</h5>
+    <div class="border-bottom px-4 d-flex justify-content-between">
+      <div>
+        <h5 class="pt-2 source-500 page-title">Update Employee</h5>
+      </div>
+      <div class="d-flex align-items-center capitalize source-400">
+        <div v-auto-animate class="border-end px-2">
+          <span
+            @click="handleUpdateDocuments(false)"
+            class="pointer"
+            v-if="UpdateDocuments == true"
+          >
+            details
+          </span>
+          <span class="text-secondary opacity-50" v-if="UpdateDocuments == false">details</span>
+        </div>
+        <div v-auto-animate class="px-2">
+          <span
+            @click="handleUpdateDocuments(true)"
+            class="pointer"
+            v-if="UpdateDocuments == false"
+          >
+            documents
+          </span>
+          <span class="text-secondary opacity-50" v-if="UpdateDocuments == true">documents</span>
+        </div>
+      </div>
     </div>
 
     <div class="overflow-y-hidden pb-5 h-100">
@@ -56,7 +80,7 @@
         <div class="container py-3">
           <div class="main2">
             <div class="container-xl px-4">
-              <div v-auto-animate class="row">
+              <div v-if="UpdateDocuments == false" v-auto-animate class="row">
                 <!--  <div class="col-xl-4">
                   <div v-auto-animate class="card mb-4 mb-xl-0">
                     <div class="card-header">Profile Picture</div>
@@ -92,15 +116,25 @@
                       <div v-auto-animate>
                         <div class="row mb3">
                           <div class="form-group col-12 col-sm-6 col-md-4">
-                            <div class="mb-3">
-                              <label class="small mb-1" for="name">Name</label>
-                              <input
-                                class="form-control"
-                                id="name"
-                                type="text"
-                                v-model="form.name"
-                              />
-                            </div>
+                            <label for="name " class="mt-2">Name</label>
+                            <input
+                              v-model="form.name"
+                              type="text"
+                              class="form-control border"
+                              id="name"
+                              placeholder="Enter name"
+                            />
+                          </div>
+
+                          <div class="form-group col-12 col-sm-6 col-md-4">
+                            <label for="name " class="mt-2">Father/Husbands Name</label>
+                            <input
+                              v-model="form.fatherHusband_name"
+                              type="text"
+                              class="form-control border"
+                              id="name"
+                              placeholder="Enter Father/Husband"
+                            />
                           </div>
 
                           <div class="form-group col-12 col-sm-6 col-md-4">
@@ -115,7 +149,7 @@
                           </div>
 
                           <div class="form-group col-12 col-sm-6 col-md-4">
-                            <div class="">
+                            <div class="mt-2">
                               <label class="small mb-1" for="city">City</label>
                               <input
                                 class="form-control"
@@ -138,7 +172,7 @@
                           </div>
 
                           <div class="form-group col-12 col-sm-6 col-md-4">
-                            <div class="">
+                            <div class="mt-2">
                               <label class="small mb-1" for="mobile_no">whatsapp Number</label>
                               <input
                                 class="form-control"
@@ -150,7 +184,7 @@
                           </div>
                           <div class="form-group col-12 col-sm-6 col-md-4">
                             <div class="mt-2">
-                              <label class="small mb-1" for="designation">Designation</label>
+                              <label class="small mt-2" for="designation">Designation</label>
                               <input
                                 class="form-control"
                                 id="designation"
@@ -291,6 +325,18 @@
                           </div>
                           <div class="form-group col-12 col-sm-6 col-md-4">
                             <div class="">
+                              <label for=" number" class="mt-2">Gross</label>
+                              <input
+                                v-model="form.gross"
+                                type="number"
+                                class="form-control border"
+                                id="Basic"
+                                placeholder="Enter  Basic"
+                              />
+                            </div>
+                          </div>
+                          <div class="form-group col-12 col-sm-6 col-md-4">
+                            <div class="">
                               <label for="  D.A" class="mt-2">D.A</label>
                               <input
                                 v-model="form.da"
@@ -354,16 +400,7 @@
                               placeholder="Enter ESIC"
                             />
                           </div>
-                          <div class="form-group col-12 col-sm-6 col-md-4">
-                            <label for="LWF" class="mt-2">LWF</label>
-                            <input
-                              v-model="form.lwf"
-                              type="number"
-                              class="form-control border"
-                              id="LWF"
-                              placeholder="Enter LWF"
-                            />
-                          </div>
+
                           <div class="form-group col-12 col-sm-6 col-md-4">
                             <label for="E_EPF" class="mt-2">E_EPF</label>
                             <input
@@ -384,6 +421,19 @@
                               placeholder="Enter E_ESIC"
                             />
                           </div>
+                          <div
+                            class="form-group col-12 col-sm-6 col-md-4 d-flex align-items-center py-2"
+                          >
+                            <div class="form-check">
+                              <input
+                                v-model="form.lwf"
+                                type="checkbox"
+                                class="form-check-input"
+                                id="LWF"
+                              />
+                              <label class="form-check-label" for="LWF">LWF</label>
+                            </div>
+                          </div>
                         </div>
                       </div>
                     </div>
@@ -392,17 +442,103 @@
                     <button
                       @click="handleUpdate"
                       type="button"
-                      class="btn btn-dark btn-sm d-block d-sm-none source-500"
+                      class="btn-sm d-block d-sm-none btn btn-primary border-0 button_bg source-500 text-light mt-4 px-5"
                     >
                       Update
                     </button>
                     <button
                       @click="handleUpdate"
                       type="button"
-                      class="btn btn-dark d-none d-sm-block source-500"
+                      class="d-none d-sm-block btn btn-primary border-0 button_bg source-500 text-light mt-4 px-5"
                     >
                       Update
                     </button>
+                  </div>
+                </div>
+              </div>
+              <div v-if="UpdateDocuments == true" v-auto-animate class="h-100 overflow-y-auto">
+                <div class="container h-100 py-3">
+                  <div class="form-document rounded">
+                    <div class="row mb-4">
+                      <div class="form-group col-12 col-md-6">
+                        <div class="">
+                          <label for="incorporation_type" class="">Select Document Type</label>
+                          <multiselect
+                            class="text-capitalize"
+                            v-model="form.document_type"
+                            :options="documentOptions"
+                            placeholder="Select Document "
+                          ></multiselect>
+                        </div>
+                      </div>
+                      <div class="form-group col-12 col-md-6 d-flex justify-content-end">
+                        <div class="d-flex gap-4 w-100">
+                          <div class="d-flex align-items-end w-100">
+                            <label for="formFile" class=""></label>
+                            <input
+                              class="form-control"
+                              accept="image/png, image/jpeg, application/pdf"
+                              type="file"
+                              id="file"
+                              ref="file"
+                              v-on:change="handleFile()"
+                            />
+                          </div>
+                          <div class="d-flex align-items-end">
+                            <butto @click="uploadFile" type="button" class="btn btn-dark btn-sm">
+                              Add
+                            </butto>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="">
+                      <div
+                        class="d-flex justify-content-around capitalize source-600 animate rounded py-1 pointer px-4 mb-2"
+                        v-if="form.adhar_proof == true"
+                      >
+                        <div>adhar proof</div>
+                        <div>
+                          <button
+                            @click="handleDeleteDocument(form.adhar_proof_url_id, 'adhar')"
+                            type="button"
+                            class="btn btn-outline-danger btn-sm"
+                          >
+                            Delete
+                          </button>
+                        </div>
+                      </div>
+                      <div
+                        class="d-flex justify-content-around capitalize source-600 animate rounded py-1 pointer px-4 mb-2"
+                        v-if="form.asci_proof == true"
+                      >
+                        <div>pan proof</div>
+                        <div>
+                          <button
+                            type="button"
+                            @click="handleDeleteDocument(form.asci_proof_url_id, 'pan')"
+                            class="btn btn-outline-danger btn-sm"
+                          >
+                            Delete
+                          </button>
+                        </div>
+                      </div>
+                      <div
+                        class="d-flex justify-content-around capitalize source-600 animate rounded py-1 pointer px-4 mb-2"
+                        v-if="form.bank_proof == true"
+                      >
+                        <div>cin proof</div>
+                        <div>
+                          <button
+                            type="button"
+                            @click="handleDeleteDocument(form.bank_proof_url_id, 'cin')"
+                            class="btn btn-outline-danger btn-sm"
+                          >
+                            Delete
+                          </button>
+                        </div>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -422,6 +558,7 @@ import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import Multiselect from 'vue-multiselect';
 import 'vue-multiselect/dist/vue-multiselect.css';
+import UpdateDocuments from '../ManageClients/UpdateDocuments.vue';
 
 export default {
   name: 'UpdateEmployee',
@@ -442,12 +579,14 @@ export default {
       name: 'xyz',
       mobile_no: '11111111',
       email: 'xyz@gmail.com',
-
+      UpdateDocuments: false,
+      documentUploaded: false,
       profile_url: '',
       form: {
         _id: '',
         user_id: '',
         name: '',
+        fatherHusband_name: '',
         email: '',
         whatsapp_no: '',
         password: '',
@@ -468,6 +607,7 @@ export default {
         bank_ifsc: '',
         pf_basic: '',
         basic: '',
+        gross: '',
         da: '',
         hra: '',
         food_allow: '',
@@ -477,7 +617,19 @@ export default {
         lwf: '',
         e_epf: '',
         e_esic: '',
+        document_type: '',
+
+        adhar_proof: false,
+        gst_proof: false,
+        cin_proof: false,
+        pan_proof: false,
+        adhar_proof_url: '',
+        gst_proof_url: '',
+        cin_proof_url: '',
+        pan_proof_url: '',
       },
+      file: '',
+      documentOptions: [],
       placeholderTeam: '',
       placeholderDepartment: '',
       placeholderRoleType: '',
@@ -493,6 +645,12 @@ export default {
 
   async created() {
     this.getCurrent();
+
+    const UpdateDocuments = localStorage.getItem('UpdateDocuments');
+    if (UpdateDocuments) {
+      this.UpdateDocuments = JSON.parse(UpdateDocuments);
+    }
+
     try {
       console.log('employeeId: ', this.employeeId);
       const employeeRes = await axiosClient.get(`/api/v1/employee/get/${this.employeeId}`);
@@ -504,6 +662,7 @@ export default {
           _id: employeeData._id,
           user_id: employeeData.user_id,
           name: employeeData.name,
+          fatherHusband_name: employeeData.fatherHusband_name,
           email: employeeData.email,
           whatsapp_no: employeeData.whatsapp_no,
           address: employeeData.address,
@@ -523,6 +682,7 @@ export default {
           bank_ifsc: employeeData.bank_ifsc,
           pf_basic: employeeData.pf_basic,
           basic: employeeData.basic,
+          gross: employeeData.gross,
           da: employeeData.da,
           hra: employeeData.hra,
           food_allow: employeeData.food_allow,
@@ -532,6 +692,15 @@ export default {
           lwf: employeeData.lwf,
           e_epf: employeeData.e_epf,
           e_esic: employeeData.e_esic,
+          adhar_proof: employeeData.adhar_proof,
+          adhar_proof_url: employeeData.adhar_proof_url,
+          adhar_proof_id: employeeData.adhar_proof_id,
+          asci_proof: employeeData.asci_proof,
+          asci_proof_url: employeeData.asci_proof_url,
+          asci_proof_id: employeeData.asci_proof_id,
+          bank_proof: employeeData.bank_proof,
+          bank_proof_url: employeeData.bank_proof_url,
+          bank_proof_id: employeeData.bank_proof_id,
         };
       }
 
@@ -547,6 +716,9 @@ export default {
       console.log('departments : ', this.departments);
       console.log('roles : ', this.roles);
       console.log('teams : ', this.teams);
+      if (this.form.adhar_proof == false) this.documentOptions.push('adhar');
+      if (this.form.asci_proof == false) this.documentOptions.push('asci');
+      if (this.form.bank_proof == false) this.documentOptions.push('bank');
     } catch (err) {}
   },
 
@@ -566,7 +738,73 @@ export default {
   },
 
   methods: {
+    handleFile() {
+      this.file = this.$refs.file.files[0];
+      console.log(this.file);
+    },
+    async uploadFile() {
+      if (this.form.document_type == '') {
+        toast.error(`Please select document type`, {
+          autoClose: 1500,
+        });
+        return;
+      }
+      if (this.file == undefined) {
+        toast.error(`Please select file`, {
+          autoClose: 1500,
+        });
+        return;
+      }
+
+      const formData = new FormData();
+      formData.append('file', this.file);
+
+      try {
+        const documentRes = await axiosClient.post(
+          `/api/v1/document/upload/${this.form.document_type}/${this.form.user_id}`,
+          formData
+        );
+        console.log(documentRes);
+        this.form.document_url = documentRes.data.location.Location;
+        this.form.document_url_id = documentRes.data.file_id;
+        console.log('form', this.form);
+        const res = await axiosClient.put(
+          `/api/v1/employee/update/document/${this.form.user_id}`,
+          this.form
+        );
+
+        toast.success(`File uploaded successfully`, {
+          autoClose: 1500,
+        });
+
+        setTimeout(() => {
+          this.$router.go(0);
+        }, 2000);
+
+        for (let i = 0; i < this.submitedDocuments.length; i++) {
+          if (this.submitedDocuments[i].document_typ == this.form.document_type) {
+            this.submitedDocuments[i].uploaded = true;
+          }
+        }
+        this.documentOoptions = this.documentOoptions.filter(
+          (option) => option != this.form.document_type
+        );
+        this.documentUploaded = true;
+        this.file = null;
+        this.form.document_type = '';
+
+        console.log('this.submitedDocuments: ', this.submitedDocuments);
+      } catch (err) {
+        console.log('error: ', err);
+      }
+    },
+
     async handleUpdate() {
+      const UpdateDocuments = localStorage.getItem('UpdateDocuments');
+      if (UpdateDocuments) {
+        this.UpdateDocuments = JSON.parse(UpdateDocuments);
+      }
+
       if (this.validateForm() == false) {
         return;
       }
@@ -603,11 +841,22 @@ export default {
       console.log(this.form);
     },
 
+    handleUpdateDocuments(e) {
+      this.UpdateDocuments = e;
+      localStorage.setItem('UpdateDocuments', e);
+    },
+
     validateForm() {
       if (this.form.name == '') {
         toast.info(`Enter Name`, { autoClose: 1000 });
         return false;
       }
+
+      if (this.form.fatherHusband_name == '') {
+        toast.info(`Enter Father/Husband Name`, { autoClose: 1000 });
+        return false;
+      }
+
       if (this.form.number == '') {
         toast.info(`Enter Number`, { autoClose: 1000 });
         return false;

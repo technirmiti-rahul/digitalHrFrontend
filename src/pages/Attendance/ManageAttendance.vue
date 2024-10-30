@@ -70,9 +70,7 @@ h1 {
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title source-400" id="ModalNotificationLabel">
-            Edit {{ updateEmployee.name }}
-          </h5>
+          <h5 class="modal-title source-400" id="ModalNotificationLabel">Edit</h5>
           <button
             type="button"
             class="btn-close"
@@ -132,13 +130,12 @@ h1 {
         </div>
         <div class="modal-body">
           <div class="mb-3">
-            <multiselect
-              v-model="selectedEmployee"
-              :options="employees"
-              placeholder="Select Employee"
-              label="name"
-              track-by="name"
-            ></multiselect>
+            <label for="name" class="form-label source-400">Employee Id</label>
+            <input type="text" class="form-control" id="name" v-model="formAdd.emp_id" />
+          </div>
+          <div class="mb-3">
+            <label for="name" class="form-label source-400">Name</label>
+            <input type="text" class="form-control" id="name" v-model="formAdd.name" />
           </div>
           <div class="mb-3">
             <label for="present" class="form-label source-400">Present</label>
@@ -165,10 +162,7 @@ h1 {
   <div class="source-400 pt-2 h-100 scroll">
     <div class="border-bottom px-4 d-flex justify-content-between align-items-center py-2">
       <div>
-        <h5 class="source-500 page-title">
-          Employee Attendance
-          {{ month_year }}
-        </h5>
+        <h5 class="source-500 page-title">Manage Attendance</h5>
       </div>
       <div class="">
         <div class="position-relative" data-bs-toggle="modal" data-bs-target="#ModalNotification">
@@ -202,14 +196,16 @@ h1 {
               />
             </div>
             <div class="d-flex justify-content-center align-items-center gap-2">
-              <button
-                type="button"
-                class="btn text-light border-0 button_bg btn-sm"
-                data-bs-toggle="modal"
-                data-bs-target="#ModalAddAttendance"
-              >
-                Add Attendance
-              </button>
+              <router-link to="/upload/excel">
+                <button type="button" class="btn text-light border-0 button_bg btn-sm">
+                  Upload Attendance
+                </button>
+              </router-link>
+              <router-link to="/add/single/attendance">
+                <button type="button" class="btn text-light border-0 button_bg btn-sm">
+                  Add Attendance
+                </button>
+              </router-link>
             </div>
           </div>
           <div class="table border rounded">
@@ -218,12 +214,19 @@ h1 {
                 table-class-name="customize-table text-capitalize pointer"
                 :headers="headers"
                 :items="items"
-                search-field="name"
+                search-field="month_year"
                 :search-value="search"
                 :rows-per-page="10"
                 border-cell
                 buttons-pagination
               >
+                <template #item-month="item">
+                  <div v-for="month in months" :key="month" class="">
+                    <div v-if="item.month == month.month">
+                      {{ month.name }}
+                    </div>
+                  </div>
+                </template>
                 <template #item-absent="item">
                   <div>
                     {{ months[month - 1].days - item.present }}
@@ -233,28 +236,10 @@ h1 {
                   <div class="d-flex justify-content-evenly">
                     <div
                       class="table-icon action_icon_color"
-                      data-bs-toggle="modal"
-                      data-bs-target="#ModalNotification"
-                      @click="updateEmployee = JSON.parse(JSON.stringify(item))"
+                      @click="handleRedirect(item.month_year)"
                     >
-                      <el-tooltip content="Edit" placement="bottom">
-                        <i class="bi bi-pen-fill pointer" style="font-size"></i>
-                      </el-tooltip>
-                    </div>
-                    <div
-                      class="table-icon action_icon_color"
-                      @click="updateEmployee = JSON.parse(JSON.stringify(item))"
-                    >
-                      <el-tooltip content="Salary Slip" placement="bottom">
-                        <router-link
-                          :to="'/wage/slip/' + item._id + '/' + item.email"
-                          style="text-decoration: none"
-                        >
-                          <i
-                            class="bi bi-receipt-cutoff pointer action_icon_color"
-                            style="font-size"
-                          ></i>
-                        </router-link>
+                      <el-tooltip content="View" placement="bottom">
+                        <i class="bi bi-eye-fill pointer" style="font-size"></i>
                       </el-tooltip>
                     </div>
                   </div>
@@ -282,15 +267,10 @@ import axiosClient from '../../axiosClient';
 
 import VueDatePicker from '@vuepic/vue-datepicker';
 import '@vuepic/vue-datepicker/dist/main.css';
+import { th } from 'element-plus/es/locales.mjs';
 
 export default {
-  name: 'EmployeeAttendance',
-  props: {
-    monthYear: {
-      type: String,
-      required: true,
-    },
-  },
+  name: 'ManageAttendance',
   components: {
     EasyDataTable,
     Multiselect,
@@ -304,14 +284,12 @@ export default {
       role: '',
       renderKey: 0,
       attendance_id: '',
-      employees: [],
-      selectedEmployee: '',
 
       notifications: [],
       headers: [
-        { text: 'Name', value: 'name', sortable: true },
-        { text: 'Present', value: 'present', sortable: false },
-        { text: 'Absent', value: 'absent', sortable: true },
+        { text: 'month', value: 'month' },
+        { text: 'year', value: 'month_year', sortable: true },
+
         { text: 'Action', value: 'action', sortable: false },
       ],
       optionTypes: ['success', 'warning', 'danger'],
@@ -319,7 +297,6 @@ export default {
         month: '',
         year: '',
       },
-      data: '',
 
       form: {
         name: '',
@@ -329,10 +306,10 @@ export default {
         name: '',
         emp_id: '',
         present: '',
-        month_year: '',
       },
+      data: '',
       months: [],
-      month: '',
+      month: null,
       newPassword: '',
       updateEmployee: {},
       showDeleteModal: false,
@@ -345,41 +322,42 @@ export default {
   },
 
   async created() {
-    console.log('monthYear: ', this.monthYear);
     await this.getCurrent();
     this.getMonths();
 
     try {
-      const res = await axiosClient.get(
-        `/api/v1/attendance/get/${this.user._id}/${this.monthYear}`
-      );
+      const res = await axiosClient.get(`/api/v1/attendance/get/all/${this.user._id}`);
+      console.log('res.data.data: ', res.data);
       this.data = res.data;
-      console.log('res.data.data: ', this.data);
-      for (let i in this.data) {
-        this.data[i].month_year = this.data[i].month_year.slice(0, 10);
+      let tempData = res.data[0].month_year;
+      let tempData2 = [];
+      tempData2.push(res.data[0]);
+
+      for (let i in res.data) {
+        if (res.data[i].month_year != tempData) {
+          tempData2.push(res.data[i]);
+          tempData = res.data[i].month_year;
+        }
       }
 
-      this.attendance_id = res.data._id;
-      this.originalItems = this.data;
-      const temp = this.data[0].month_year.split('-');
-      this.month = temp[1];
-      this.month_year = this.data[0].month_year;
+      this.originalItems = tempData2;
+      for (let i in this.originalItems) {
+        this.originalItems[i].month_year = this.originalItems[i].month_year.slice(0, 10);
+        const temp = this.originalItems[i].month_year.split('-');
+        this.originalItems[i].month = temp[1];
+      }
 
-      const resEmployees = await axiosClient.get(
-        `/api/v1/employee/get/employees/by/client/${this.user._id}`
-      );
-      console.log('resEmployees.data.data: ', resEmployees.data.data);
-      this.employees = resEmployees.data.data;
+      this.items = this.originalItems;
 
-      console.log('month_year: ', this.month_year, ' temp : ', temp);
+      const temp = res.data.month_year.split('/');
+      this.month = temp[0];
+
       this.renderKey++;
     } catch (err) {
       console.log('error: ', err);
     }
 
-    this.items = this.originalItems;
-
-    console.log('this.items : ', this.items);
+    console.log('employee: ', this.items);
   },
 
   mounted() {
@@ -400,17 +378,16 @@ export default {
   setup() {},
 
   methods: {
+    handleRedirect(monthYear) {
+      console.log('monthYear: ', monthYear);
+      this.$router.push(`/employee/attendance/${monthYear}`);
+    },
+
     async handleAddAttendance() {
-      this.formAdd.name = this.selectedEmployee.name;
-      this.formAdd.emp_id = this.selectedEmployee._id;
-      this.formAdd.month_year = this.month_year;
       console.log('formAdd', this.formAdd);
-
-      if (this.validateFormAdd() == false) return;
-
       try {
         const res = await axiosClient.post(
-          `/api/v1/attendance/add/single/${this.user._id}`,
+          `/api/v1/attendance/add/record/${this.attendance_id}`,
           this.formAdd
         );
         console.log('res.data.data: ', res.data);
@@ -419,12 +396,8 @@ export default {
         });
 
         setTimeout(() => {
-          this.$router.go(0);
-        });
-
-        this.originalItems = res.data.AttendanceData;
-        this.items = this.originalItems;
-        this.selectedEmployee = '';
+          this.$router.go('0');
+        }, 2000);
       } catch (err) {
         console.log('error: ', err);
         toast.error('Some Thing Went Wrong');
@@ -444,10 +417,9 @@ export default {
         present: this.updateEmployee.present,
       };
 
-      if (this.validateForm() == false) return;
       try {
         const res = await axiosClient.put(
-          `/api/v1/attendance/edit/${this.updateEmployee._id}`,
+          `/api/v1/attendance/edit/${this.attendance_id}/${this.updateEmployee._id}`,
           this.form
         );
         console.log('res.data.data: ', res.data);
@@ -461,9 +433,45 @@ export default {
           }
         }
 
-        this.items = this.originalItems;
+        for (let i in this.items) {
+          if (this.items[i]._id == this.updateEmployee._id) {
+            this.items[i].name = this.form.name;
+            this.items[i].present = this.form.present;
+          }
+        }
+
+        console.log('items: ', this.items);
+
+        this.renderKey++;
+        setTimeout(() => {
+          this.$router.go('0');
+        }, 2000);
       } catch (err) {
         console.log('error: ', err);
+        toast.error('Some Thing Went Wrong');
+      }
+    },
+    async getAttendanceByMonthYear() {
+      const month_year = this.month_year.month + 1 + '/' + this.month_year.year;
+      console.log('getAttendanceByMonthYear called', '  ', month_year);
+      const form = {
+        month_year: month_year,
+      };
+      try {
+        const res = await axiosClient.post(`/api/v1/attendance/get/${this.user._id}`, form);
+        console.log('res.data.data: ', res.data);
+        this.originalItems = res.data.AttendanceData;
+        const temp = res.data.month_year.split('/');
+        this.month = temp[0];
+        //this.month_year = res.data.month_year;
+        this.items = this.originalItems;
+      } catch (err) {
+        console.log('errror: ', err);
+        if (err.response.status == 404) {
+          toast.error(`No Data Found For ${month_year}`, {
+            autoClose: 1500,
+          });
+        }
       }
     },
 
@@ -493,65 +501,20 @@ export default {
 
     getMonths() {
       const months = [
-        { month: 1, days: 31 },
-        { month: 2, days: 28 },
-        { month: 3, days: 31 },
-        { month: 4, days: 30 },
-        { month: 5, days: 31 },
-        { month: 6, days: 30 },
-        { month: 7, days: 31 },
-        { month: 8, days: 31 },
-        { month: 9, days: 30 },
-        { month: 10, days: 31 },
-        { month: 11, days: 30 },
-        { month: 12, days: 31 },
+        { month: 1, name: 'January', days: 31 },
+        { month: 2, name: 'February', days: 28 },
+        { month: 3, name: 'March', days: 31 },
+        { month: 4, name: 'April', days: 30 },
+        { month: 5, name: 'May', days: 31 },
+        { month: 6, name: 'June', days: 30 },
+        { month: 7, name: 'July', days: 31 },
+        { month: 8, name: 'August', days: 31 },
+        { month: 9, name: 'September', days: 30 },
+        { month: 10, name: 'October', days: 31 },
+        { month: 11, name: 'November', days: 30 },
+        { month: 12, name: 'December', days: 31 },
       ];
       this.months = months;
-    },
-
-    validateFormAdd() {
-      console.log('validateFormAdd called');
-      if (this.formAdd.name == '') {
-        toast.info('Please Enter Employee Name', {
-          autoClose: 1500,
-        });
-        return false;
-      }
-
-      if (this.formAdd.emp_id == '') {
-        toast.info('Please Enter Employee Id', {
-          autoClose: 1500,
-        });
-        return false;
-      }
-
-      if (this.formAdd.present == '') {
-        toast.info('Please Enter Present', {
-          autoClose: 1500,
-        });
-        return false;
-      }
-
-      return true;
-    },
-
-    validateForm() {
-      console.log('validateFormAdd called');
-      if (this.form.name == '') {
-        toast.info('Please Enter Employee Name', {
-          autoClose: 1500,
-        });
-        return false;
-      }
-
-      if (this.form.present == '') {
-        toast.info('Please Enter Present', {
-          autoClose: 1500,
-        });
-        return false;
-      }
-
-      return true;
     },
   },
 };

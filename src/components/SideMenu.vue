@@ -245,7 +245,10 @@ ul {
             </div>
           </div>
           <!-- ////////////////Clients////////////////// -->
-          <div class="rounded-2 bg overflow-hidden">
+          <div
+            v-if="role == 'super_admin' || role == 'client'"
+            class="rounded-2 bg overflow-hidden"
+          >
             <div
               data-bs-toggle="collapse"
               class="text-light pointer py-1 px-2 d-flex justify-content-between"
@@ -326,7 +329,10 @@ ul {
             </div>
           </div>
           <!-- ////////////////////////////////////////////////Employees/////////////////////////////////////////////////////////// -->
-          <div class="rounded-2 bg overflow-hidden">
+          <div
+            v-if="role == 'super_admin' || role == 'client'"
+            class="rounded-2 bg overflow-hidden"
+          >
             <div
               data-bs-toggle="collapse"
               class="text-light pointer py-1 px-2 d-flex justify-content-between"

@@ -124,7 +124,7 @@
                     Fathers/Husbands Name
                   </div>
                   <div class="border-end border-dark col-3 d-flex align-items-center source-500">
-                    Rahul Patil
+                    {{ employee.fatherHusband_name }}
                   </div>
                   <div class="border-end border-dark col-3 d-flex align-items-center source-700">
                     PF No
@@ -176,7 +176,8 @@
                     Days In Month
                   </div>
                   <div class="border-end border-dark col-3 d-flex align-items-center source-500">
-                    {{ months[month - 1]?.days }}
+                    <!--  {{ months[month - 1]?.days }} -->
+                    {{ attendance.totalWorkingDays }}
                   </div>
                   <div class="border-end border-dark col-3 d-flex align-items-center source-700">
                     Total Attendance
@@ -196,7 +197,7 @@
                       >
                         PF Basic
                       </div>
-                      <div class="col-5 d-flex align-items-center source-500">15000</div>
+                      <div class="col-5 d-flex align-items-center source-500">{{ pfBasic }}</div>
                     </div>
                     <div class="row border-bottom border-dark">
                       <div
@@ -204,7 +205,9 @@
                       >
                         Basic
                       </div>
-                      <div class="col-5 d-flex align-items-center source-500">40000</div>
+                      <div class="col-5 d-flex align-items-center source-500">
+                        {{ payableBasic }}
+                      </div>
                     </div>
                     <div class="row border-bottom border-dark">
                       <div
@@ -212,7 +215,7 @@
                       >
                         D.A
                       </div>
-                      <div class="col-5 d-flex align-items-center source-500">15000</div>
+                      <div class="col-5 d-flex align-items-center source-500">{{ payableDA }}</div>
                     </div>
                     <div class="row border-bottom border-dark">
                       <div
@@ -220,7 +223,7 @@
                       >
                         HRA
                       </div>
-                      <div class="col-5 d-flex align-items-center source-500">15000</div>
+                      <div class="col-5 d-flex align-items-center source-500">{{ payableHra }}</div>
                     </div>
                     <div class="row border-bottom border-dark">
                       <div
@@ -228,7 +231,9 @@
                       >
                         Food Allow
                       </div>
-                      <div class="col-5 d-flex align-items-center source-500">15000</div>
+                      <div class="col-5 d-flex align-items-center source-500">
+                        {{ payableFoodAllow }}
+                      </div>
                     </div>
                     <div class="row border-bottom border-dark">
                       <div
@@ -236,7 +241,9 @@
                       >
                         Conveyance
                       </div>
-                      <div class="col-5 d-flex align-items-center source-500">15000</div>
+                      <div class="col-5 d-flex align-items-center source-500">
+                        {{ payableConveyance }}
+                      </div>
                     </div>
                     <div class="row border-bottom border-dark">
                       <div
@@ -244,7 +251,9 @@
                       >
                         Reimbursement
                       </div>
-                      <div class="col-5 d-flex align-items-center source-500">0</div>
+                      <div class="col-5 d-flex align-items-center source-500">
+                        {{ reimbursement }}
+                      </div>
                     </div>
                     <div class="row border-bottom border-dark">
                       <div
@@ -252,7 +261,7 @@
                       >
                         Overtime Wages
                       </div>
-                      <div class="col-5 d-flex align-items-center source-500">0</div>
+                      <div class="col-5 d-flex align-items-center source-500">{{ otEarnings }}</div>
                     </div>
                     <div class="row">
                       <div
@@ -260,7 +269,9 @@
                       >
                         Gross Wages
                       </div>
-                      <div class="col-5 d-flex align-items-center source-700">15000</div>
+                      <div class="col-5 d-flex align-items-center source-700">
+                        {{ grossSalary }}
+                      </div>
                     </div>
                   </div>
                   <div class="col-7" style="padding: 0 11px">
@@ -282,7 +293,7 @@
                           <div
                             class="border-bottom border-dark col-5 d-flex align-items-center source-500"
                           >
-                            1800
+                            {{ pf }}
                           </div>
                           <div
                             class="border-bottom border-end border-dark col-7 d-flex align-items-center source-700"
@@ -292,7 +303,7 @@
                           <div
                             class="border-bottom border-dark col-5 d-flex align-items-center source-500"
                           >
-                            0
+                            {{ esi }}
                           </div>
                           <div
                             class="border-bottom border-end border-dark col-7 d-flex align-items-center source-700"
@@ -302,7 +313,7 @@
                           <div
                             class="border-bottom border-dark col-5 d-flex align-items-center source-500"
                           >
-                            0
+                            {{ lwf }}
                           </div>
                           <div
                             class="border-bottom border-end border-dark col-7 d-flex align-items-center source-700"
@@ -312,7 +323,7 @@
                           <div
                             class="border-bottom border-dark col-5 d-flex align-items-center source-500"
                           >
-                            0
+                            {{ advances }}
                           </div>
                           <div
                             class="border-bottom border-end border-dark col-7 d-flex align-items-center source-700"
@@ -322,7 +333,7 @@
                           <div
                             class="border-bottom border-dark col-5 d-flex align-items-center source-500"
                           >
-                            9000
+                            {{ tdsOther }}
                           </div>
                           <div
                             class="border-bottom border-end border-dark col-7 d-flex align-items-center source-700"
@@ -332,7 +343,7 @@
                           <div
                             class="border-bottom border-dark col-5 d-flex align-items-center source-700"
                           >
-                            1800
+                            {{ totalDeduction }}
                           </div>
                           <div
                             class="border-end border-dark col-7 d-flex align-items-center source-700"
@@ -340,7 +351,7 @@
                             Net Wages
                           </div>
                           <div class="border-dark col-5 d-flex align-items-center source-700">
-                            1800
+                            {{ netWages }}
                           </div>
                         </div>
                       </div>
@@ -358,7 +369,7 @@
                           <div
                             class="border-bottom border-dark col-5 d-flex align-items-center source-500"
                           >
-                            1950
+                            {{ e_pf }}
                           </div>
                           <div
                             class="border-bottom border-end border-dark col-7 d-flex align-items-center source-700"
@@ -368,7 +379,7 @@
                           <div
                             class="border-bottom border-dark col-5 d-flex align-items-center source-500"
                           >
-                            0
+                            {{ e_esic }}
                           </div>
                           <div
                             class="border-bottom border-end border-dark col-7 d-flex align-items-center source-700"
@@ -378,7 +389,7 @@
                           <div
                             class="border-bottom border-dark col-5 d-flex align-items-center source-700"
                           >
-                            1950
+                            {{ e_pf + e_esic }}
                           </div>
                           <div class="col-12 source-700 text-center" style="height: 99px">
                             Employer's Signature
@@ -419,6 +430,7 @@ import 'vue3-toastify/dist/index.css';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import axiosClient from '../../axiosClient';
+import { da } from 'element-plus/es/locales.mjs';
 
 export default {
   name: 'WageSlip',
@@ -451,6 +463,8 @@ export default {
         { month: 11, name: 'November', short: 'Nov', days: 30 },
         { month: 12, name: 'December', short: 'Dec', days: 31 },
       ],
+      user: '',
+      client: '',
       month: '',
       year: '',
       attendance: '',
@@ -475,6 +489,33 @@ export default {
       items: [],
       originalItems: [],
 
+      minimum_basic: '',
+      minimum_hra: '',
+      minimum_da: '',
+      minimum_FoodAllow: '',
+      minimum_ConveyanceAllow: '',
+      otherAllowance: '',
+      pfBasic: '',
+      pf: '',
+      payableBasic: '',
+      payableDA: '',
+      payableHra: '',
+      payableConveyance: '',
+      payableFoodAllow: '',
+      payableOtherAllowance: '',
+      otEarnings: '',
+      reimbursement: '',
+      grossSalary: '',
+      esi: '',
+      lwf: '',
+      e_pf: 0,
+      e_esic: 0,
+      tdsOther: '',
+      totalDeduction: '',
+      netWages: '',
+
+      advances: 0,
+
       headers: [
         { text: 'Name', value: 'name', sortable: true },
         { text: 'Email', value: 'email' },
@@ -487,7 +528,7 @@ export default {
   },
 
   async created() {
-    console.log(this.attandanceId, this.email);
+    //  console.log(this.attandanceId, this.email);
     this.getCurrent();
     this.getMonths();
 
@@ -496,8 +537,9 @@ export default {
       this.attendance = res.data;
       console.log('res.data: ', res.data);
 
-      /*   const attendance = await axiosClient.get(`/api/v1/attendance/get/${this.attandanceId}`);
-      console.log('attendanceData: ', this.attendanceData);
+      /*   
+      const attendance = await axiosClient.get(`/api/v1/attendance/get/${this.attandanceId}`);
+    //  console.log('attendanceData: ', this.attendanceData);
       this.attendanceData = attendance.data;
       this.attandanceData = this.attendanceData.month_year.slice(0, 10);
       */
@@ -512,10 +554,16 @@ export default {
       this.month = parseInt(split[1]);
       this.year = split[0];
 
-      console.log('employee: ', this.employee);
-      console.log('attendance: ', this.attendance);
+      this.calculateSalary(
+        this.attendance.gross,
+        this.attendance.totalWorkingDays,
+        this.attendance.present
+      );
+
+      //  console.log('employee: ', this.employee);
+      //  console.log('attendance: ', this.attendance);
     } catch (err) {
-      console.log('error: ', err);
+      //  console.log('error: ', err);
     }
 
     //console.log(this.items);
@@ -539,6 +587,104 @@ export default {
   setup() {},
 
   methods: {
+    calculateSalary(gross, days, attendance) {
+      const basic = Math.round((gross * 40) / 100);
+      const hra = Math.round((gross * 30) / 100);
+      const DA = Math.round((gross * 10) / 100);
+      const conveyance = Math.round((gross * 10) / 100);
+      const FoodAllow = Math.round((gross * 10) / 100);
+
+      const payableBasic = Math.round((basic / days) * attendance);
+      const payableDA = Math.round((DA / days) * attendance);
+
+      let pfBasic = payableBasic + payableDA;
+      if (pfBasic > 15000) pfBasic = 15000;
+      const pf = Math.round((pfBasic * 12) / 100);
+      const e_pf = Math.round((pfBasic * 13) / 100);
+
+      const payableHra = Math.round((hra / days) * attendance);
+      const payableConveyance = Math.round((conveyance / days) * attendance);
+      const payableFoodAllow = Math.round((FoodAllow / days) * attendance);
+      const payableOtherAllowance = 0;
+      const otEarnings = 0;
+
+      const reimbursement = 0;
+
+      const grossSalary =
+        payableBasic +
+        payableDA +
+        payableHra +
+        payableConveyance +
+        payableFoodAllow +
+        payableOtherAllowance +
+        otEarnings +
+        reimbursement;
+
+      let esi = 0;
+      if (grossSalary <= 21000) esi = Math.round((grossSalary * 0.75) / 100);
+      let lwf = 0;
+
+      if (this.employee.lwf == true) lwf = 10;
+
+      const tdsOther = 9000;
+      const totalDeduction = esi + pf + lwf + tdsOther;
+
+      const netWages = grossSalary - totalDeduction;
+
+      this.minimum_basic = basic;
+      this.minimum_hra = hra;
+      this.minimum_da = DA;
+      this.minimum_FoodAllow = FoodAllow;
+      this.minimum_ConveyanceAllow = conveyance;
+      this.otherAllowance = 0;
+      this.pfBasic = pfBasic;
+      this.pf = pf;
+      this.e_pf = e_pf;
+      this.e_esic = 0;
+      this.payableBasic = payableBasic;
+      this.payableDA = payableDA;
+      this.payableHra = payableHra;
+      this.payableConveyance = payableConveyance;
+      this.payableFoodAllow = payableFoodAllow;
+      this.payableOtherAllowance = payableOtherAllowance;
+      this.otEarnings = otEarnings;
+      this.reimbursement = reimbursement;
+      this.grossSalary = grossSalary;
+      this.esi = esi;
+      this.lwf = lwf;
+      this.tdsOther = tdsOther;
+      this.totalDeduction = totalDeduction;
+      this.netWages = netWages;
+
+      console.log('gross: ', gross);
+      console.log('basic: ', basic);
+      console.log('hra: ', hra);
+      console.log('DA: ', DA);
+      console.log('conveyance: ', conveyance);
+      console.log('FoodAllow: ', FoodAllow);
+
+      console.log('payableBasic: ', payableBasic);
+      console.log('payableDA: ', payableDA);
+      console.log('pfBasic: ', pfBasic);
+      console.log('pf: ', pf);
+
+      console.log('payableHra: ', payableHra);
+      console.log('payableConveyance: ', payableConveyance);
+      console.log('payableFoodAllow: ', payableFoodAllow);
+      console.log('payableOtherAllowance: ', payableOtherAllowance);
+      console.log('otEarnings: ', otEarnings);
+
+      console.log('reimbursement: ', reimbursement);
+
+      console.log('grossSalary: ', grossSalary);
+      console.log('esi: ', esi);
+      console.log('lwf: ', lwf);
+      console.log('tdsOther: ', tdsOther);
+      console.log('totalDeduction: ', totalDeduction);
+
+      console.log('netWages: ', netWages);
+    },
+
     async handleDownload() {
       const element = document.getElementById('slip');
       const canvas = await html2canvas(element, {
@@ -601,14 +747,18 @@ export default {
     async getCurrent() {
       try {
         const token = await axiosClient.get(`api/v1/user/getCurrent/`);
-        console.log('Token : ', token);
+        //  console.log('Token : ', token);
         if (!token) {
           this.$router.push('/login');
         }
+        this.user = token.data.user;
       } catch (err) {
-        console.log('error: ', err);
+        //  console.log('error: ', err);
         this.$router.push('/login');
       }
+
+      try {
+      } catch (err) {}
     },
   },
 };

@@ -107,7 +107,9 @@
                       >
                         UAN No
                       </div>
-                      <div class="col-3 d-flex align-items-center source-500">8888888888888</div>
+                      <div class="col-3 d-flex align-items-center source-500">
+                        {{ employee.uan_no }}
+                      </div>
                     </div>
                   </div>
                   <div class="border-bottom border-dark" style="padding: 0 11px">
@@ -120,7 +122,7 @@
                       <div
                         class="border-end border-dark col-3 d-flex align-items-center source-500"
                       >
-                        Rahul Patil
+                        {{ employee.fatherHusband_name }}
                       </div>
                       <div
                         class="border-end border-dark col-3 d-flex align-items-center source-700"
@@ -128,7 +130,7 @@
                         PF No
                       </div>
                       <div class="col-3 d-flex align-items-center source-500 font12">
-                        GAGOA73836277302983823
+                        {{ employee.pf_no }}
                       </div>
                     </div>
                   </div>
@@ -152,7 +154,7 @@
                       <div
                         class="border-end border-dark col-3 d-flex align-items-center source-500"
                       >
-                        8888888888888
+                        {{ employee.esic_no }}
                       </div>
                     </div>
                   </div>
@@ -176,7 +178,7 @@
                       <div
                         class="border-end border-dark col-3 d-flex align-items-center source-500"
                       >
-                        8888888888888434
+                        {{ employee.bank_ac_no }}
                       </div>
                     </div>
                   </div>
@@ -190,7 +192,7 @@
                       <div
                         class="border-end border-dark col-3 d-flex align-items-center source-500"
                       >
-                        {{ attendance.totalDays }}
+                        {{ attendance.totalWorkingDays }}
                       </div>
                       <div
                         class="border-end border-dark col-3 d-flex align-items-center source-700"
@@ -214,7 +216,9 @@
                           >
                             PF Basic
                           </div>
-                          <div class="col-5 d-flex align-items-center source-500">15000</div>
+                          <div class="col-5 d-flex align-items-center source-500">
+                            {{ attendance.pfBasic }}
+                          </div>
                         </div>
                         <div class="row border-bottom border-dark">
                           <div
@@ -222,7 +226,9 @@
                           >
                             Basic
                           </div>
-                          <div class="col-5 d-flex align-items-center source-500">40000</div>
+                          <div class="col-5 d-flex align-items-center source-500">
+                            {{ attendance.payableBasic }}
+                          </div>
                         </div>
                         <div class="row border-bottom border-dark">
                           <div
@@ -230,7 +236,9 @@
                           >
                             D.A
                           </div>
-                          <div class="col-5 d-flex align-items-center source-500">15000</div>
+                          <div class="col-5 d-flex align-items-center source-500">
+                            {{ attendance.payableDA }}
+                          </div>
                         </div>
                         <div class="row border-bottom border-dark">
                           <div
@@ -238,7 +246,9 @@
                           >
                             HRA
                           </div>
-                          <div class="col-5 d-flex align-items-center source-500">15000</div>
+                          <div class="col-5 d-flex align-items-center source-500">
+                            {{ attendance.payableHra }}
+                          </div>
                         </div>
                         <div class="row border-bottom border-dark">
                           <div
@@ -246,7 +256,9 @@
                           >
                             Food Allow
                           </div>
-                          <div class="col-5 d-flex align-items-center source-500">15000</div>
+                          <div class="col-5 d-flex align-items-center source-500">
+                            {{ attendance.payableFoodAllow }}
+                          </div>
                         </div>
                         <div class="row border-bottom border-dark">
                           <div
@@ -254,7 +266,9 @@
                           >
                             Conveyance
                           </div>
-                          <div class="col-5 d-flex align-items-center source-500">15000</div>
+                          <div class="col-5 d-flex align-items-center source-500">
+                            {{ attendance.payableConveyance }}
+                          </div>
                         </div>
                         <div class="row border-bottom border-dark">
                           <div
@@ -262,7 +276,9 @@
                           >
                             Reimbursement
                           </div>
-                          <div class="col-5 d-flex align-items-center source-500">0</div>
+                          <div class="col-5 d-flex align-items-center source-500">
+                            {{ attendance.reimbursement }}
+                          </div>
                         </div>
                         <div class="row border-bottom border-dark">
                           <div
@@ -270,7 +286,9 @@
                           >
                             Overtime Wages
                           </div>
-                          <div class="col-5 d-flex align-items-center source-500">0</div>
+                          <div class="col-5 d-flex align-items-center source-500">
+                            {{ attendance.otEarnings }}
+                          </div>
                         </div>
                         <div class="row">
                           <div
@@ -278,7 +296,9 @@
                           >
                             Gross Wages
                           </div>
-                          <div class="col-5 d-flex align-items-center source-700">15000</div>
+                          <div class="col-5 d-flex align-items-center source-700">
+                            {{ attendance.grossSalary }}
+                          </div>
                         </div>
                       </div>
                       <div class="col-7" style="padding: 0 11px">
@@ -300,7 +320,7 @@
                               <div
                                 class="border-bottom border-dark col-5 d-flex align-items-center source-500"
                               >
-                                1800
+                                {{ attendance.pf }}
                               </div>
                               <div
                                 class="border-bottom border-end border-dark col-7 d-flex align-items-center source-700"
@@ -310,7 +330,7 @@
                               <div
                                 class="border-bottom border-dark col-5 d-flex align-items-center source-500"
                               >
-                                0
+                                {{ attendance.esi }}
                               </div>
                               <div
                                 class="border-bottom border-end border-dark col-7 d-flex align-items-center source-700"
@@ -320,7 +340,7 @@
                               <div
                                 class="border-bottom border-dark col-5 d-flex align-items-center source-500"
                               >
-                                0
+                                {{ attendance.lwf }}
                               </div>
                               <div
                                 class="border-bottom border-end border-dark col-7 d-flex align-items-center source-700"
@@ -330,7 +350,7 @@
                               <div
                                 class="border-bottom border-dark col-5 d-flex align-items-center source-500"
                               >
-                                0
+                                {{ attendance.advances }}
                               </div>
                               <div
                                 class="border-bottom border-end border-dark col-7 d-flex align-items-center source-700"
@@ -340,7 +360,7 @@
                               <div
                                 class="border-bottom border-dark col-5 d-flex align-items-center source-500"
                               >
-                                9000
+                                {{ attendance.tdsOther }}
                               </div>
                               <div
                                 class="border-bottom border-end border-dark col-7 d-flex align-items-center source-700"
@@ -350,7 +370,7 @@
                               <div
                                 class="border-bottom border-dark col-5 d-flex align-items-center source-700"
                               >
-                                1800
+                                {{ attendance.totalDeduction }}
                               </div>
                               <div
                                 class="border-end border-dark col-7 d-flex align-items-center source-700"
@@ -358,7 +378,7 @@
                                 Net Wages
                               </div>
                               <div class="border-dark col-5 d-flex align-items-center source-700">
-                                1800
+                                {{ attendance.netWages }}
                               </div>
                             </div>
                           </div>
@@ -376,7 +396,7 @@
                               <div
                                 class="border-bottom border-dark col-5 d-flex align-items-center source-500"
                               >
-                                1950
+                                {{ attendance.e_pf }}
                               </div>
                               <div
                                 class="border-bottom border-end border-dark col-7 d-flex align-items-center source-700"
@@ -386,7 +406,7 @@
                               <div
                                 class="border-bottom border-dark col-5 d-flex align-items-center source-500"
                               >
-                                0
+                                {{ attendance.e_esic }}
                               </div>
                               <div
                                 class="border-bottom border-end border-dark col-7 d-flex align-items-center source-700"
@@ -396,7 +416,7 @@
                               <div
                                 class="border-bottom border-dark col-5 d-flex align-items-center source-700"
                               >
-                                1950
+                                {{ attendance.e_pf + attendance.e_esic }}
                               </div>
                               <div class="col-12 source-700 text-center" style="height: 99px">
                                 Employer's Signature
@@ -460,6 +480,8 @@ import 'vue3-toastify/dist/index.css';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import axiosClient from '../../axiosClient';
+import { pa } from 'element-plus/es/locales.mjs';
+import { treeCellPrefix } from 'element-plus/es/components/table/src/config.mjs';
 
 export default {
   name: 'WageSlip',
@@ -616,6 +638,111 @@ export default {
             this.attendanceData[i].month_year.slice(2, 4);
           totalPresent += temp;
         }
+
+        //calculating salarys
+        for (let i = 0; i < this.attendanceData.length; i++) {
+          const gross = this.attendanceData[i].gross;
+          const days = this.attendanceData[i].totalWorkingDays;
+          const attendance = this.attendanceData[i].present;
+
+          const basic = Math.round((gross * 40) / 100);
+          const hra = Math.round((gross * 30) / 100);
+          const DA = Math.round((gross * 10) / 100);
+          const conveyance = Math.round((gross * 10) / 100);
+          const FoodAllow = Math.round((gross * 10) / 100);
+
+          const payableBasic = Math.round((basic / days) * attendance);
+          const payableDA = Math.round((DA / days) * attendance);
+
+          let pfBasic = payableBasic + payableDA;
+          if (pfBasic > 15000) pfBasic = 15000;
+          const pf = Math.round((pfBasic * 12) / 100);
+          const e_pf = Math.round((pfBasic * 13) / 100);
+
+          const payableHra = Math.round((hra / days) * attendance);
+          const payableConveyance = Math.round((conveyance / days) * attendance);
+          const payableFoodAllow = Math.round((FoodAllow / days) * attendance);
+          const payableOtherAllowance = 0;
+          const otEarnings = 0;
+
+          const reimbursement = 0;
+
+          const grossSalary =
+            payableBasic +
+            payableDA +
+            payableHra +
+            payableConveyance +
+            payableFoodAllow +
+            payableOtherAllowance +
+            otEarnings +
+            reimbursement;
+
+          let esi = 0;
+          if (grossSalary <= 21000) esi = Math.round((grossSalary * 0.75) / 100);
+          let lwf = 0;
+          if (this.employee.lwf == true) lwf = 10;
+          const tdsOther = 0;
+          const totalDeduction = esi + pf + lwf + tdsOther;
+
+          const netWages = grossSalary - totalDeduction;
+
+          this.attendanceData[i].minimum_basic = basic;
+          this.attendanceData[i].minimum_hra = hra;
+          this.attendanceData[i].minimum_DA = DA;
+          this.attendanceData[i].minimum_conveyance = conveyance;
+          this.attendanceData[i].minimum_FoodAllow = FoodAllow;
+          this.attendanceData[i].minimum_gross = gross;
+          this.attendanceData[i].pfBasic = pfBasic;
+          this.attendanceData[i].pf = pf;
+          this.attendanceData[i].e_pf = e_pf;
+          this.attendanceData[i].e_esic = 0;
+          this.attendanceData[i].daysInMonth = days;
+          this.attendanceData[i].attendance = attendance;
+          this.attendanceData[i].payableBasic = payableBasic;
+          this.attendanceData[i].payableDA = payableDA;
+          this.attendanceData[i].payableHra = payableHra;
+          this.attendanceData[i].payableConveyance = payableConveyance;
+          this.attendanceData[i].payableFoodAllow = payableFoodAllow;
+          this.attendanceData[i].payableOtherAllowance = payableOtherAllowance;
+          this.attendanceData[i].otEarnings = otEarnings;
+          this.attendanceData[i].reimbursement = reimbursement;
+          this.attendanceData[i].grossSalary = grossSalary;
+          this.attendanceData[i].esi = esi;
+          this.attendanceData[i].pf = pf;
+          this.attendanceData[i].lwf = lwf;
+          this.attendanceData[i].tdsOther = tdsOther;
+          this.attendanceData[i].totalDeduction = totalDeduction;
+          this.attendanceData[i].netWages = netWages;
+          this.attendanceData[i].advances = 0;
+
+          /*  tempItems.push({
+          name: this.originalItems[i].name,
+          minimum_basic: basic,
+          minimum_hra: hra,
+          minimum_DA: DA,
+          minimum_conveyance: conveyance,
+          minimum_FoodAllow: FoodAllow,
+          minimum_gross: gross,
+          daysInMonth: days,
+          attendance: attendance,
+          payableBasic: payableBasic,
+          payableDA: payableDA,
+          payableHra: payableHra,
+          payableConveyance: payableConveyance,
+          payableFoodAllow: payableFoodAllow,
+          payableOtherAllowance: payableOtherAllowance,
+          otEarnings: otEarnings,
+          reimbursement: reimbursement,
+          grossSalary: grossSalary,
+          esi: esi,
+          pf: pf,
+          lwf: lwf,
+          tdsOther: tdsOther,
+          totalDeduction: totalDeduction,
+          netWages: netWages,
+        }); */
+        }
+
         console.log('this.attendanceData: ', this.attendanceData);
         this.attendance.totalPresent = totalPresent;
 

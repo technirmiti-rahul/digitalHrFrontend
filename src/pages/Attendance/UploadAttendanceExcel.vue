@@ -82,6 +82,24 @@ h1 {
                 @change="handleFileUpload"
               />
             </div>
+            <div class="">
+              <input
+                v-model="form.totalWorkingDays"
+                type="text"
+                class="form-control border"
+                id="state"
+                placeholder="Enter Working Days"
+              />
+            </div>
+            <div class="">
+              <input
+                v-model="form.remark"
+                type="text"
+                class="form-control border"
+                id="state"
+                placeholder="Add Remark"
+              />
+            </div>
             <div>
               <VueDatePicker v-model="month_year" month-picker />
               <!-- <input type="date" class="form-control form-control-sm" v-model="form.month_year" /> -->
@@ -112,6 +130,7 @@ import 'vue3-toastify/dist/index.css';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import axiosClient from '../../axiosClient';
+import { months } from '../../months';
 
 export default {
   name: 'UploadXl',
@@ -135,8 +154,12 @@ export default {
         employeeData: [],
         client_user_id: '',
         month: '',
-        year: '',
+
         month_year: '',
+        totalWorkingDays: '',
+        month: '',
+        year: '',
+        remark: '',
       },
       file: null,
     };
@@ -216,12 +239,15 @@ export default {
         this.form.month_year = this.month_year.year + '-' + '0' + (temp + 1) + '-' + '01';
       }
 
+      this.form.month = months[temp].name;
+      this.form.year = this.month_year.year;
+
       console.log('this.form: ', this.form);
 
       reader.readAsArrayBuffer(this.file);
       const date = Date();
       console.log('date: ', Date());
-      return;
+
       if (this.form.employeeData.length > 0) {
         console.log('adding data');
         try {

@@ -92,6 +92,24 @@ h1 {
                 placeholder="Enter Present"
               />
             </div>
+            <div class="">
+              <input
+                v-model="form.totalWorkingDays"
+                type="text"
+                class="form-control border"
+                id="state"
+                placeholder="Enter Working Days"
+              />
+            </div>
+            <div class="">
+              <input
+                v-model="form.remark"
+                type="text"
+                class="form-control border"
+                id="state"
+                placeholder="Add Remark"
+              />
+            </div>
             <div>
               <VueDatePicker v-model="month_year" month-picker />
               <!-- <input type="date" class="form-control form-control-sm" v-model="form.month_year" /> -->
@@ -143,6 +161,7 @@ import 'vue3-toastify/dist/index.css';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import axiosClient from '../../axiosClient';
+import { months } from '../../months';
 
 export default {
   name: 'AddSingleAttendance',
@@ -156,7 +175,11 @@ export default {
     return {
       headers: [
         { text: 'Name', value: 'name', sortable: true },
-        { text: 'Email', value: 'email' },
+        { text: 'Present', value: 'present' },
+        { text: 'Total Working Days', value: 'totalWorkingDays' },
+        { text: 'Month', value: 'month' },
+        { text: 'Year', value: 'year' },
+        { text: 'Remark', value: 'remark' },
       ],
       items: [],
       id: '',
@@ -178,6 +201,11 @@ export default {
         year: '',
         present: '',
         month_year: '',
+        totalWorkingDays: '',
+        month: '',
+        year: '',
+        remark: '',
+        gross: null,
       },
       file: null,
     };
@@ -223,10 +251,12 @@ export default {
   methods: {
     async handleAddSingleAttendance() {
       console.log('this.selectedEmployee: ', this.selectedEmployee);
+      console.log('months', months);
       // this.form.month_year = this.month_year.year + '-' + (this.month_year.month + 1) + '-' + '01';
       this.form.name = this.selectedEmployee.name;
       this.form.email = this.selectedEmployee.email;
       this.form.client_user_id = this.user._id;
+      this.form.gross = this.selectedEmployee.gross;
 
       const temp = parseInt(this.month_year.month);
       if (temp >= 9) {
@@ -234,6 +264,9 @@ export default {
       } else {
         this.form.month_year = this.month_year.year + '-' + '0' + (temp + 1) + '-' + '01';
       }
+
+      this.form.month = months[temp].name;
+      this.form.year = this.month_year.year;
 
       console.log('this.form: ', this.form);
       if (this.validateForm() == false) {
@@ -250,7 +283,14 @@ export default {
         toast.success(`Attendance Added Successfully`, { autoClose: 1000 });
         this.selectedEmployee.present = this.form.present;
         console.log('this.selectedEmployee: ', this.selectedEmployee);
-        this.items.push(this.selectedEmployee);
+        this.items.push({
+          name: this.selectedEmployee.name,
+          present: this.form.present,
+          email: this.selectedEmployee.email,
+          totalWorkingDays: this.form.totalWorkingDays,
+          month: this.form.month,
+          year: this.form.year,
+        });
         console.log(' this.item: ', this.item);
         this.selectedEmployee = '';
         this.form.present = '';
@@ -297,6 +337,11 @@ export default {
 
       if (this.form.month_year == '') {
         toast.info(`Enter Month Year`, { autoClose: 1000 });
+        return false;
+      }
+
+      if (this.form.totalWorkingDays == '') {
+        toast.info(`Enter Total Working Days`, { autoClose: 1000 });
         return false;
       }
 

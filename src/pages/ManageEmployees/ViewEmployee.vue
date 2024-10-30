@@ -103,6 +103,18 @@
                               />
                             </div>
                           </div>
+                          <div class="form-group col-12 col-sm-6 col-md-4">
+                            <div class="mb-3">
+                              <label class="small mb-1" for="name">Father/Husbands Name</label>
+                              <input
+                                disabled
+                                class="form-control"
+                                id="name"
+                                type="text"
+                                v-model="form.fatherHusband_name"
+                              />
+                            </div>
+                          </div>
 
                           <div class="form-group col-12 col-sm-6 col-md-4">
                             <label class="small mb-1" for="name">Email</label>
@@ -153,7 +165,19 @@
                             </div>
                           </div>
                           <div class="form-group col-12 col-sm-6 col-md-4">
-                            <div class="">
+                            <div class="mt-2">
+                              <label class="small mb-1" for="mobile_no">Joining Date</label>
+                              <input
+                                disabled
+                                class="form-control"
+                                id="mobile_no"
+                                type="text"
+                                v-model="form.date_of_joining"
+                              />
+                            </div>
+                          </div>
+                          <div class="form-group col-12 col-sm-6 col-md-4">
+                            <div class="mt-2">
                               <label class="small mb-1" for="designation">Designation</label>
                               <input
                                 disabled
@@ -308,6 +332,19 @@
                           </div>
                           <div class="form-group col-12 col-sm-6 col-md-4">
                             <div class="">
+                              <label for=" number" class="mt-2">Gross</label>
+                              <input
+                                disabled
+                                v-model="form.gross"
+                                type="number"
+                                class="form-control border"
+                                id="Basic"
+                                placeholder="Enter  Basic"
+                              />
+                            </div>
+                          </div>
+                          <div class="form-group col-12 col-sm-6 col-md-4">
+                            <div class="">
                               <label for="  D.A" class="mt-2">D.A</label>
                               <input
                                 disabled
@@ -377,17 +414,7 @@
                               placeholder="Enter ESIC"
                             />
                           </div>
-                          <div class="form-group col-12 col-sm-6 col-md-4">
-                            <label for="LWF" class="mt-2">LWF</label>
-                            <input
-                              disabled
-                              v-model="form.lwf"
-                              type="number"
-                              class="form-control border"
-                              id="LWF"
-                              placeholder="Enter LWF"
-                            />
-                          </div>
+
                           <div class="form-group col-12 col-sm-6 col-md-4">
                             <label for="E_EPF" class="mt-2">E_EPF</label>
                             <input
@@ -410,6 +437,64 @@
                               placeholder="Enter E_ESIC"
                             />
                           </div>
+                          <div
+                            class="form-group col-12 col-sm-6 col-md-4 d-flex align-items-center py-2"
+                          >
+                            <div class="form-check">
+                              <input
+                                disabled
+                                v-model="form.lwf"
+                                type="checkbox"
+                                class="form-check-input"
+                                id="LWF"
+                              />
+                              <label class="form-check-label" for="LWF">LWF</label>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="d-flex justify-content-around mt-3">
+                        <div>
+                          <div
+                            v-if="form.adhar_proof == true"
+                            @click="
+                              handleRedirect(`view/employee/document/${employeeId}/adhar_proof_url`)
+                            "
+                            class="pointer"
+                          >
+                            Adhar Proof
+                            <i class="bi bi-link-45deg"></i>
+                            <i class="mx-2 bi bi-check-circle icon-font-2 text-success"></i>
+                          </div>
+                          <div v-else class="text-secondary">Adhar Proof</div>
+                        </div>
+                        <div>
+                          <div
+                            v-if="form.asci == true"
+                            @click="
+                              handleRedirect(`view/employee/document/${employeeId}/asci_proof_url`)
+                            "
+                            class="pointer"
+                          >
+                            ASCI Proof
+                            <i class="bi bi-link-45deg"></i>
+                            <i class="mx-2 bi bi-check-circle icon-font-2 text-success"></i>
+                          </div>
+                          <div v-else class="text-secondary">ASCI Proof</div>
+                        </div>
+                        <div>
+                          <div
+                            v-if="form.bank_proof == true"
+                            @click="
+                              handleRedirect(`view/employee/document/${employeeId}/bank_proof_url`)
+                            "
+                            class="pointer"
+                          >
+                            Bank proof
+                            <i class="bi bi-link-45deg"></i>
+                            <i class="mx-2 bi bi-check-circle icon-font-2 text-success"></i>
+                          </div>
+                          <div v-else class="text-secondary">Bank proof</div>
                         </div>
                       </div>
                     </div>
@@ -418,14 +503,14 @@
                     <button
                       @click="handleUpdate"
                       type="button"
-                      class="btn btn-dark btn-sm d-block d-sm-none source-500"
+                      class="btn-sm d-block d-sm-none btn btn-primary border-0 button_bg source-500 text-light mt-4 px-5"
                     >
                       Update
                     </button>
                     <button
                       @click="handleUpdate"
                       type="button"
-                      class="btn btn-dark d-none d-sm-block source-500"
+                      class="d-none d-sm-block btn btn-primary border-0 button_bg source-500 text-light mt-4 px-5"
                     >
                       Update
                     </button>
@@ -474,6 +559,7 @@ export default {
         _id: '',
         user_id: '',
         name: '',
+        fatherHusband_name: '',
         email: '',
         whatsapp_no: '',
         password: '',
@@ -494,6 +580,7 @@ export default {
         bank_ifsc: '',
         pf_basic: '',
         basic: '',
+        gross: '',
         da: '',
         hra: '',
         food_allow: '',
@@ -530,6 +617,7 @@ export default {
           _id: employeeData._id,
           user_id: employeeData.user_id,
           name: employeeData.name,
+          fatherHusband_name: employeeData.fatherHusband_name,
           email: employeeData.email,
           whatsapp_no: employeeData.whatsapp_no,
           address: employeeData.address,
@@ -538,7 +626,7 @@ export default {
           country: employeeData.country,
           pin_code: employeeData.pin_code,
           designation: employeeData.designation,
-          date_of_joining: employeeData.date_of_joining,
+          date_of_joining: employeeData.date_of_joining.slice(0, 10),
 
           adhar_card: employeeData.adhar_card,
           uan_no: employeeData.uan_no,
@@ -549,6 +637,7 @@ export default {
           bank_ifsc: employeeData.bank_ifsc,
           pf_basic: employeeData.pf_basic,
           basic: employeeData.basic,
+          gross: employeeData.gross,
           da: employeeData.da,
           hra: employeeData.hra,
           food_allow: employeeData.food_allow,
@@ -558,6 +647,15 @@ export default {
           lwf: employeeData.lwf,
           e_epf: employeeData.e_epf,
           e_esic: employeeData.e_esic,
+          adhar_proof: employeeData.adhar_proof,
+          adhar_proof_url: employeeData.adhar_proof_url,
+          adhar_proof_id: employeeData.adhar_proof_id,
+          asci_proof: employeeData.asci_proof,
+          asci_proof_url: employeeData.asci_proof_url,
+          asci_proof_id: employeeData.asci_proof_id,
+          bank_proof: employeeData.bank_proof,
+          bank_proof_url: employeeData.bank_proof_url,
+          bank_proof_id: employeeData.bank_proof_id,
         };
       }
 
@@ -594,6 +692,11 @@ export default {
   methods: {
     async handleUpdate() {
       this.$router.push(`/update/employee/${this.form._id}`);
+    },
+
+    handleRedirect(link) {
+      const route = this.$router.resolve(`/${link}`);
+      window.open(route.href, '_blank');
     },
 
     validateForm() {
@@ -639,6 +742,124 @@ export default {
       }
       if (this.form.address == '') {
         toast.info(`Enter Address`, { autoClose: 1000 });
+        return false;
+      }
+
+      /* " 
+
+      form: {
+      
+        _id: '',
+        user_id: '',
+        name: '',
+        email: '',
+        whatsapp_no: '',
+        password: '',
+        address: '',
+        city: '',
+        state: '',
+        country: '',
+        pin_code: '',
+        designation: '',
+        date_of_joining: '',
+
+        
+      },
+      
+      " */
+
+      if (this.form.adhar_card == '') {
+        toast.info(`Enter Adhar Card`, { autoClose: 1000 });
+        return false;
+      }
+
+      if (this.form.uan_no == '') {
+        toast.info(`Enter UAN No`, { autoClose: 1000 });
+        return false;
+      }
+
+      if (this.form.pf_no == '') {
+        toast.info(`Enter PF No`, { autoClose: 1000 });
+        return false;
+      }
+
+      if (this.form.esic_no == '') {
+        toast.info(`Enter ESIC No`, { autoClose: 1000 });
+        return false;
+      }
+
+      if (this.form.bank_name == '') {
+        toast.info(`Enter Bank Name`, { autoClose: 1000 });
+        return false;
+      }
+
+      if (this.form.bank_ac_no == '') {
+        toast.info(`Enter Bank Account No`, { autoClose: 1000 });
+        return false;
+      }
+
+      if (this.form.bank_ifsc == '') {
+        toast.info(`Enter Bank IFSC`, { autoClose: 1000 });
+        return false;
+      }
+
+      if (this.form.pf_basic == '') {
+        toast.info(`Enter PF Basic`, { autoClose: 1000 });
+        return false;
+      }
+
+      if (this.form.basic == '') {
+        toast.info(`Enter Basic`, { autoClose: 1000 });
+        return false;
+      }
+
+      if (this.form.gross == '') {
+        toast.info(`Enter Gross`, { autoClose: 1000 });
+        return false;
+      }
+
+      if (this.form.da == '') {
+        toast.info(`Enter DA`, { autoClose: 1000 });
+        return false;
+      }
+
+      if (this.form.hra == '') {
+        toast.info(`Enter HRA`, { autoClose: 1000 });
+        return false;
+      }
+
+      if (this.form.food_allow == '') {
+        toast.info(`Enter Food Allowance`, { autoClose: 1000 });
+        return false;
+      }
+
+      if (this.form.conveyance == '') {
+        toast.info(`Enter Conveyance`, { autoClose: 1000 });
+        return false;
+      }
+
+      if (this.form.epf == '') {
+        toast.info(`Enter EPF`, { autoClose: 1000 });
+        return false;
+      }
+
+      if (this.form.esic == '') {
+        toast.info(`Enter ESIC`, { autoClose: 1000 });
+        return false;
+      }
+
+      if (this.form.lwf == '') {
+        toast.info(`Enter LWF`, { autoClose: 1000 });
+        return false;
+      }
+
+      if (this.form.e_epf == '') {
+        toast.info(`Enter E-EPF`, { autoClose: 1000 });
+        return false;
+      }
+
+      if (this.form.e_esic == '') {
+        toast.info(`Enter E-ESIC`, { autoClose: 1000 });
         return false;
       }
 

@@ -68,17 +68,28 @@
               class="shadow-s card bg-primary border-0 text-light bg-gradient mb-3"
               style="max-width: 18rem; min-width: 18rem; height: 10rem"
             >
-              <div class="card-body d-flex flex-column">
+              <div class="card-body h-100 d-flex flex-column">
                 <div class="w-100">
                   <h5 class="card-title">Clients</h5>
                   <div class="card-text h-100 d-flex justify-content-center align-items-center">
-                    <h2>{{ clients.length }}</h2>
+                    <div class="row w-100 h-100">
+                      <div class="col-6 h-100 d-flex justify-content-center align-items-center">
+                        <img
+                          src="../assets/DashboardImages/clientIcon.png"
+                          alt="Clients"
+                          style="width: 4rem; height: auto; object-fit: cover"
+                        />
+                      </div>
+                      <div class="col-6 d-flex justify-content-center align-items-center">
+                        <h1>{{ clients.length }}</h1>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
             <div
-              class="shadow-s card bg-danger border-0 text-light bg-gradient mb-3"
+              class="shadow-s card bg-primary border-0 text-light bg-gradient mb-3"
               style="max-width: 18rem; min-width: 18rem; height: 10rem"
             >
               <div class="card-body d-flex flex-column">
@@ -94,7 +105,7 @@
 
           <div v-if="role == 'client'" class="d-flex">
             <div
-              class="shadow-s card bg-danger border-0 text-light bg-gradient mb-3"
+              class="shadow-s card bg-primary border-0 text-light bg-gradient mb-3"
               style="max-width: 18rem; min-width: 18rem; height: 10rem"
             >
               <div class="card-body d-flex flex-column">
@@ -108,7 +119,7 @@
             </div>
           </div>
 
-          <div class="d-flex flex-column flex-md-row gap-1">
+          <!--  <div class="d-flex flex-column flex-md-row gap-1">
             <div
               class="left scroll border d-flex justify-content-center align-items-center rounded-4 px-4"
               id="bar_graph"
@@ -135,7 +146,7 @@
             >
               <LineChart :propsChartData="graphData" />
             </div>
-          </div>
+          </div> -->
         </div>
       </div>
     </div>

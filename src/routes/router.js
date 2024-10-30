@@ -23,8 +23,9 @@ import AddClient from '../pages/ManageClients/AddClient.vue';
 import AddClientDetails from '../pages/ManageClients/AddClientDetails.vue';
 import UpdateClient from '../pages/ManageClients/UpdateClient.vue';
 import ViewClient from '../pages/ManageClients/ViewClient.vue';
-import ViewDocument from '../pages/ManageClients/ViewDocument.vue';
-import UpdateDocuments from '../pages/ManageClients/UpdateDocuments.vue';
+import ViewClientDocument from '../pages/ManageClients/ViewClientDocument.vue';
+//import UpdateDocuments from '../pages/ManageClients/UpdateDocuments.vue';
+import UpdateClientDocuments from '../pages/ManageClients/UpdateClientDocuments.vue';
 
 import AddEmployee from '../pages/ManageEmployees/AddEmployee.vue';
 import UpdateEmployee from '../pages/ManageEmployees/UpdateEmployee.vue';
@@ -32,12 +33,15 @@ import ViewEmployee from '../pages/ManageEmployees/ViewEmployee.vue';
 import ManageEmployees from '../pages/ManageEmployees/ManageEmployees.vue';
 import EmployeesByClient from '../pages/ManageEmployees/EmployeesByClient.vue';
 import AddEmployeeBySuperAdmin from '../pages/ManageEmployees/AddEmployeeBySuperAdmin.vue';
-import UploadXl from '../pages/ManageEmployees/UploadAttendanceExcel.vue';
+import UpdateEmployeeDocuments from '../pages/ManageEmployees/UpdateEmployeeDocuments.vue';
+import ViewEmployeeDocument from '../pages/ManageEmployees/ViewEmployeeDocument.vue';
 
-import EmployeeAttendance from '../pages/ManageEmployees/EmployeeAttendance.vue';
-import ManageAttendance from '../pages/ManageEmployees/ManageAttendance.vue';
 import UploadEmployeeExcel from '../pages/ManageEmployees/UploadEmployeeExcel.vue';
+
+import ManageAttendance from '../pages/Attendance/ManageAttendance.vue';
+import EmployeeAttendance from '../pages/Attendance/EmployeeAttendance.vue';
 import AddSingleAttendance from '../pages/Attendance/AddSingleAttendance.vue';
+import UploadAttendanceExcel from '../pages/Attendance/UploadAttendanceExcel.vue';
 
 import WageSlip from '../pages/WageSlip/WageSlip.vue';
 import WageSlipOfMonths from '../pages/WageSlip/WageSlipOfMonths.vue';
@@ -64,10 +68,18 @@ const routes = [
       },
       {
         path: '/view/document/:clientId/:docId',
-        component: ViewDocument,
+        component: ViewClientDocument,
         props: (route) => ({
           docId: route.params.docId,
           clientId: route.params.clientId,
+        }),
+      },
+      {
+        path: '/view/employee/document/:employeeId/:docId',
+        component: ViewEmployeeDocument,
+        props: (route) => ({
+          docId: route.params.docId,
+          employeeId: route.params.employeeId,
         }),
       },
     ],
@@ -165,14 +177,14 @@ const routes = [
       },
       {
         path: '/update/client/documents/:clientId',
-        component: UpdateDocuments,
+        component: UpdateClientDocuments,
         props: (route) => ({
           clientId: route.params.clientId,
         }),
       },
       {
         path: '/documents',
-        component: UpdateDocuments,
+        component: UpdateClientDocuments,
       },
       {
         path: '/update/client/:clientId',
@@ -191,7 +203,7 @@ const routes = [
 
       {
         path: '/upload/excel',
-        component: UploadXl,
+        component: UploadAttendanceExcel,
       },
       {
         path: '/upload/employee/excel',
@@ -231,6 +243,13 @@ const routes = [
         component: EmployeeAttendance,
         props: (route) => ({
           monthYear: route.params.monthYear,
+        }),
+      },
+      {
+        path: '/update/employee/documents/:employee_userId',
+        component: UpdateEmployeeDocuments,
+        props: (route) => ({
+          employee_userId: route.params.employee_userId,
         }),
       },
       {
